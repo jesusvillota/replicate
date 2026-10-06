@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 #SBATCH --job-name=ocr-paddleocr
 #SBATCH --partition=cpu_shared
+#SBATCH --qos=cpu_shared
 #SBATCH --nodes=1
 #SBATCH --cpus-per-task=6
 #SBATCH --mem=12G
