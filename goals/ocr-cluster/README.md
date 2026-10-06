@@ -21,12 +21,14 @@ flowchart TD
   subgraph M_1["M-1 · Cluster OCR outputs for all three papers"]
     TASK_001["TASK-001 OCR papers with Marker on cluster"]
     TASK_002["TASK-002 OCR papers with Chandra on cluster"]
+    TASK_003["TASK-003 OCR papers with PaddleOCR on cluster"]
   end
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
   classDef decision fill:#f3e8ff,stroke:#7c3aed
   class TASK_001 draft
   class TASK_002 draft
+  class TASK_003 draft
 ```
 <!-- goal:graph:end -->
 
