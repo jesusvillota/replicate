@@ -11,7 +11,7 @@ success:
 milestones:
   - {id: M-1, title: Cluster OCR outputs for all three papers, success: [SC-1, SC-2, SC-3, SC-4], exit: Four task PRs merged into main}
 policy:
-  decide: human         # human | experts (a committee answers worker decision requests)
+  decide: experts         # human | experts (a committee answers worker decision requests)
   orchestrate: you      # you | agent: an orchestrator agent approves, dispatches and merges 
   routing: fixed        # with an orchestrator: fixed respects each task's route; dynamic lets it choose
   orchestrator: null    # {platform: codex, model: MODEL, effort: LEVEL}
