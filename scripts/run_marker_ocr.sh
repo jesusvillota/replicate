@@ -8,6 +8,7 @@ INPUT_DIR="${TASK_DIR}/inputs"
 OUTPUT_DIR="${TASK_DIR}/outputs"
 RAW_OUTPUT_DIR="${TASK_DIR}/.marker-raw-${SLURM_JOB_ID}"
 SCRATCH_DIR="/tmp/${USER:-j-vill36}/marker-${SLURM_JOB_ID}"
+UV_BIN="/mnt/slurm-beegfs/Users/j-vill36/.local/bin/uv"
 
 export TMPDIR="${SCRATCH_DIR}/tmp"
 export TEMP="$TMPDIR"
@@ -15,7 +16,7 @@ export TMP="$TMPDIR"
 export XDG_CACHE_HOME="${SCRATCH_DIR}/xdg-cache"
 export HF_HOME="${SCRATCH_DIR}/huggingface"
 export TORCH_HOME="${SCRATCH_DIR}/torch"
-export PIP_CACHE_DIR="${SCRATCH_DIR}/pip-cache"
+export UV_CACHE_DIR="${SCRATCH_DIR}/uv-cache"
 export PYTHONPYCACHEPREFIX="${SCRATCH_DIR}/pycache"
 
 mkdir -p "$TMPDIR" "$XDG_CACHE_HOME" "$HF_HOME" "$TORCH_HOME" "$OUTPUT_DIR"
@@ -34,8 +35,8 @@ if [[ ${#pdfs[@]} -ne 3 ]]; then
 fi
 
 venv="${SCRATCH_DIR}/venv"
-python3 -m venv "$venv"
-"${venv}/bin/python" -m pip install --disable-pip-version-check marker-pdf
+"$UV_BIN" venv "$venv" --python /usr/bin/python3.10
+"$UV_BIN" pip install --python "${venv}/bin/python" marker-pdf
 
 # Marker uses Markdown output by default. Process one PDF at a time to fit the
 # available memory while keeping inference inside this SLURM job.
