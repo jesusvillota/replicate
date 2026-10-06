@@ -7,7 +7,7 @@ Produce machine-readable text for all three PDFs using Marker, Chandra, PaddleOC
 
 ## Context, scope and non-goals
 
-The repo holds three PDF papers on leveraged ETF rebalancing and volatility. Each OCR method writes plain-text or Markdown output under `ocr/<method>/`, one file per paper, same base name. No text cleanup, no comparison report, and no accuracy scoring are in scope. Assumption: each tool runs locally from its public repo docs with default settings.
+The repo holds three PDF papers on leveraged ETF rebalancing and volatility. Each OCR method writes plain-text or Markdown output under `ocr/<method>/`, one file per paper, same base name. All OCR inference runs on the SLURM cluster (account `j-vill36`), never on the MacBook. The MacBook only submits jobs, monitors them, and fetches results. Job budget: at most one SLURM job per task at a time (four tasks share the account cap of 4). No text cleanup, no comparison report, and no accuracy scoring are in scope. Assumption: each tool runs on a cluster compute node from its public repo docs with default settings.
 
 ## Risks and open questions
 
