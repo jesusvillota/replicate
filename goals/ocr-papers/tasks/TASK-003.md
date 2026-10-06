@@ -9,16 +9,20 @@ delivery: pr
 
 ## Why
 
-<the success criterion or milestone this serves>
+Serves SC-3: PaddleOCR output covers all three papers.
 
 ## Scope
 
-<included work, touched areas and interfaces, explicitly out of scope>
+Run PaddleOCR (https://github.com/PaddlePaddle/PaddleOCR) with default settings on all three PDFs at the repo root. Write output to `ocr/paddleocr/`, one file per paper. Out of scope: text cleanup, comparison with other methods, accuracy scoring.
 
 ## Acceptance
 
-- <observable criterion, provable by command output>
+- `ocr/paddleocr/` holds one output file per input PDF (three files total).
+- Each output file is non-empty and holds extracted paper text.
 
 ## Verify
 
-<commands that prove the acceptance criteria>
+```sh
+ls ocr/paddleocr/
+wc -c ocr/paddleocr/*
+```
