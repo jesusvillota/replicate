@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 #SBATCH --job-name=paperextract-task004
-#SBATCH --partition=cpu_long_unlimited
-#SBATCH --qos=cpu_long_unlimited
+#SBATCH --partition=cpu_shared
+#SBATCH --qos=cpu_shared
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
-#SBATCH --mem=6G
+#SBATCH --mem=12G
+#SBATCH --time=04:00:00
 #SBATCH --signal=TERM@120
 #SBATCH --output=logs/paperextract-%j.out
 #SBATCH --error=logs/paperextract-%j.err
