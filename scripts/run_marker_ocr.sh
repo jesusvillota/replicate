@@ -45,9 +45,7 @@ venv="${SCRATCH_DIR}/venv"
 # Use its documented CPU backend and install llama-server in job scratch.
 "$MICROMAMBA_BIN" create --yes --prefix "${SCRATCH_DIR}/llama-env" \
   --channel conda-forge "llama.cpp=11351=cpu_mkl_hc2f5b01_0"
-eval "$(\"$MICROMAMBA_BIN\" shell hook --shell bash)"
-micromamba activate "$LLAMA_ENV"
-source "${venv}/bin/activate"
+export LD_LIBRARY_PATH="${LLAMA_ENV}/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
 export SURYA_INFERENCE_BACKEND=llamacpp
 export LLAMA_CPP_BINARY="${LLAMA_ENV}/bin/llama-server"
 if [[ ! -x "$LLAMA_CPP_BINARY" ]]; then
