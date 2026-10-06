@@ -14,7 +14,7 @@ Serves SC-2: Chandra output covers all three papers.
 
 ## Scope
 
-Run Chandra (https://github.com/datalab-to/chandra) on the SLURM cluster (account `j-vill36`), with default tool settings. Never run model inference on the MacBook. The MacBook only submits the job, monitors it, and fetches results. Ship the three PDFs and the run script to shared storage (`/mnt/slurm-beegfs/Users/j-vill36/scripts_replicate/`). Before you submit, probe live capacity with `cluster-kit resources --json` and send the job to an unoccupied CPU partition that fits it. Keep at most one SLURM job of this task queued or running at a time (the account cap of 4 is shared with the three sibling tasks). Write output to `ocr/chandra/`, one file per paper. Out of scope: text cleanup, comparison with other methods, accuracy scoring.
+Run Chandra (https://github.com/datalab-to/chandra) on the SLURM cluster (account `j-vill36`), with default tool settings. Never run model inference on the MacBook. The MacBook only submits the job, monitors it, and fetches results. Ship the three PDFs and the run script to shared storage (`/mnt/slurm-beegfs/Users/j-vill36/scripts_replicate/`). Before you submit, probe live capacity with `cluster-kit resources --json` and send the job to an unoccupied CPU partition that fits it (or a GPU partition such as `gpu_compute` when the tool needs a GPU; see DEC-001). Keep at most one SLURM job of this task queued or running at a time (the account cap of 4 is shared with the three sibling tasks). Write output to `ocr/chandra/`, one file per paper. Out of scope: text cleanup, comparison with other methods, accuracy scoring.
 
 ## Acceptance
 
