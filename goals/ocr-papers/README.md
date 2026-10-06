@@ -25,7 +25,6 @@ flowchart TD
     TASK_003["TASK-003 OCR papers with PaddleOCR"]
     TASK_004["TASK-004 OCR papers with paperextract"]
   end
-  DEC_001 --> TASK_002
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
   classDef decision fill:#f3e8ff,stroke:#7c3aed
