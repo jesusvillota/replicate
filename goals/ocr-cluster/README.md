@@ -19,10 +19,12 @@ Tools may need heavy models, GPU access, or API keys. Chandra offers a managed A
 ```mermaid
 flowchart TD
   subgraph M_1["M-1 · Cluster OCR outputs for all three papers"]
+    TASK_001["TASK-001 OCR papers with Marker on cluster"]
   end
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
   classDef decision fill:#f3e8ff,stroke:#7c3aed
+  class TASK_001 draft
 ```
 <!-- goal:graph:end -->
 
