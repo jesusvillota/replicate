@@ -22,6 +22,7 @@ flowchart TD
     TASK_001["TASK-001 OCR papers with Marker"]
     TASK_002["TASK-002 OCR papers with Chandra"]
     TASK_003["TASK-003 OCR papers with PaddleOCR"]
+    TASK_004["TASK-004 OCR papers with paperextract"]
   end
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
@@ -29,6 +30,7 @@ flowchart TD
   class TASK_001 draft
   class TASK_002 draft
   class TASK_003 draft
+  class TASK_004 draft
 ```
 <!-- goal:graph:end -->
 
