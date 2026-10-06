@@ -5,7 +5,7 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
-#SBATCH --mem=12G
+#SBATCH --mem=6G
 #SBATCH --signal=TERM@120
 #SBATCH --output=logs/paperextract-%j.out
 #SBATCH --error=logs/paperextract-%j.err
