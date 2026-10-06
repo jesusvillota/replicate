@@ -19,14 +19,17 @@ Tools may need heavy models, GPU access, or API keys. Scanned tables and math ma
 ```mermaid
 flowchart TD
   subgraph M_1["M-1 · OCR outputs for all three papers"]
+    DEC_001{{"DEC-001 how shall TASK-002 obtain Chandra output (API key, GPU machine, or drop Chandra)?"}}
     TASK_001["TASK-001 OCR papers with Marker"]
     TASK_002["TASK-002 OCR papers with Chandra"]
     TASK_003["TASK-003 OCR papers with PaddleOCR"]
     TASK_004["TASK-004 OCR papers with paperextract"]
   end
+  DEC_001 --> TASK_002
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
   classDef decision fill:#f3e8ff,stroke:#7c3aed
+  class DEC_001 decision
 ```
 <!-- goal:graph:end -->
 
