@@ -4,7 +4,7 @@
 #SBATCH --nodes=1
 #SBATCH --cpus-per-task=6
 #SBATCH --mem=12G
-#SBATCH --time=24:00:00
+#SBATCH --time=12:00:00
 #SBATCH --output=/mnt/slurm-beegfs/Users/j-vill36/scripts_replicate/ocr-cluster-task-003/logs/paddleocr-%j.out
 #SBATCH --error=/mnt/slurm-beegfs/Users/j-vill36/scripts_replicate/ocr-cluster-task-003/logs/paddleocr-%j.err
 
