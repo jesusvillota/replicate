@@ -1,0 +1,20 @@
+format: goal/v2
+id: ocr-papers
+title: OCR three papers with four methods
+objective: Produce machine-readable text for all three PDFs using Marker, Chandra, PaddleOCR, and paperextract.
+base: main
+success:
+  SC-1: <observable result and how it is verified>
+milestones:
+  - {id: M-1, title: <first observable outcome>, success: [SC-1], exit: <verifiable evidence>}
+policy:
+  decide: human         # human | experts (a committee answers worker decision requests)
+  orchestrate: you      # you | agent: an orchestrator agent approves, dispatches and merges 
+  routing: fixed        # with an orchestrator: fixed respects each task's route; dynamic lets it choose
+  orchestrator: null    # {platform: codex, model: MODEL, effort: LEVEL}
+  max_parallel: 2
+  default_route: null   # {platform: codex, model: MODEL, effort: LEVEL}
+  agent: claude         # claude | codex | opencode | agy
+  turn_budget: 40
+  plan_commits: push    # push | commit | off
+  worktree_setup: null  # shell run in each new task worktree, e.g. "uv sync"
