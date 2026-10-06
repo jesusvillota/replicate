@@ -1,11 +1,10 @@
 #!/usr/bin/env bash
 #SBATCH --job-name=paperextract-task004
-#SBATCH --partition=cpu_shared
+#SBATCH --partition=cpu_long_unlimited
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=8
+#SBATCH --cpus-per-task=2
 #SBATCH --mem=20G
-#SBATCH --time=04:00:00
 #SBATCH --signal=TERM@120
 #SBATCH --output=logs/paperextract-%j.out
 #SBATCH --error=logs/paperextract-%j.err
@@ -27,7 +26,7 @@ cd "$TASK_DIR"
 cat > "$TASK_DIR/cpu.toml" <<EOF
 [worker]
 root = "$PAPEREXTRACT_DIR"
-cpu_threads = 8
+cpu_threads = 2
 timeout_seconds = 3600
 
 [registry]
