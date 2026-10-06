@@ -2,10 +2,10 @@
 
 ## Acceptance
 
-- [ ] `ocr/marker/` holds one output file per input PDF. Evidence: the local output folder is empty. Cluster sync and fetch did not run.
-- [ ] Each output file is non-empty and holds extracted paper text. Evidence: no output files exist.
-- [x] Marker ran on a cluster compute node. Evidence: SLURM job `23536` ran on `HPCOM-05`. Its `sacct` state and log tail appear below. The job was canceled and produced no output.
-- [x] This task held at most one queued or running SLURM job at a time. Evidence: the job history below shows each job ended before the next started. This resume submitted no job.
+- [ ] `ocr/marker/` holds one output file per input PDF (three files total). Evidence: the directory was empty on 2026-10-07; no Marker job was accepted in this resume.
+- [ ] Each output file is non-empty and holds extracted paper text. Evidence: there are no output files to inspect.
+- [x] Marker ran on a cluster compute node. Evidence: earlier job `23536` ran on `HPCOM-05`. Its `sacct` state and compute-node log tail appear below. That run was cancelled and produced no output. This resume's submission was rejected and received no job ID.
+- [x] This task never held more than one queued or running SLURM job at a time. Evidence: the task's previous job history below is sequential. The current submission was rejected, so this resume held no task job.
 
 ## Previous SLURM job history
 
@@ -27,13 +27,15 @@ Times use the cluster's local time on 2026-10-06.
 
 ## SLURM and log evidence
 
+Earlier job `23536`:
+
 ```text
 $ sacct -j 23536 --format=JobID,State,Elapsed,MaxRSS
 23536       CANCELLED by 1009  00:16:35  6604072K
 23536.batch CANCELLED          00:16:36  6604072K
 ```
 
-The compute-node log tail from `/mnt/slurm-beegfs/Users/j-vill36/.cache/datalab/surya/llamacpp_server.log` is:
+Compute-node log tail from `/mnt/slurm-beegfs/Users/j-vill36/.cache/datalab/surya/llamacpp_server.log`:
 
 ```text
 7.58.206.324 W find_slot: non-consecutive token position 79 after 7 for sequence 7 with 7 new tokens
@@ -46,18 +48,27 @@ The compute-node log tail from `/mnt/slurm-beegfs/Users/j-vill36/.cache/datalab/
 10.05.074.338 W srv          stop: cancel task, id_task = 5
 ```
 
-Job `23530` also logged six `Inference error: Request timed out.` messages. Neither job produced an output file.
+## Current capacity blocker (2026-10-07)
 
-## Current blocker
+The runner now requests two CPUs, 10G, and one L4 GPU on `gpu_compute`. The three PDFs and runner were staged under this worktree's isolated remote path, `/mnt/slurm-beegfs/Users/j-vill36/scripts_replicate__goal-ocr-cluster-task-001/`.
 
-DEC-001 was accepted on 2026-10-06. It allows a GPU partition or tuned CPU inference settings. The updated runner requests one L4 GPU, two CPUs, and 16 GB on `gpu_compute`. It uses a CUDA-enabled llama.cpp build and writes Markdown files directly to `ocr/marker/`.
+The default `cluster-kit resources --json` probe showed an empty queue because its default SLURM username did not match the job owner. Querying with `cluster-kit resources --user j-vill36 --json` showed four running jobs: `23575`, `23576`, `23577`, and `23589`. `sacctmgr` reported `MaxJobs=4` and `MaxSubmit=4`. The free GPU node slot fit the requested job, but the account limit was full.
 
-The cluster became unreachable before this resume could sync or submit the updated runner. `cluster-kit resources --json`, `cluster-kit exec 'hostname'`, and the code sync all failed with `ssh: connect to host 192.168.1.61 port 22: Connection refused`. The FortiClient VPN stayed disconnected after a start attempt. No job was submitted in this resume, and no output was fetched.
+The attempted `sbatch --parsable scripts/run_marker_ocr.sh` returned:
+
+```text
+sbatch: error: AssocMaxSubmitJobLimit
+sbatch: error: Batch job submission failed: Job violates accounting/QOS policy (job submit limit, user's size and/or time limits)
+```
+
+SLURM returned no job ID. No retry was made. A related `cluster-kit resources` username mismatch was recorded with `agent-note` outside this task.
 
 ## Summary
 
-The existing PR already contains the runner and the failed CPU run history. This resume updates the runner for a one-GPU `gpu_compute` run and keeps the task job cap at one. The runner passes `bash -n`, and the changes pass `git diff --check`. No cluster run or output check could be completed because SSH access was unavailable.
+This resume reduced the runner's memory request from 16G to 10G and staged the inputs and runner on the cluster. The cluster node had a fitting 2 CPU, 10G, 1 GPU slot, but four other jobs already used the account's four-job limit. SLURM rejected the submission, so this resume produced no OCR outputs.
 
-Verified revision before this outcome commit: `e524bfd1f0ad13bacae9d9a473193ba742181cf0`.
+`bash -n scripts/run_marker_ocr.sh` and `git diff --check` passed. The output directory check found no files. No OCR verification could be completed in this resume.
 
-Follow-up: restore cluster SSH access, sync the runner, run one `gpu_compute` job, fetch the three Markdown outputs, and update this outcome with the successful job evidence.
+Verified revision before this outcome update: `b2081d8`.
+
+Follow-up: after an account job ends, query resources with `--user j-vill36`, then run one `gpu_compute` job with two CPUs, 10G, and one GPU. Fetch the three Markdown files and replace this blocker with the resulting `sacct` and log evidence.

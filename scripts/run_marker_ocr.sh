@@ -3,7 +3,7 @@
 #SBATCH --qos=gpu_compute
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=2
-#SBATCH --mem=16G
+#SBATCH --mem=10G
 #SBATCH --time=72:00:00
 #SBATCH --gres=gpu:nvidia_l4:1
 #SBATCH --job-name=marker-t001
