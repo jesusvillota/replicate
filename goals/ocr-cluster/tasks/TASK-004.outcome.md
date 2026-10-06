@@ -2,27 +2,27 @@
 
 Goal-Task: ocr-cluster/TASK-004
 
-Goal-Blocked: no CPU node had enough free memory for Paperextract
+Goal-Blocked: cluster VPN is unavailable: FortiClient reports its VPN app is not installed
 
-## Acceptance checklist
+## Acceptance
 
 - [ ] `ocr/paperextract/` holds one output file per input PDF.
-  Evidence: Not met. No compute job started, so the output folder was not created.
+  Evidence: Not met. `ls -ld ocr ocr/paperextract` reports that neither path exists. The retry could not submit a cluster job.
 - [ ] Each output file is non-empty and holds extracted paper text.
-  Evidence: Not met. Paperextract did not run on the three PDFs.
-- [ ] A compute-node run is shown by its job ID, `sacct` state, and log tail.
-  Evidence: Not met. Job `23532` stayed `PENDING` with reason `Resources`. Slurm estimated a start at `2026-10-06 18:59:51 +02:00`, more than four hours after submission. Jobs `23528`, `23531`, and `23532` all ended as `CANCELLED+` with elapsed time `00:00:00`. No OCR log exists.
-- [x] This task never held more than one queued or running job.
-  Evidence: Jobs `23528`, `23531`, and `23532` were submitted one at a time. Each was cancelled before the next was submitted. `squeue -n paperextract-task004` returned no jobs after the final cancellation. The task held at most one queued or running job.
+  Evidence: Not met. Paperextract did not run on the three PDFs during this retry.
+- [ ] The OCR ran on a cluster compute node, shown by the SLURM job ID, its `sacct` state, and a log tail.
+  Evidence: Not met. No job ID or compute log exists for this retry.
+- [x] This task never held more than one cluster job queued or running at once.
+  Evidence: No job was submitted during this retry. Outcome commit `666b3e5` records that earlier jobs `23528`, `23531`, and `23532` were submitted one at a time and cancelled before the next submission. Direct `squeue` checks showed no TASK-004 job; one check showed only unrelated jobs `23495` and `23527`.
 
 ## Summary
 
-The three PDFs and both task scripts were copied to `/mnt/slurm-beegfs/Users/j-vill36/scripts_replicate/task-004/`. Paperextract and its default CPU model were installed on the cluster login node. `paperextract models status mineru --verify` passed. No inference ran on the MacBook.
+The retry updated `TASK-004-run.sh` to use `cpu_shared`, 4 CPUs, 12 GB of memory, and a four-hour limit. Revision `5e254f1` passed `bash -n` and `git diff --check`, and it was pushed to `goal/ocr-cluster/task-004`.
 
-The CPU partition was `cpu_long_unlimited`, with its matching QOS. The final request used four CPUs and 6 GB of memory. Slurm showed no node with both four free CPUs and 6 GB of allocatable memory. `HPCOM-04` had no free CPUs. The other nodes had less than 6 GB of allocatable memory. Job `23532` stayed pending. Its estimated start was more than four hours later, so it was cancelled before it started. The earlier jobs were also cancelled before they started: `23528` used the default, mismatched QOS; `23531` requested 12 GB and could not fit.
+The resource probe showed usable CPU capacity. Its queue field was empty. A direct `squeue` check briefly listed two unrelated running jobs, `23495` and `23527`; a later check listed none. No TASK-004 job was submitted.
 
-The task code revision is `93d9302`. The cluster checkout used Paperextract commit `04820bc85df378a07c7f20b0d4f03757d3b41c7c`.
+The cluster VPN then became unavailable. `cluster-kit sync cp` could not connect. SSH to `cluster` failed with `Connection refused`. `scutil --nc status` reported `Disconnected` and said the VPN app for the saved profile was not installed. FortiClient showed its cloud agent connected, but Remote Access was disabled. The repository has no local `src/` or `runnables/` directories, so `cluster-kit sync code` also could not complete. No OCR inference ran on the MacBook.
 
-Checks: `bash -n` passed for both task scripts. `git diff --check` passed. The repository has no configured test suite.
+Checks: `bash -n goals/ocr-cluster/tasks/TASK-004-run.sh goals/ocr-cluster/tasks/TASK-004-finalize.sh` passed. `git diff --check` passed. Output and `sacct` checks could not run because cluster access was unavailable.
 
-Proposed follow-up: resume when one CPU node has at least four CPUs and 6 GB of allocatable memory, and an account job slot is free. Submit one job, then collect the three Markdown files and its SLURM log.
+Proposed follow-up: restore the FortiClient VPN app or another approved cluster connection. Then stage the run script and PDFs, submit one `cpu_shared` job, fetch the three outputs, and record its `sacct` state and log tail.
