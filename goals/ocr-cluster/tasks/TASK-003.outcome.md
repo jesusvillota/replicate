@@ -2,18 +2,28 @@
 
 ## Acceptance
 
-- [ ] `ocr/paddleocr/` has one output file for each input PDF (three files total).
-  The last remote listing showed only two files:
+- [x] `ocr/paddleocr/` holds one output file per input PDF (three files total).
+  `ls -l ocr/paddleocr/` and `wc -c ocr/paddleocr/*` show exactly these three files:
   - `Bessembinder_SSRN_2026_RebalancingFrictionalCostsAndReturnsToLeveredSingleStockETFs.txt` — 80,447 bytes.
   - `Bessembinder_SSRN_2026_VolatilityAndReturnsToLeveragedETFs.txt` — 42,508 bytes.
-  I could not fetch them or confirm the third output after cluster SSH stopped working.
-- [ ] Each output file is non-empty and contains extracted paper text.
-  The two files above were non-empty. The runner checks for extracted text before it writes a file.
-  I could not read the files or verify all three outputs locally.
-- [ ] PaddleOCR ran on a cluster compute node, with the final SLURM state and log tail recorded.
-  Job `23527` ran in `cpu_shared` on `HPCOM-01`. At the last remote check,
-  `sacct` reported `RUNNING`, elapsed `01:41:12`. I lost SSH access before I could
-  record its final state or final log tail. The last captured log tail was:
+  - `Harvey-Mazzoleni-Melone_SSRN_2026_TheUnintendedConsequencesOfRebalancing.txt` — 151,456 bytes.
+  Their base names match the three input PDFs.
+- [x] Each output file is non-empty and holds extracted paper text.
+  A local content check found 10,624 words across 39 page markers, 5,582 words
+  across 21 page markers, and 18,544 words across 76 page markers, respectively.
+  Each file starts with readable paper text. Local SHA-256 hashes match the
+  remote files exactly:
+
+  ```text
+  9f2ff4f711241cb508a590c1561c2e1fc1075b8767058c9f6b206340fc6d26de  Bessembinder_SSRN_2026_RebalancingFrictionalCostsAndReturnsToLeveredSingleStockETFs.txt
+  c7a7781c707734825970023b5ce8edd8a19f4cc82b258324d6d8d35e1aa1290c  Bessembinder_SSRN_2026_VolatilityAndReturnsToLeveragedETFs.txt
+  a8c008324ee87fe2592058af2f85c80ab3682733deadc54882c2aee9850a4411  Harvey-Mazzoleni-Melone_SSRN_2026_TheUnintendedConsequencesOfRebalancing.txt
+  ```
+- [x] The OCR ran on a cluster compute node, shown by the SLURM job ID, its
+  `sacct` state, and a log tail.
+  `sacct -j 23527 --format=JobID,JobName,Partition,State,Elapsed,MaxRSS,NodeList`
+  reports job `23527`, state `COMPLETED`, elapsed `02:20:07`, batch MaxRSS
+  `3792852K`, and node `HPCOM-01` in partition `cpu_shared`. The remote log tail:
 
   ```text
   SLURM_JOB_ID=23527
@@ -23,35 +33,38 @@
   Python 3.10.12
   paddlepaddle 3.3.1
   paddleocr 3.7.0
+  Wrote Bessembinder_SSRN_2026_RebalancingFrictionalCostsAndReturnsToLeveredSingleStockETFs.txt: 39 pages, 80339 characters
+  Wrote Bessembinder_SSRN_2026_VolatilityAndReturnsToLeveragedETFs.txt: 21 pages, 42026 characters
+  Wrote Harvey-Mazzoleni-Melone_SSRN_2026_TheUnintendedConsequencesOfRebalancing.txt: 76 pages, 151117 characters
+  Completed OCR for 3 PDFs on HPCOM-01
+  Finished=2026-10-06T16:20:09+02:00
   ```
 - [x] This task never held more than one cluster job queued or running at once.
-  Accounting showed the earlier jobs ended before the next job was submitted:
-  `23511` ended at 13:49:12; `23514` ended at 13:50:47; `23516` ended at
-  13:52:03; and `23519` ended at 13:55:48. Job `23527` started at 14:00:02.
-  No later task job was submitted. The last queue view showed `23527` as the only
-  PaddleOCR task job.
+  `sacct` for job name `ocr-paddleocr` on 2026-10-06 listed only these jobs.
+  Each job reached a terminal state before the next job was submitted:
 
-## Blocked
+  | Job | Submitted | Terminal | State |
+  | --- | --- | --- | --- |
+  | 23511 | 13:48:40 | 13:49:12 | CANCELLED |
+  | 23514 | 13:50:18 | 13:50:47 | CANCELLED |
+  | 23516 | 13:51:51 | 13:52:03 | FAILED |
+  | 23519 | 13:54:23 | 13:55:48 | FAILED |
+  | 23527 | 13:59:36 | 16:20:09 | COMPLETED |
 
-Goal-Blocked: SSH to `192.168.1.61:22` is refused, so job `23527` and the third
-output cannot be verified or fetched.
-
-Cluster access is unavailable. Tailscale can reach `192.168.1.61`, but TCP port
-22 refuses connections. `cluster-kit resources` and `cluster-kit exec` both fail
-with the same SSH refusal. macOS reports the FortiClient VPN service as
-disconnected. FortiClient's window shows its cloud management link as connected,
-but no active remote-access VPN. I could not check job `23527`, read its final
-log, or fetch the third output.
+  This resumed session submitted no cluster job.
 
 ## Summary
 
-The runner used PaddleOCR `3.7.0` and PaddlePaddle `3.3.1` on the cluster.
-The OCR model and OCR settings stayed at their defaults. The job disables
-Paddle's automatic oneDNN backend because the earlier oneDNN attempt failed.
-This setting is `PADDLE_PDX_ENABLE_MKLDNN_BYDEFAULT=False` in the SLURM script.
+Fetched the three completed PaddleOCR outputs from
+`/mnt/slurm-beegfs/Users/j-vill36/scripts_replicate/ocr-cluster-task-003/ocr/paddleocr/`
+to `ocr/paddleocr/`. The remote and local SHA-256 hashes match for all files.
+The output set matches all input PDFs, and each file contains extracted text.
+OCR inference ran on `HPCOM-01`; no OCR inference ran locally.
+Deviation: none from the task scope. This resumed session fetched the completed
+outputs and submitted no new cluster job.
 
-The verified runner revision is `ce6590e`. Two remote output files existed at
-the last check. Job `23527` was still running then. Its current state is unknown.
+Verified runner revision: `ce6590e`. Job `23527` used PaddleOCR `3.7.0` and
+PaddlePaddle `3.3.1`, with the default OCR model and settings. The runner disables
+the failing automatic oneDNN backend, as recorded in the job script.
 
-Follow-up: restore SSH access, check job `23527` and its log, fetch all three
-outputs, run the required checks, and update this outcome and the draft PR.
+Follow-up: none for TASK-003.
