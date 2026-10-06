@@ -2,7 +2,7 @@
 set -euo pipefail
 
 SLURM_JOB_ID="${SLURM_JOB_ID:?Run this script through SLURM}"
-REPO_ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
+REPO_ROOT="${OCR_MARKER_ROOT:-$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)}"
 TASK_DIR="${REPO_ROOT}/ocr/marker"
 INPUT_DIR="${TASK_DIR}/inputs"
 OUTPUT_DIR="${TASK_DIR}/outputs"
