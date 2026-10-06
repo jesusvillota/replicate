@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 #SBATCH --job-name=paperextract-task004
 #SBATCH --partition=cpu_long_unlimited
+#SBATCH --qos=cpu_long_unlimited
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=2
