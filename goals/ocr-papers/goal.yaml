@@ -15,7 +15,7 @@ policy:
   orchestrate: you      # you | agent: an orchestrator agent approves, dispatches and merges 
   routing: fixed        # with an orchestrator: fixed respects each task's route; dynamic lets it choose
   orchestrator: null    # {platform: codex, model: MODEL, effort: LEVEL}
-  max_parallel: 2
+  max_parallel: 3
   default_route: null   # {platform: codex, model: MODEL, effort: LEVEL}
   agent: claude         # claude | codex | opencode | agy
   turn_budget: 40
