@@ -27,10 +27,6 @@ flowchart TD
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
   classDef decision fill:#f3e8ff,stroke:#7c3aed
-  class TASK_001 draft
-  class TASK_002 draft
-  class TASK_003 draft
-  class TASK_004 draft
 ```
 <!-- goal:graph:end -->
 
