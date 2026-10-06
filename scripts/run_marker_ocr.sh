@@ -37,9 +37,11 @@ venv="${SCRATCH_DIR}/venv"
 python3 -m venv "$venv"
 "${venv}/bin/python" -m pip install --disable-pip-version-check marker-pdf
 
-# Marker uses Markdown output by default. Keep its inference and model setup
-# inside this single SLURM job on the compute node.
-"${venv}/bin/marker" "$INPUT_DIR" --output_dir "$RAW_OUTPUT_DIR"
+# Marker uses Markdown output by default. Process one PDF at a time to fit the
+# available memory while keeping inference inside this SLURM job.
+for pdf in "${pdfs[@]}"; do
+  "${venv}/bin/marker_single" "$pdf" --output_dir "$RAW_OUTPUT_DIR"
+done
 
 for pdf in "${pdfs[@]}"; do
   filename="$(basename -- "$pdf")"
