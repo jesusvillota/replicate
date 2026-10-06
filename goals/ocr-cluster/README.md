@@ -7,18 +7,18 @@ Produce machine-readable text for all three PDFs with Marker, Chandra, PaddleOCR
 
 ## Context, scope and non-goals
 
-<what exists today, what is included, what is explicitly out of scope>
+The repo holds three PDF papers on leveraged ETF rebalancing and volatility. Each OCR method writes plain-text or Markdown output under `ocr/<method>/`, one file per paper, same base name. All OCR inference runs on the SLURM cluster (account `j-vill36`), never on the MacBook. The MacBook only submits jobs, monitors them, and fetches results. Job budget: at most one SLURM job per task at a time (four tasks share the account cap of 4). No text cleanup, no comparison report, and no accuracy scoring are in scope. Assumption: each tool runs on a cluster compute node from its public repo docs with default settings. This goal replaces the earlier `ocr-papers` goal, whose local runs overheated the MacBook.
 
 ## Risks and open questions
 
-<risks, assumptions, and unknowns; material unknowns become discovery tasks or DEC nodes>
+Tools may need heavy models, GPU access, or API keys. Chandra offers a managed API (needs a Datalab key with credits) or a local CLI (needs a GPU, 60 GB free disk, and Docker); the cluster provides GPUs via its `gpu_*` partitions. Scanned tables and math may convert poorly. Open question: which output format each tool produces by default (Markdown or text).
 
 ## Plan structure
 
 <!-- goal:graph:start -->
 ```mermaid
 flowchart TD
-  subgraph M_1["M-1 · <first observable outcome>"]
+  subgraph M_1["M-1 · Cluster OCR outputs for all three papers"]
   end
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
