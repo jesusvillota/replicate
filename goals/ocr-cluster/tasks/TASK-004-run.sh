@@ -4,8 +4,8 @@
 #SBATCH --qos=cpu_long_unlimited
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=2
-#SBATCH --mem=20G
+#SBATCH --cpus-per-task=4
+#SBATCH --mem=12G
 #SBATCH --signal=TERM@120
 #SBATCH --output=logs/paperextract-%j.out
 #SBATCH --error=logs/paperextract-%j.err
@@ -27,7 +27,6 @@ cd "$TASK_DIR"
 cat > "$TASK_DIR/cpu.toml" <<EOF
 [worker]
 root = "$PAPEREXTRACT_DIR"
-cpu_threads = 2
 timeout_seconds = 3600
 
 [registry]
