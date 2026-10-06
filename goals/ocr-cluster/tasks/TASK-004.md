@@ -2,7 +2,7 @@
 id: TASK-004
 title: OCR papers with paperextract on cluster
 milestone: M-1
-state: draft
+state: approved
 depends_on: []
 delivery: pr
 ---

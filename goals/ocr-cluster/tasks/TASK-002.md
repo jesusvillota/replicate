@@ -2,7 +2,7 @@
 id: TASK-002
 title: OCR papers with Chandra on cluster
 milestone: M-1
-state: draft
+state: approved
 depends_on: []
 delivery: pr
 ---

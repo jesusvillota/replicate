@@ -2,7 +2,7 @@
 id: TASK-003
 title: OCR papers with PaddleOCR on cluster
 milestone: M-1
-state: draft
+state: approved
 depends_on: []
 delivery: pr
 ---

@@ -2,7 +2,7 @@
 id: TASK-001
 title: OCR papers with Marker on cluster
 milestone: M-1
-state: draft
+state: approved
 depends_on: []
 delivery: pr
 ---
