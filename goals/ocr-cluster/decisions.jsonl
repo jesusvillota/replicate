@@ -1,0 +1,1 @@
+{"at":"2026-10-06T11:22:14.693739Z","node":"goal:ocr-cluster","action":"policy","actor":"human:jesusvillota","summary":"Set policy default_route codex gpt-6-luna max","rationale":"","refs":{"key":"default_route","route":{"platform":"codex","model":"gpt-6-luna","effort":"max"}}}

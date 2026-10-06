@@ -16,7 +16,7 @@ policy:
   routing: fixed        # with an orchestrator: fixed respects each task's route; dynamic lets it choose
   orchestrator: null    # {platform: codex, model: MODEL, effort: LEVEL}
   max_parallel: 2
-  default_route: null   # {platform: codex, model: MODEL, effort: LEVEL}
+  default_route: {platform: codex, model: gpt-6-luna, effort: max}   # {platform: codex, model: MODEL, effort: LEVEL}
   agent: claude         # claude | codex | opencode | agy
   turn_budget: 40
   plan_commits: push    # push | commit | off
