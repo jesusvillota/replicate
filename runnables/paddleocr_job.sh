@@ -15,6 +15,8 @@ TASK_ROOT="/mnt/slurm-beegfs/Users/j-vill36/scripts_replicate/ocr-cluster-task-0
 VENV="$TASK_ROOT/.venv"
 UV_BIN="/mnt/slurm-beegfs/Users/j-vill36/.local/bin/uv"
 export PADDLE_PDX_CACHE_HOME="$TASK_ROOT/model-cache"
+# The default oneDNN backend fails with PaddlePaddle 3.3.1 on this node.
+export PADDLE_PDX_ENABLE_MKLDNN_BYDEFAULT=False
 export UV_CACHE_DIR="$TASK_ROOT/.uv-cache"
 export TMPDIR="/tmp/paddleocr-${SLURM_JOB_ID}"
 export OMP_NUM_THREADS="${SLURM_CPUS_PER_TASK}"
