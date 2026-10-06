@@ -7,18 +7,18 @@ Produce machine-readable text for all three PDFs using Marker, Chandra, PaddleOC
 
 ## Context, scope and non-goals
 
-<what exists today, what is included, what is explicitly out of scope>
+The repo holds three PDF papers on leveraged ETF rebalancing and volatility. Each OCR method writes plain-text or Markdown output under `ocr/<method>/`, one file per paper, same base name. No text cleanup, no comparison report, and no accuracy scoring are in scope. Assumption: each tool runs locally from its public repo docs with default settings.
 
 ## Risks and open questions
 
-<risks, assumptions, and unknowns; material unknowns become discovery tasks or DEC nodes>
+Tools may need heavy models, GPU access, or API keys. Scanned tables and math may convert poorly. Open question: which output format each tool produces by default (Markdown or text).
 
 ## Plan structure
 
 <!-- goal:graph:start -->
 ```mermaid
 flowchart TD
-  subgraph M_1["M-1 · <first observable outcome>"]
+  subgraph M_1["M-1 · OCR outputs for all three papers"]
   end
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
