@@ -2,12 +2,12 @@
 
 ## Acceptance
 
-- [ ] `ocr/marker/` holds one output file per input PDF. Evidence: the cluster output folder is empty. The local `ocr/marker/` folder has no files.
-- [ ] Each output file is non-empty and holds paper text. Evidence: no output file exists.
-- [x] OCR ran on a cluster compute node. Evidence: `scontrol show job -o 23536` reported `NodeList=HPCOM-05`. `sacct` recorded state `CANCELLED by 1009`, elapsed time `00:16:35`, and peak memory `6604072K`. The log tail below shows stalled model work and canceled tasks. The job did not finish.
-- [x] This task held at most one queued or running SLURM job at a time. Evidence: the table below lists every `marker-t001` job. Each job ended before the next one started.
+- [ ] `ocr/marker/` holds one output file per input PDF. Evidence: the local output folder is empty. Cluster sync and fetch did not run.
+- [ ] Each output file is non-empty and holds extracted paper text. Evidence: no output files exist.
+- [x] Marker ran on a cluster compute node. Evidence: SLURM job `23536` ran on `HPCOM-05`. Its `sacct` state and log tail appear below. The job was canceled and produced no output.
+- [x] This task held at most one queued or running SLURM job at a time. Evidence: the job history below shows each job ended before the next started. This resume submitted no job.
 
-### SLURM job history
+## Previous SLURM job history
 
 Times use the cluster's local time on 2026-10-06.
 
@@ -25,7 +25,7 @@ Times use the cluster's local time on 2026-10-06.
 | 23535 | 14:58:06 | 14:58:06 | FAILED |
 | 23536 | 14:58:59 | 15:15:35 | CANCELLED |
 
-### SLURM and log evidence
+## SLURM and log evidence
 
 ```text
 $ sacct -j 23536 --format=JobID,State,Elapsed,MaxRSS
@@ -46,28 +46,18 @@ The compute-node log tail from `/mnt/slurm-beegfs/Users/j-vill36/.cache/datalab/
 10.05.074.338 W srv          stop: cancel task, id_task = 5
 ```
 
-Job `23530` also logged six `Inference error: Request timed out.` messages before cancellation. No output file was produced by either job.
+Job `23530` also logged six `Inference error: Request timed out.` messages. Neither job produced an output file.
+
+## Current blocker
+
+DEC-001 was accepted on 2026-10-06. It allows a GPU partition or tuned CPU inference settings. The updated runner requests one L4 GPU, two CPUs, and 16 GB on `gpu_compute`. It uses a CUDA-enabled llama.cpp build and writes Markdown files directly to `ocr/marker/`.
+
+The cluster became unreachable before this resume could sync or submit the updated runner. `cluster-kit resources --json`, `cluster-kit exec 'hostname'`, and the code sync all failed with `ssh: connect to host 192.168.1.61 port 22: Connection refused`. The FortiClient VPN stayed disconnected after a start attempt. No job was submitted in this resume, and no output was fetched.
 
 ## Summary
 
-The task staged the three input PDFs and the run script on shared storage. Marker ran on CPU node `HPCOM-05`. The run used Marker’s default `marker_single` conversion command and processed one PDF at a time.
+The existing PR already contains the runner and the failed CPU run history. This resume updates the runner for a one-GPU `gpu_compute` run and keeps the task job cap at one. The runner passes `bash -n`, and the changes pass `git diff --check`. No cluster run or output check could be completed because SSH access was unavailable.
 
-The script selected Surya's `llamacpp` backend because the default backend required Docker. The cluster does not have Docker. The CPU model did not finish within the available CPU allocation. Job `23530` timed out. Job `23536` used four CPUs but still produced no output. Its log showed 480.59 seconds of model prompt processing for seven tokens, then canceled six tasks.
+Verified revision before this outcome commit: `e524bfd1f0ad13bacae9d9a473193ba742181cf0`.
 
-No output file was copied to the worktree. The shared output folder is empty. No task jobs overlapped. `bash -n scripts/run_marker_ocr.sh` passes. `gh pr checks 4` reports no checks. Verified revision before this outcome: `ff7deb36505dd7ca8b712468fbd0f205d1e4b79d`.
-
-Follow-up: receive the decision below, then rerun with the approved cluster settings and complete the file checks.
-
-## Decision request
-
-May TASK-001 use a GPU partition, or change CPU inference settings, after the default CPU run times out?
-
-Options:
-
-1. Keep the CPU partition and current inference settings. Wait for a larger CPU slot, then retry. This keeps the task scope and defaults. The current CPU capacity produced no paper text.
-2. Use a GPU partition with a GPU-enabled `llama.cpp` build. This may finish sooner and keeps Marker’s conversion command. It changes the task's CPU-only requirement and needs a GPU-compatible build.
-3. Keep the CPU partition and tune `llama.cpp` threads, parallel requests, or timeouts. This may use current CPU capacity better. It changes the current inference settings and may not finish faster.
-
-### Recommendation
-
-Allow option 2. The current CPU runs produce no output and show very slow model work. A GPU-enabled backend offers the best chance of completing all three papers while keeping Marker’s conversion command at its default.
+Follow-up: restore cluster SSH access, sync the runner, run one `gpu_compute` job, fetch the three Markdown outputs, and update this outcome with the successful job evidence.
