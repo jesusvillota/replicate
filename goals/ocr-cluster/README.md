@@ -19,14 +19,17 @@ Tools may need heavy models, GPU access, or API keys. Chandra offers a managed A
 ```mermaid
 flowchart TD
   subgraph M_1["M-1 · Cluster OCR outputs for all three papers"]
+    DEC_001{{"DEC-001 May TASK-001 use a GPU partition or tuned CPU inference settings?"}}
     TASK_001["TASK-001 OCR papers with Marker on cluster"]
     TASK_002["TASK-002 OCR papers with Chandra on cluster"]
     TASK_003["TASK-003 OCR papers with PaddleOCR on cluster"]
     TASK_004["TASK-004 OCR papers with paperextract on cluster"]
   end
+  DEC_001 --> TASK_001
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
   classDef decision fill:#f3e8ff,stroke:#7c3aed
+  class DEC_001 decision
 ```
 <!-- goal:graph:end -->
 
