@@ -13,12 +13,17 @@ set -euo pipefail
 
 TASK_ROOT="/mnt/slurm-beegfs/Users/j-vill36/scripts_replicate/ocr-cluster-task-003"
 VENV="$TASK_ROOT/.venv"
+UV_BIN="/mnt/slurm-beegfs/Users/j-vill36/.local/bin/uv"
 export PADDLE_PDX_CACHE_HOME="$TASK_ROOT/model-cache"
-export PIP_CACHE_DIR="$TASK_ROOT/.pip-cache"
+export UV_CACHE_DIR="$TASK_ROOT/.uv-cache"
 export TMPDIR="/tmp/paddleocr-${SLURM_JOB_ID}"
 export OMP_NUM_THREADS="${SLURM_CPUS_PER_TASK}"
 
-mkdir -p "$PADDLE_PDX_CACHE_HOME" "$PIP_CACHE_DIR" "$TMPDIR" "$TASK_ROOT/ocr/paddleocr"
+mkdir -p \
+    "$PADDLE_PDX_CACHE_HOME" \
+    "$UV_CACHE_DIR" \
+    "$TMPDIR" \
+    "$TASK_ROOT/ocr/paddleocr"
 trap 'rm -rf "$TMPDIR"' EXIT
 
 echo "SLURM_JOB_ID=$SLURM_JOB_ID"
@@ -28,12 +33,11 @@ echo "Started=$(date -Is)"
 python3 --version
 
 if [[ ! -x "$VENV/bin/python" ]]; then
-    python3 -m venv "$VENV"
+    "$UV_BIN" venv --clear --python "$(command -v python3)" "$VENV"
 fi
 
-"$VENV/bin/python" -m pip install --upgrade pip
-"$VENV/bin/python" -m pip install paddlepaddle paddleocr
-"$VENV/bin/python" -m pip show paddlepaddle paddleocr
+"$UV_BIN" pip install --python "$VENV/bin/python" --upgrade paddlepaddle paddleocr
+"$VENV/bin/python" -c 'from importlib.metadata import version; print("paddlepaddle", version("paddlepaddle")); print("paddleocr", version("paddleocr"))'
 "$VENV/bin/python" "$TASK_ROOT/paddleocr_extract.py" \
     --input-dir "$TASK_ROOT/input" \
     --output-dir "$TASK_ROOT/ocr/paddleocr"
