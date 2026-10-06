@@ -9,6 +9,8 @@ OUTPUT_DIR="${TASK_DIR}/outputs"
 RAW_OUTPUT_DIR="${TASK_DIR}/.marker-raw-${SLURM_JOB_ID}"
 SCRATCH_DIR="/tmp/${USER:-j-vill36}/marker-${SLURM_JOB_ID}"
 UV_BIN="/mnt/slurm-beegfs/Users/j-vill36/.local/bin/uv"
+MICROMAMBA_BIN="/mnt/slurm-beegfs/Users/j-vill36/.local/bin/micromamba"
+LLAMA_ENV="${SCRATCH_DIR}/llama-env"
 
 export TMPDIR="${SCRATCH_DIR}/tmp"
 export TEMP="$TMPDIR"
@@ -17,6 +19,7 @@ export XDG_CACHE_HOME="${SCRATCH_DIR}/xdg-cache"
 export HF_HOME="${SCRATCH_DIR}/huggingface"
 export TORCH_HOME="${SCRATCH_DIR}/torch"
 export UV_CACHE_DIR="${SCRATCH_DIR}/uv-cache"
+export MAMBA_ROOT_PREFIX="${SCRATCH_DIR}/mamba-root"
 export PYTHONPYCACHEPREFIX="${SCRATCH_DIR}/pycache"
 
 mkdir -p "$TMPDIR" "$XDG_CACHE_HOME" "$HF_HOME" "$TORCH_HOME" "$OUTPUT_DIR"
@@ -37,6 +40,22 @@ fi
 venv="${SCRATCH_DIR}/venv"
 "$UV_BIN" venv "$venv" --python /usr/bin/python3.10
 "$UV_BIN" pip install --python "${venv}/bin/python" marker-pdf
+
+# Surya auto-detects the host GPU, even when this CPU job has no GPU allocation.
+# Use its documented CPU backend and install llama-server in job scratch.
+"$MICROMAMBA_BIN" create --yes --prefix "${SCRATCH_DIR}/llama-env" \
+  --channel conda-forge "llama.cpp=11351=cpu_mkl_hc2f5b01_0"
+eval "$(\"$MICROMAMBA_BIN\" shell hook --shell bash)"
+micromamba activate "$LLAMA_ENV"
+source "${venv}/bin/activate"
+export SURYA_INFERENCE_BACKEND=llamacpp
+export LLAMA_CPP_BINARY="${LLAMA_ENV}/bin/llama-server"
+if [[ ! -x "$LLAMA_CPP_BINARY" ]]; then
+  printf 'llama-server was not installed at %s\n' "$LLAMA_CPP_BINARY" >&2
+  exit 1
+fi
+"$LLAMA_CPP_BINARY" --version
+printf 'SURYA_INFERENCE_BACKEND=%s\n' "$SURYA_INFERENCE_BACKEND"
 
 # Marker uses Markdown output by default. Process one PDF at a time to fit the
 # available memory while keeping inference inside this SLURM job.
