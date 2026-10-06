@@ -5,6 +5,7 @@ milestone: M-1
 state: draft
 depends_on: []
 delivery: pr
+route: {platform: opencode, model: opencode/muse-spark-1.3-contributor-free}
 ---
 
 ## Why
