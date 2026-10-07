@@ -2,12 +2,44 @@
 
 ## Acceptance
 
-- [ ] `ocr/marker/` holds one output file per input PDF (three files total). Evidence: the directory was empty on 2026-10-07; no Marker job was accepted in this resume.
-- [ ] Each output file is non-empty and holds extracted paper text. Evidence: there are no output files to inspect.
-- [x] Marker ran on a cluster compute node. Evidence: earlier job `23536` ran on `HPCOM-05`. Its `sacct` state and compute-node log tail appear below. That run was cancelled and produced no output. This resume's submission was rejected and received no job ID.
-- [x] This task never held more than one queued or running SLURM job at a time. Evidence: the task's previous job history below is sequential. The current submission was rejected, so this resume held no task job.
+- [x] `ocr/marker/` holds one output file per input PDF (three files total). Evidence: local `ls -l ocr/marker` lists three Markdown files with the input PDF base names.
+- [x] Each output file is non-empty and holds extracted paper text. Evidence: `wc -c ocr/marker/*` reports 111,516, 44,951, and 190,619 bytes. Each file starts with the paper title and author text.
+- [x] Marker ran on a cluster compute node. Evidence: job 23623 ran on `HPCOM-01`; its output records `SLURM_JOB_ID=23623`, `SLURMD_NODENAME=HPCOM-01`, and an NVIDIA L4 GPU. `sacct -j 23623 --format=JobID,State,Elapsed,MaxRSS` reports `COMPLETED`, 00:19:52, and 12045512K for the batch step. The log lists all three output sizes and `Completed=2026-10-07T12:05:09+02:00`.
+- [x] This task never held more than one cluster job queued or running at once. Evidence: direct `squeue -u j-vill36` checks showed Marker jobs sequentially. Job 23614 failed before job 23615 was submitted. Job 23615 was canceled and left the queue before job 23623 was submitted. Job 23623 completed before any further Marker submission. The previous session's Marker job history is listed below.
 
-## Previous SLURM job history
+## Final SLURM evidence
+
+Job 23623 used partition `gpu_compute`, two CPUs, 16G, and one L4 GPU.
+
+```text
+$ sacct -j 23623 --format=JobID,State,Elapsed,MaxRSS
+23623         COMPLETED   00:19:52
+23623.batch   COMPLETED   00:19:52  12045512K
+23623.extern  COMPLETED   00:19:52          0
+```
+
+Compute-node and log evidence:
+
+```text
+SLURM_JOB_ID=23623
+SLURMD_NODENAME=HPCOM-01
+Started=2026-10-07T11:45:18+02:00
+NVIDIA L4, 23034 MiB
+Produced Bessembinder_SSRN_2026_RebalancingFrictionalCostsAndReturnsToLeveredSingleStockETFs.md (111516 bytes)
+Produced Bessembinder_SSRN_2026_VolatilityAndReturnsToLeveragedETFs.md (44951 bytes)
+Produced Harvey-Mazzoleni-Melone_SSRN_2026_TheUnintendedConsequencesOfRebalancing.md (190619 bytes)
+Completed=2026-10-07T12:05:09+02:00
+```
+
+## Current resume job history
+
+| Job ID | State | Elapsed | Result |
+| --- | --- | --- | --- |
+| 23614 | FAILED | 00:00:01 | Used the SLURM spool path as the repository root. |
+| 23615 | CANCELLED+ | 00:18:01 | The 10G run hit an out-of-memory kill during the third paper. |
+| 23623 | COMPLETED | 00:19:52 | Produced all three Markdown files with a 16G request. |
+
+## Previous session job history
 
 Times use the cluster's local time on 2026-10-06.
 
@@ -25,50 +57,16 @@ Times use the cluster's local time on 2026-10-06.
 | 23535 | 14:58:06 | 14:58:06 | FAILED |
 | 23536 | 14:58:59 | 15:15:35 | CANCELLED |
 
-## SLURM and log evidence
+## Attempts and deviations
 
-Earlier job `23536`:
-
-```text
-$ sacct -j 23536 --format=JobID,State,Elapsed,MaxRSS
-23536       CANCELLED by 1009  00:16:35  6604072K
-23536.batch CANCELLED          00:16:36  6604072K
-```
-
-Compute-node log tail from `/mnt/slurm-beegfs/Users/j-vill36/.cache/datalab/surya/llamacpp_server.log`:
-
-```text
-7.58.206.324 W find_slot: non-consecutive token position 79 after 7 for sequence 7 with 7 new tokens
-8.06.512.254 I slot print_timing: id  2 | task 6 | prompt processing, n_tokens =      7, progress = 0.00, t = 480.59 s / 0.01 tokens per second
-10.04.883.980 W srv          stop: cancel task, id_task = 3
-10.04.919.899 W srv          stop: cancel task, id_task = 6
-10.04.925.223 W srv          stop: cancel task, id_task = 4
-10.04.942.195 W srv          stop: cancel task, id_task = 2
-10.05.033.246 W srv          stop: cancel task, id_task = 0
-10.05.074.338 W srv          stop: cancel task, id_task = 5
-```
-
-## Current capacity blocker (2026-10-07)
-
-The runner now requests two CPUs, 10G, and one L4 GPU on `gpu_compute`. The three PDFs and runner were staged under this worktree's isolated remote path, `/mnt/slurm-beegfs/Users/j-vill36/scripts_replicate__goal-ocr-cluster-task-001/`.
-
-The default `cluster-kit resources --json` probe showed an empty queue because its default SLURM username did not match the job owner. Querying with `cluster-kit resources --user j-vill36 --json` showed four running jobs: `23575`, `23576`, `23577`, and `23589`. `sacctmgr` reported `MaxJobs=4` and `MaxSubmit=4`. The free GPU node slot fit the requested job, but the account limit was full.
-
-The attempted `sbatch --parsable scripts/run_marker_ocr.sh` returned:
-
-```text
-sbatch: error: AssocMaxSubmitJobLimit
-sbatch: error: Batch job submission failed: Job violates accounting/QOS policy (job submit limit, user's size and/or time limits)
-```
-
-SLURM returned no job ID. No retry was made. A related `cluster-kit resources` username mismatch was recorded with `agent-note` outside this task.
+- Job 23614 failed after one second. SLURM ran the submitted script from its spool path, so the script chose `/var/spool/slurmd` as the repository root. The job log reported a permission error creating `/var/spool/slurmd/ocr`. The runner now uses `SLURM_SUBMIT_DIR` as its root.
+- Job 23615 used 10G and reached an out-of-memory kill while processing the third paper. Its log showed repeated inference connection errors. The cgroup reported `oom_kill=1`. I canceled it and raised the request to 16G. Job 23623 then completed with a 12045512K peak.
+- The standard `cluster-kit sync code` command could not run because this repo has no `src/` or `runnables/` directories. The staged PDFs matched the local files by SHA-256. I copied the updated runner with `scp` and verified its checksum before submission.
 
 ## Summary
 
-This resume reduced the runner's memory request from 16G to 10G and staged the inputs and runner on the cluster. The cluster node had a fitting 2 CPU, 10G, 1 GPU slot, but four other jobs already used the account's four-job limit. SLURM rejected the submission, so this resume produced no OCR outputs.
+Marker processed all three papers on the SLURM GPU node `HPCOM-01`. The Markdown files are in `ocr/marker/`. The runner uses the SLURM submission directory and requests 16G after the 10G run hit the memory limit.
 
-`bash -n scripts/run_marker_ocr.sh` and `git diff --check` passed. The output directory check found no files. No OCR verification could be completed in this resume.
+Verified revision: to be recorded after rebase.
 
-Verified revision before this outcome update: `b2081d8`.
-
-Follow-up: after an account job ends, query resources with `--user j-vill36`, then run one `gpu_compute` job with two CPUs, 10G, and one GPU. Fetch the three Markdown files and replace this blocker with the resulting `sacct` and log evidence.
+Follow-ups: none.

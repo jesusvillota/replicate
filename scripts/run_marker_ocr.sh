@@ -3,7 +3,7 @@
 #SBATCH --qos=gpu_compute
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=2
-#SBATCH --mem=10G
+#SBATCH --mem=16G
 #SBATCH --time=72:00:00
 #SBATCH --gres=gpu:nvidia_l4:1
 #SBATCH --job-name=marker-t001
@@ -12,7 +12,7 @@
 set -euo pipefail
 
 SLURM_JOB_ID="${SLURM_JOB_ID:?Run this script through SLURM}"
-REPO_ROOT="${OCR_MARKER_ROOT:-$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)}"
+REPO_ROOT="${OCR_MARKER_ROOT:-${SLURM_SUBMIT_DIR:-$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)}}"
 TASK_DIR="${REPO_ROOT}/ocr/marker"
 INPUT_DIR="$REPO_ROOT"
 OUTPUT_DIR="$TASK_DIR"
