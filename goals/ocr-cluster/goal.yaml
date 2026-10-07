@@ -1,15 +1,16 @@
 format: goal/v2
 id: ocr-cluster
 title: OCR three papers on the SLURM cluster
-objective: Produce machine-readable text for all three PDFs with Marker, Chandra, PaddleOCR, and paperextract, running all inference on the SLURM cluster and never on the MacBook.
+objective: Produce machine-readable text for all three PDFs with Marker, Chandra, PaddleOCR, paperextract, and SOCR (strict-local, no paid API), running all inference on the SLURM cluster and never on the MacBook.
 base: main
 success:
   SC-1: Marker output covers all three PDFs, verified by `ls ocr/marker/`.
   SC-2: Chandra output covers all three PDFs, verified by `ls ocr/chandra/`.
   SC-3: PaddleOCR output covers all three PDFs, verified by `ls ocr/paddleocr/`.
   SC-4: paperextract output covers all three PDFs, verified by `ls ocr/paperextract/`.
+  SC-5: SOCR output covers all three PDFs, verified by `ls ocr/socr/`.
 milestones:
-  - {id: M-1, title: Cluster OCR outputs for all three papers, success: [SC-1, SC-2, SC-3, SC-4], exit: Four task PRs merged into main}
+  - {id: M-1, title: Cluster OCR outputs for all three papers, success: [SC-1, SC-2, SC-3, SC-4, SC-5], exit: Five task PRs merged into main}
 policy:
   decide: human         # human | experts (a committee answers worker decision requests)
   orchestrate: you      # you | agent: an orchestrator agent approves, dispatches and merges 

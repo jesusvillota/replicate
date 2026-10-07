@@ -3,11 +3,11 @@
 Goal `ocr-cluster` · format `goal/v2`. Live status is derived from GitHub and git and is
 never written here: run `goal status ocr-cluster` or `goal tui`.
 
-Produce machine-readable text for all three PDFs with Marker, Chandra, PaddleOCR, and paperextract, running all inference on the SLURM cluster and never on the MacBook.
+Produce machine-readable text for all three PDFs with Marker, Chandra, PaddleOCR, paperextract, and SOCR (strict-local, no paid API), running all inference on the SLURM cluster and never on the MacBook.
 
 ## Context, scope and non-goals
 
-The repo holds three PDF papers on leveraged ETF rebalancing and volatility. Each OCR method writes plain-text or Markdown output under `ocr/<method>/`, one file per paper, same base name. All OCR inference runs on the SLURM cluster (account `j-vill36`), never on the MacBook. The MacBook only submits jobs, monitors them, and fetches results. Job budget: at most one SLURM job per task at a time (four tasks share the account cap of 4). No text cleanup, no comparison report, and no accuracy scoring are in scope. Assumption: each tool runs on a cluster compute node from its public repo docs with default settings. This goal replaces the earlier `ocr-papers` goal, whose local runs overheated the MacBook.
+The repo holds three PDF papers on leveraged ETF rebalancing and volatility. Each OCR method writes plain-text or Markdown output under `ocr/<method>/`, one file per paper, same base name. All OCR inference runs on the SLURM cluster (account `j-vill36`), never on the MacBook. The MacBook only submits jobs, monitors them, and fetches results. Job budget: at most one SLURM job per task at a time (five tasks share the account cap of 4). No text cleanup, no comparison report, and no accuracy scoring are in scope. Assumption: each tool runs on a cluster compute node from its public repo docs with default settings. This goal replaces the earlier `ocr-papers` goal, whose local runs overheated the MacBook.
 
 ## Risks and open questions
 
