@@ -8,10 +8,12 @@ RUN_DIR="$BASE_DIR/.chandra-run-${SLURM_JOB_ID:-manual}"
 VENV_DIR="$BASE_DIR/.venv-chandra"
 JOB_TMP="/tmp/chandra-${SLURM_JOB_ID:-manual}"
 SERVER_LOG="$BASE_DIR/_logs_/chandra-vllm-${SLURM_JOB_ID:-manual}.out"
+UV_BIN="/mnt/slurm-beegfs/Users/j-vill36/.local/bin/uv"
 
 mkdir -p "$BASE_DIR/_logs_" "$JOB_TMP" "$BASE_DIR/.cache/huggingface"
 export TMPDIR="$JOB_TMP"
 export PIP_CACHE_DIR="$JOB_TMP/pip-cache"
+export UV_CACHE_DIR="$JOB_TMP/uv-cache"
 export HF_HOME="$BASE_DIR/.cache/huggingface"
 export VLLM_API_BASE="http://localhost:8000/v1"
 export VLLM_MODEL_NAME="chandra"
@@ -44,8 +46,17 @@ if (( ${#pdfs[@]} != 3 )); then
     exit 2
 fi
 
-python3 -m venv "$VENV_DIR"
-"$VENV_DIR/bin/python" -m pip install "chandra-ocr==0.2.0" "vllm==0.17.0"
+if [[ ! -x "$UV_BIN" ]]; then
+    echo "uv is not executable at $UV_BIN" >&2
+    exit 8
+fi
+if [[ ! -x "$VENV_DIR/bin/python" ]] || \
+    ! "$VENV_DIR/bin/python" -c 'import sys; sys.exit(sys.version_info[:2] != (3, 10))'; then
+    "$UV_BIN" venv --clear --python /usr/bin/python3 "$VENV_DIR"
+fi
+"$VENV_DIR/bin/python" --version
+"$UV_BIN" pip install --python "$VENV_DIR/bin/python" \
+    "chandra-ocr==0.2.0" "vllm==0.17.0"
 
 rm -rf "$RUN_DIR" "$OUTPUT_DIR"
 mkdir -p "$RUN_DIR" "$OUTPUT_DIR"
@@ -66,7 +77,7 @@ SERVER_PID=$!
 
 ready=0
 for _ in $(seq 1 360); do
-    if curl --fail --silent "$VLLM_API_BASE/models" >/dev/null; then
+    if "$VENV_DIR/bin/python" -c 'import os; from urllib.request import urlopen; urlopen(os.environ["VLLM_API_BASE"] + "/models", timeout=5)' >/dev/null 2>&1; then
         ready=1
         break
     fi
