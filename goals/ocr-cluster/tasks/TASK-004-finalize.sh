@@ -1,0 +1,127 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+TASK_DIR="/mnt/slurm-beegfs/Users/j-vill36/scripts_replicate/task-004"
+PAPEREXTRACT_BIN="$TASK_DIR/paperextract/.venv/bin/paperextract"
+LIBRARY="$TASK_DIR/library"
+OUTPUT_DIR="$TASK_DIR/outputs"
+
+mkdir -p "$OUTPUT_DIR" "$TASK_DIR/logs"
+exec > >(tee "$TASK_DIR/logs/finalize.log") 2>&1
+
+python3 - "$TASK_DIR" "$PAPEREXTRACT_BIN" <<'PY'
+from __future__ import annotations
+
+import hashlib
+import shutil
+import subprocess
+import sys
+from pathlib import Path
+
+
+task_dir = Path(sys.argv[1])
+paperextract_bin = Path(sys.argv[2])
+input_dir = task_dir / "inputs"
+staged_dir = task_dir / "staged"
+library = task_dir / "library"
+output_dir = task_dir / "outputs"
+inputs = sorted(input_dir.glob("*.pdf"))
+if len(inputs) != 3:
+    raise SystemExit(f"Expected 3 input PDFs, found {len(inputs)}")
+
+
+def digest(path: Path) -> str:
+    value = hashlib.sha256()
+    with path.open("rb") as source:
+        for block in iter(lambda: source.read(1024 * 1024), b""):
+            value.update(block)
+    return value.hexdigest()
+
+
+completed_runs = sorted(
+    run for run in staged_dir.iterdir() if (run / "worker/result.json").is_file()
+)
+if not completed_runs:
+    raise SystemExit(f"No completed Paperextract runs found in {staged_dir}")
+
+completed_by_digest: dict[str, list[Path]] = {}
+for run in completed_runs:
+    source = run / "source.pdf"
+    if not source.is_file():
+        raise SystemExit(f"Completed run has no source PDF: {run}")
+    completed_by_digest.setdefault(digest(source), []).append(run)
+
+
+def published_papers() -> dict[str, set[Path]]:
+    published: dict[str, set[Path]] = {}
+    for source in library.rglob("*.pdf"):
+        paper_dir = next(
+            (parent for parent in source.parents if (parent / "paper.md").is_file()),
+            None,
+        )
+        if paper_dir is not None:
+            published.setdefault(digest(source), set()).add(paper_dir)
+    return published
+
+
+published = published_papers()
+publish_runs: list[Path] = []
+for source in inputs:
+    key = digest(source)
+    runs = completed_by_digest.get(key, [])
+    if len(runs) != 1:
+        raise SystemExit(
+            f"Expected one completed run for {source.name}; found {len(runs)}"
+        )
+    matches = published.get(key, set())
+    if len(matches) > 1:
+        raise SystemExit(
+            f"Expected at most one published paper for {source.name}; found {len(matches)}"
+        )
+    if not matches:
+        publish_runs.append(runs[0])
+
+if publish_runs:
+    subprocess.run(
+        [
+            str(paperextract_bin),
+            "publish",
+            *(str(run) for run in publish_runs),
+            "--library",
+            str(library),
+        ],
+        check=True,
+    )
+    published = published_papers()
+
+expected_names: set[str] = set()
+for source in inputs:
+    matches = published.get(digest(source), set())
+    if len(matches) != 1:
+        raise SystemExit(
+            f"Expected one published paper for {source.name}; found {len(matches)}"
+        )
+    paper_dir = next(iter(matches))
+    markdown = paper_dir / "paper.md"
+    body = markdown.read_text(encoding="utf-8").strip()
+    if len(body.split()) < 100:
+        raise SystemExit(f"Extracted text is too short: {markdown}")
+    destination = output_dir / f"{source.stem}.md"
+    shutil.copyfile(markdown, destination)
+    if destination.stat().st_size == 0:
+        raise SystemExit(f"Empty output: {destination}")
+    expected_names.add(destination.name)
+    print(
+        f"{destination.name}\t{destination.stat().st_size} bytes\t"
+        f"{len(body.split())} words"
+    )
+
+actual_names = {path.name for path in output_dir.iterdir() if path.is_file()}
+if actual_names != expected_names:
+    raise SystemExit(
+        f"Output names differ: expected {sorted(expected_names)}, "
+        f"found {sorted(actual_names)}"
+    )
+print(f"Verified {len(actual_names)} non-empty Markdown outputs")
+PY
