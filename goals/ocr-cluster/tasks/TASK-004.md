@@ -29,3 +29,7 @@ ls ocr/paperextract/
 wc -c ocr/paperextract/*
 sacct -j <job-id> --format=JobID,State,Elapsed,MaxRSS
 ```
+
+## Attempts
+
+- 2026-10-06: PR #7 closed without merging: Relaunch: SLURM queue is now empty and CPU partitions are free. Largest free single-node slots: HPCOM-02 (8 CPU/16G), HPCOM-05 (4 CPU/24G), HPCOM-01 (4 CPU/12G). Submit paperextract to cpu_shared with a small request (e.g. 4-8 CPUs, 12-16G) so it starts now; keep one job at a time.
