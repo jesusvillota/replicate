@@ -67,6 +67,6 @@ Times use the cluster's local time on 2026-10-06.
 
 Marker processed all three papers on the SLURM GPU node `HPCOM-01`. The Markdown files are in `ocr/marker/`. The runner uses the SLURM submission directory and requests 16G after the 10G run hit the memory limit.
 
-Verified revision: to be recorded after rebase.
+Verified revision: `0636fe5dcf579a1596d07c517afe7b6ebfac1022` (runner and OCR outputs).
 
 Follow-ups: none.
