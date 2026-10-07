@@ -13,8 +13,8 @@
   $ wc -c ocr/socr/*/*.md
     82430 ocr/socr/Bessembinder_SSRN_2026_RebalancingFrictionalCostsAndReturnsToLeveredSingleStockETFs/Bessembinder_SSRN_2026_RebalancingFrictionalCostsAndReturnsToLeveredSingleStockETFs.md
     43640 ocr/socr/Bessembinder_SSRN_2026_VolatilityAndReturnsToLeveragedETFs/Bessembinder_SSRN_2026_VolatilityAndReturnsToLeveragedETFs.md
-   151923 ocr/socr/Harvey-Mazzoleni-Melone_SSRN_2026_TheUnintendedConsequencesOfRebalancing/Harvey-Mazzoleni-Melone_SSRN_2026_TheUnintendedConsequencesOfRebalancing.md
-   277993 total
+   151922 ocr/socr/Harvey-Mazzoleni-Melone_SSRN_2026_TheUnintendedConsequencesOfRebalancing/Harvey-Mazzoleni-Melone_SSRN_2026_TheUnintendedConsequencesOfRebalancing.md
+   277992 total
   ```
 
   The files contain 13,382, 6,659, and 22,682 words. Their `figures/` folders contain 42 images. All 37 Markdown image links resolve. The local vision judge accepted repairs for pages 19, 36, 68, 70, 75, 76, and 34. It rejected 13 pages, which remain fail-closed: first paper page 31; third paper pages 32, 40, 63–67, 69, and 71–74. The task spec permits partial output when all three final Markdown files exist.
