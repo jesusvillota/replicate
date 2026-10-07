@@ -10,19 +10,20 @@ OUTPUT_DIR="$TASK_DIR/outputs"
 mkdir -p "$OUTPUT_DIR" "$TASK_DIR/logs"
 exec > >(tee "$TASK_DIR/logs/finalize.log") 2>&1
 
-"$PAPEREXTRACT_BIN" publish "$TASK_DIR/staged" --library "$LIBRARY"
-
-python3 - "$TASK_DIR" <<'PY'
+python3 - "$TASK_DIR" "$PAPEREXTRACT_BIN" <<'PY'
 from __future__ import annotations
 
 import hashlib
 import shutil
+import subprocess
 import sys
 from pathlib import Path
 
 
 task_dir = Path(sys.argv[1])
+paperextract_bin = Path(sys.argv[2])
 input_dir = task_dir / "inputs"
+staged_dir = task_dir / "staged"
 library = task_dir / "library"
 output_dir = task_dir / "outputs"
 inputs = sorted(input_dir.glob("*.pdf"))
@@ -38,14 +39,61 @@ def digest(path: Path) -> str:
     return value.hexdigest()
 
 
-published: dict[str, set[Path]] = {}
-for source in library.rglob("*.pdf"):
-    paper_dir = next(
-        (parent for parent in source.parents if (parent / "paper.md").is_file()),
-        None,
+completed_runs = sorted(
+    run for run in staged_dir.iterdir() if (run / "worker/result.json").is_file()
+)
+if not completed_runs:
+    raise SystemExit(f"No completed Paperextract runs found in {staged_dir}")
+
+completed_by_digest: dict[str, list[Path]] = {}
+for run in completed_runs:
+    source = run / "source.pdf"
+    if not source.is_file():
+        raise SystemExit(f"Completed run has no source PDF: {run}")
+    completed_by_digest.setdefault(digest(source), []).append(run)
+
+
+def published_papers() -> dict[str, set[Path]]:
+    published: dict[str, set[Path]] = {}
+    for source in library.rglob("*.pdf"):
+        paper_dir = next(
+            (parent for parent in source.parents if (parent / "paper.md").is_file()),
+            None,
+        )
+        if paper_dir is not None:
+            published.setdefault(digest(source), set()).add(paper_dir)
+    return published
+
+
+published = published_papers()
+publish_runs: list[Path] = []
+for source in inputs:
+    key = digest(source)
+    runs = completed_by_digest.get(key, [])
+    if len(runs) != 1:
+        raise SystemExit(
+            f"Expected one completed run for {source.name}; found {len(runs)}"
+        )
+    matches = published.get(key, set())
+    if len(matches) > 1:
+        raise SystemExit(
+            f"Expected at most one published paper for {source.name}; found {len(matches)}"
+        )
+    if not matches:
+        publish_runs.append(runs[0])
+
+if publish_runs:
+    subprocess.run(
+        [
+            str(paperextract_bin),
+            "publish",
+            *(str(run) for run in publish_runs),
+            "--library",
+            str(library),
+        ],
+        check=True,
     )
-    if paper_dir is not None:
-        published.setdefault(digest(source), set()).add(paper_dir)
+    published = published_papers()
 
 expected_names: set[str] = set()
 for source in inputs:
@@ -69,7 +117,7 @@ for source in inputs:
         f"{len(body.split())} words"
     )
 
-actual_names = {path.name for path in output_dir.glob("*.md")}
+actual_names = {path.name for path in output_dir.iterdir() if path.is_file()}
 if actual_names != expected_names:
     raise SystemExit(
         f"Output names differ: expected {sorted(expected_names)}, "
