@@ -24,6 +24,7 @@ flowchart TD
     TASK_002["TASK-002 OCR papers with Chandra on cluster"]
     TASK_003["TASK-003 OCR papers with PaddleOCR on cluster"]
     TASK_004["TASK-004 OCR papers with paperextract on cluster"]
+    TASK_005["TASK-005 OCR papers with SOCR strict-local on cluster"]
   end
   DEC_001 --> TASK_001
   classDef draft stroke-dasharray: 4 3
