@@ -3,24 +3,43 @@
 ## Acceptance
 
 - [ ] `ocr/chandra/` holds one output file per input PDF (three files total).
-  Evidence: `ocr/chandra/` is absent in this worktree. No compute job ran.
+  Evidence: The isolated worktree output folder and the shared `ocr/chandra/`
+  folder contain no files.
 - [ ] Each output file is non-empty and holds extracted paper text.
-  Evidence: No output files were created.
-- [ ] The OCR ran on a cluster compute node, shown by the SLURM job ID, its `sacct` state, and a log tail.
-  Evidence: Job `23524` stayed `PENDING` with reason `Resources`. SLURM estimated a start at `2026-10-06T18:59:51` on `HPCOM-04`. I canceled it before it started. `sacct` reports `CANCELLED+`, elapsed `00:00:00`, with no `MaxRSS`. No compute log exists.
+  Evidence: No OCR output files were created.
+- [ ] The OCR ran on a cluster compute node, shown by the SLURM job ID, its
+  `sacct` state, and a log tail.
+  Evidence: SLURM job `23607` requested `gpu:nvidia_l4:1`, 22 CPUs, and 84G on
+  `gpu_compute`. The first `squeue` check reported `PENDING` with reason
+  `(None)`. I canceled it immediately. `sacct` reports `CANCELLED+`, elapsed
+  `00:00:00`, no `MaxRSS`, and no assigned node. The SLURM output log was not
+  created, so there is no compute log tail. The job did not run.
 - [x] This task never held more than one cluster job queued or running at once.
-  Evidence: I submitted jobs `23510`, `23512`, and `23524` one at a time. I confirmed each earlier job was canceled before submitting the next. The final `squeue` query showed no queued task jobs. `sacct` reports all three as `CANCELLED+` with elapsed `00:00:00`.
+  Evidence: Jobs `23510`, `23512`, `23524`, and `23607` all show
+  `CANCELLED+` with elapsed `00:00:00` in `sacct`. The earlier three were
+  canceled before the next was submitted. On resume, the explicit node-pin
+  submission was rejected before creating a job; job `23607` was the only
+  accepted submission and was canceled when it pended. No task job remains in
+  `squeue`.
 
 ## Summary
 
-I added `runnables/chandra_ocr.sh` and synced it with the three source PDFs to the isolated worktree path `/mnt/slurm-beegfs/Users/j-vill36/scripts_replicate__goal-ocr-cluster-task-002/`.
+I confirmed the runner and all three PDFs were staged in the isolated cluster
+worktree. Their SHA-256 hashes matched the local files. The live resource probe
+showed HPCOM-02 with 24 free CPUs, 132G free memory, and one free L4 GPU.
+`gpu_compute` allows up to 32 CPUs and 88G.
 
-Deviation: Chandra's Docker helper needs Docker. The cluster login node has no Docker. The script is set to prepare a vLLM server directly on a compute node. Chandra's CLI keeps its default `vllm` mode and OCR options.
+The first submission requested HPCOM-02 directly. SLURM rejected node selection
+for this partition before creating a job. I then submitted one job without a
+node pin, requesting one L4 GPU, 22 CPUs, 84G, and the `gpu_compute` QoS. SLURM
+reported it as `PENDING` during the initial check, so I canceled it as
+instructed. `sacct` shows zero runtime and no assigned node. No OCR ran, and no
+log or output files exist.
 
-The cluster had no L4 slot with enough host memory for this job. A 20 GB per-GPU request stayed pending. SLURM estimated its start at `2026-10-06T18:59:51`. I canceled the job before it started. Chandra did not run, so this task has no OCR outputs or compute log tail.
+Goal-Blocked: SLURM left job 23607 PENDING (reason None); cluster execution was unavailable before the required cancellation.
 
-Goal-Blocked: Cluster GPU capacity is unavailable; SLURM job 23524 remained pending for Resources with estimated start 2026-10-06T18:59:51.
+Verified runner revision: `36cd02b`. Its SHA-256 matched the staged cluster
+copy. No compute run or output verification was possible.
 
-Verified runner revision: `36cd02b`. `bash -n runnables/chandra_ocr.sh` passed. `gh pr checks 6` reported no checks.
-
-Proposed follow-up: resume TASK-002 when an L4 node has enough host memory. Submit one job and complete the OCR run and output checks.
+Proposed follow-up: Resume TASK-002 when SLURM can start one eligible L4 job on
+`gpu_compute`; then fetch and verify all three OCR outputs.
