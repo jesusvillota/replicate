@@ -703,110 +703,35 @@ distinct momentum signals.
 ## Page 19
 
 Table 1: Cross-Asset Predictive Regressions
-This table reports estimates for the multivariate predictive regression (4). Ret is the difference between S&P
-500 and 10-y Treasury note futures returns. Threshold and Calendar signals are constructed as described
-in Section 1.2. Momentum is computed by averaging the sign of 11 to 20, and 21, 42, 63, 126, and 252
-trailing equity returns in excess of the 10-year Treasury note.
-VIX is the CBOE equity option-implied
-volatility index (divided by 100); MOVE is the U.S. bond market option-implied volatility index (divided
-by 100); EPU is the news-based measure of economic policy uncertainty from Baker, Bloom, and Davis
-(2016); ADS is the Aruoba, Diebold, and Scotti (2009) real-time business conditions index; Sentiment is the
-daily news-based sentiment index constructed in Shapiro, Sudhof, and Wilson (2022). Values in parentheses
-are heteroskedasticity-consistent standard errors. Constant estimates are not tabulated. Daily observations.
-The sample period is 1997-09-10 to 2023-03-17.
 
-[page 19 failed: unverifiable table — see image]
+This table reports estimates for the multivariate predictive regression (4). $Ret$ is the difference between S&P 500 and 10-y Treasury note futures returns. Threshold and Calendar signals are constructed as described in Section 1.2. Momentum is computed by averaging the sign of 11 to 20, and 21, 42, 63, 126, and 252 trailing equity returns in excess of the 10-year Treasury note. VIX is the CBOE equity option-implied volatility index (divided by 100); MOVE is the U.S. bond market option-implied volatility index (divided by 100); EPU is the news-based measure of economic policy uncertainty from Baker, Bloom, and Davis (2016); ADS is the Aruoba, Diebold, and Scotti (2009) real-time business conditions index; Sentiment is the daily news-based sentiment index constructed in Shapiro, Sudhof, and Wilson (2022). Values in parentheses are heteroskedasticity-consistent standard errors. Constant estimates are not tabulated. Daily observations. The sample period is 1997-09-10 to 2023-03-17.
 
-![Failed table page 19](figures/failed_table_p19.png)
-
-Calendar
-0.0553
-0.0689
-0.0572
-0.0542
-0.0666
-(0.0709)
-(0.0686)
-(0.0696)
-(0.0713)
-(0.0686)
-week4
-0.0002
-0.0002
-0.0002
-0.0002
-0.0002
-(0.0004)
-(0.0004)
-(0.0004)
-(0.0004)
-(0.0004)
-Calendar *week4
-−0.3029∗∗∗
-−0.3036∗∗∗
-−0.3026∗∗∗
-−0.3032∗∗∗
-−0.3033∗∗∗
-(0.0808)
-(0.0808)
-(0.0805)
-(0.0806)
-(0.0808)
-Momentum
-0.0023∗∗∗
-0.0024∗∗∗
-0.0024∗∗∗
-0.0025∗∗∗
-0.0024∗∗∗
-(0.0006)
-(0.0007)
-(0.0006)
-(0.0006)
-(0.0007)
-Ret
-−0.0203
-−0.0167
-−0.0198
-−0.0192
-−0.0173
-(0.0289)
-(0.0289)
-(0.0281)
-(0.0287)
-(0.0286)
-VIX
-0.0090∗
-0.0076
-(0.0053)
-(0.0062)
-MOVE
-−0.0020∗
-−0.0019∗
-(0.0011)
-(0.0011)
-EPU
-0.0005∗
-0.0002
-(0.0003)
-(0.0004)
-ADS
-0.0000
-0.0001
-(0.0002)
-(0.0002)
-Sentiment
-−0.0016
-−0.0003
-(0.0012)
-(0.0013)
-
-|  |  |  |  |  |  |
-| --- | --- | --- | --- | --- | --- |
-| Observations | 6,226 | 6,226 | 6,226 | 6,226 | 6,226 |
-| R2 |  |  |  |  |  |
-| Adjusted | 0.0239 | 0.0252 | 0.0243 | 0.0242 | 0.0248 |
-
-17
+| | (1) | (2) | (3) | (4) | (5) |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| Threshold | $-0.4144^{***}$ | $-0.4208^{***}$ | $-0.4254^{***}$ | $-0.4254^{***}$ | $-0.4226^{***}$ |
+| | $(0.1148)$ | $(0.1164)$ | $(0.1098)$ | $(0.1133)$ | $(0.1139)$ |
+| Calendar | $0.0553$ | $0.0689$ | $0.0572$ | $0.0542$ | $0.0666$ |
+| | $(0.0709)$ | $(0.0686)$ | $(0.0696)$ | $(0.0713)$ | $(0.0686)$ |
+| week4 | $0.0002$ | $0.0002$ | $0.0002$ | $0.0002$ | $0.0002$ |
+| | $(0.0004)$ | $(0.0004)$ | $(0.0004)$ | $(0.0004)$ | $(0.0004)$ |
+| Calendar *week4 | $-0.3029^{***}$ | $-0.3036^{***}$ | $-0.3026^{***}$ | $-0.3032^{***}$ | $-0.3033^{***}$ |
+| | $(0.0808)$ | $(0.0808)$ | $(0.0805)$ | $(0.0806)$ | $(0.0808)$ |
+| Momentum | $0.0023^{***}$ | $0.0024^{***}$ | $0.0024^{***}$ | $0.0025^{***}$ | $0.0024^{***}$ |
+| | $(0.0006)$ | $(0.0007)$ | $(0.0006)$ | $(0.0006)$ | $(0.0007)$ |
+| Ret | $-0.0203$ | $-0.0167$ | $-0.0198$ | $-0.0192$ | $-0.0173$ |
+| | $(0.0289)$ | $(0.0289)$ | $(0.0281)$ | $(0.0287)$ | $(0.0286)$ |
+| VIX |  | $0.0090^*$ |  |  | $0.0076$ |
+| |  | $(0.0053)$ |  |  | $(0.0062)$ |
+| MOVE |  | $-0.0020^*$ |  |  | $-0.0019^*$ |
+| |  | $(0.0011)$ |  |  | $(0.0011)$ |
+| EPU |  |  | $0.0005^{*}$ |  | $0.0002$ |
+| |  |  | $(0.0003)$ |  | $(0.0004)$ |
+| ADS |  |  | $0.0000$ |  | $0.0001$ |
+| |  |  | $(0.0002)$ |  | $(0.0002)$ |
+| Sentiment |  |  |  | $-0.0016$ | $-0.0003$ |
+| |  |  |  | $(0.0012)$ | $(0.0013)$ |
+| Observations | $6,226$ | $6,226$ | $6,226$ | $6,226$ | $6,226$ |
+| Adjusted R² | $0.0239$ | $0.0252$ | $0.0243$ | $0.0242$ | $0.0248$ |
 
 ## Page 20
 
@@ -1304,17 +1229,25 @@ stock and bond returns instead of the closing price leads to largely the same re
 
 Table 3: Dissecting Cross-Asset Return Predictability
 
-[page 34 failed: unverifiable table — see image]
+This table reports estimates for the multivariate predictive regression (4). $Ret$ is the S\&P 500 futures excess returns (first two columns) or 10-y Treasury note futures excess returns (last two columns). Values in parentheses are heteroskedasticity-consistent standard errors. Constant estimates are not tabulated. Appendix Table D.13 reports the coefficient estimates for all regressors. Daily observations. The sample period is 1997-09-10 to 2023-03-17.
 
-![Failed table page 34](figures/failed_table_p34.png)
-
-This table reports estimates for the multivariate predictive regression (4).
-Ret is the S&P 500 futures
-excess returns (first two columns) or 10-y Treasury note futures excess returns (last two columns). Values
-in parentheses are heteroskedasticity-consistent standard errors.
-Appendix Table D.13 reports the coefficient estimates for all regressors. Daily observations. The sample
-period is 1997-09-10 to 2023-03-17.
-32
+| | Ret$_{t+1}^{\text{S\&P 500}}$ (1) | Ret$_{t+1}^{\text{S\&P 500}}$ (2) | Ret$_{t+1}^{10-\text{y}}$ (3) | Ret$_{t+1}^{10-\text{y}}$ (4) |
+| :--- | :--- | :--- | :--- | :--- |
+| Threshold | $-0.3302^{***}$ | $-0.3261^{***}$ | $0.0842^{***}$ | $0.0841^{***}$ |
+| | $(0.1062)$ | $(0.1049)$ | $(0.0269)$ | $(0.0270)$ |
+| Calendar | $0.0424$ | $0.0441$ | $-0.0129$ | $-0.0148$ |
+| | $(0.0665)$ | $(0.0645)$ | $(0.0116)$ | $(0.0113)$ |
+| week4 | $0.0005$ | $0.0005$ | $0.0004^{***}$ | $0.0004^{***}$ |
+| | $(0.0004)$ | $(0.0004)$ | $(0.0001)$ | $(0.0001)$ |
+| Calendar * week4 | $-0.2667^{***}$ | $-0.2671^{***}$ | $0.0362^{***}$ | $0.0372^{***}$ |
+| | $(0.0758)$ | $(0.0762)$ | $(0.0128)$ | $(0.0127)$ |
+| Momentum | $0.0018^{***}$ | $0.0018^{***}$ | $-0.0005^{***}$ | $-0.0005^{***}$ |
+| | $(0.0005)$ | $(0.0006)$ | $(0.0001)$ | $(0.0001)$ |
+| Ret | $-0.0223$ | $0.0030$ | $-0.0020$ | $-0.0027$ |
+| | $(0.0264)$ | $(0.0430)$ | $(0.0065)$ | $(0.0093)$ |
+| Controls | NO | YES | NO | YES |
+| Observations | 6,223 | 6,223 | 6,223 | 6,223 |
+| Adjusted R$^2$ | 0.0225 | 0.0242 | 0.0078 | 0.0072 |
 
 ## Page 35
 
@@ -1357,9 +1290,27 @@ the early 2000s (see, e.g., OECD reports Pension Markets in Focus).
 
 ## Page 36
 
-[page 36 failed: unverifiable table — see image]
+Table 4: Long-Term Evidence
 
-![Failed table page 36](figures/failed_table_p36.png)
+This table reports estimates for the multivariate predictive regression (4) by using a longer dataset. $Ret$ is the difference between daily U.S. equity total returns from Kenneth French's database and daily 10-year Treasury note total returns calculated using U.S. Treasury yield curve data from Gürkaynak, Sack, and Wright (2007). Threshold and Calendar signals are constructed as described in Section 1.2. Momentum is computed by averaging the sign of 11 to 20, and 21, 42, 63, 126, and 252 trailing equity returns in excess of the 10-year Treasury note. The data spans from 1961-06-16 to 2023-03-17 (the entire sample is used in the first column of the table). For consistency with our previous estimations, the estimations in the second column end on 1997-09-09, while those in the third column begin on 1997-09-10. Values in parentheses are heteroskedasticity-consistent standard errors. Constant estimates are not tabulated. Daily observations.
+
+| | (1) | (2) | (3) |
+| :--- | :--- | :--- | :--- |
+| Sample | 1961-2023 | 1961-1997 | 1997-2023 |
+| Threshold | $-0.1809^{***}$ | $-0.0157$ | $-0.3685^{***}$ |
+| | $(0.0620)$ | $(0.0576)$ | $(0.1103)$ |
+| Calendar | $0.0259$ | $-0.0204$ | $0.0573$ |
+| | $(0.0411)$ | $(0.0495)$ | $(0.0612)$ |
+| week4 | $0.0004$ | $0.0005^{**}$ | $0.0000$ |
+| | $0.0002$ | $(0.0002)$ | $(0.0004)$ |
+| Calendar * week4 | $-0.1536^{***}$ | $-0.0284$ | $-0.2569^{***}$ |
+| | $(0.0471)$ | $(0.0596)$ | $(0.0670)$ |
+| Momentum | $0.0013^{***}$ | $0.0004$ | $0.0020^{***}$ |
+| | $(0.0003)$ | $(0.0003)$ | $(0.0005)$ |
+| Ret | $0.0216$ | $0.1433^{***}$ | $-0.0144$ |
+| | $(0.0192)$ | $(0.0245)$ | $(0.0280)$ |
+| Observations | 15,291 | 8,870 | 6,421 |
+| Adjusted R² | 0.0053 | 0.0204 | 0.0170 |
 
 ## Page 37
 
@@ -2734,9 +2685,27 @@ Ret
 
 ## Page 68
 
-[page 68 failed: unverifiable table — see image]
+Table D.7: Cross-Asset Predictive Regressions: Different Portfolio Weights
 
-![Failed table page 68](figures/failed_table_p68.png)
+This table reports estimates for the multivariate predictive regression (4). $Ret$ is the difference between S&P 500 and 10-year Treasury note futures returns. Threshold and Calendar signals are constructed as described in Section 1.2. Momentum is computed by averaging the sign of 11 to 20, and 21, 42, 63, 126, and 252 trailing equity returns in excess of the 10-year Treasury note. Values in parentheses are heteroskedasticity-consistent standard errors. Daily observations. The sample period is 1997-09-10 to 2023-03-17.
+
+| equity-bond Allocation | Ret$_{t+1}$ | | |
+| :--- | :--- | :--- | :--- |
+| | **86/14** | **50/50** | **70/30** |
+| Threshold | -0.8453*** | -0.4098*** | -0.4822*** |
+| | (0.212) | (0.107) | (0.131) |
+| Calendar | 0.1021 | 0.0522 | 0.0622 |
+| | (0.143) | (0.066) | (0.081) |
+| week4 | 0.0001 | 0.0002 | 0.0001 |
+| | (0.000) | (0.000) | (0.000) |
+| Calendar × week4 | -0.6008*** | -0.2914*** | -0.3460*** |
+| | (0.160) | (0.076) | (0.091) |
+| Momentum | 0.0023*** | 0.0023*** | 0.0024*** |
+| | (0.001) | (0.001) | (0.001) |
+| Ret | -0.0177 | -0.0186 | -0.0191 |
+| | (0.027) | (0.029) | (0.029) |
+| Observations | 6,226 | 6,226 | 6,226 |
+| Adjusted $R^2$ | 0.025 | 0.024 | 0.025 |
 
 ## Page 69
 
@@ -2746,9 +2715,37 @@ Ret
 
 ## Page 70
 
-[page 70 failed: unverifiable table — see image]
+Table D.9: Cross-Asset Predictive Regressions: Alternative Controls
 
-![Failed table page 70](figures/failed_table_p70.png)
+This table reports estimates for the multivariate predictive regression (4). $Ret$ is the difference between S&P 500 and 10-year Treasury note futures returns. Threshold and Calendar signals are constructed as described in Section 1.2. Momentum is computed by averaging the sign of 11 to 20, and 21, 42, 63, 126, and 252 trailing equity returns in excess of the 10-year Treasury note. ra$^{BEX}$ and unc$^{BEX}$ are, respectively, the risk aversion and economic uncertainty indexes costructed in Bekaert, Engstrom, and Xu (2022); FEARS is the Financial and Economic Attitudes Revealed by Search index constructed in Da, Engelberg, and Gao (2015) available from 2004-07-01 to 2016-12-30; ARA is the aggregate retail attention index constructed in Da et al. (2025) available from 2004-07-01 to 2019-12-31. Values in parentheses are heteroskedasticity-consistent standard errors. Daily observations.
+
+| | (1) | (2) | (3) | (4) |
+| :--- | :--- | :--- | :--- | :--- |
+| | $Ret_{t+1}$ | | | |
+| Threshold | $-0.4493^{***}$ | $-0.4375^{***}$ | $-0.4226^{**}$ | $-0.3731^{**}$ |
+| | $(0.1152)$ | $(0.1134)$ | $(0.1719)$ | $(0.1537)$ |
+| Calendar | $0.1059^{*}$ | $0.0599$ | $0.1000$ | $0.1100$ |
+| | $(0.0616)$ | $(0.0704)$ | $(0.1134)$ | $(0.0980)$ |
+| week4 | $0.0001$ | $0.0001$ | $0.0003$ | $0.0003$ |
+| | $(0.0004)$ | $(0.0004)$ | $(0.0006)$ | $(0.0005)$ |
+| Calendar *week4 | $-0.3048^{***}$ | $-0.3075^{***}$ | $-0.4011^{***}$ | $-0.3823^{***}$ |
+| | $(0.0807)$ | $(0.0813)$ | $(0.1309)$ | $(0.1173)$ |
+| Momentum | $0.0025^{***}$ | $0.0026^{***}$ | $0.0020^{**}$ | $0.0016^{**}$ |
+| | $(0.0006)$ | $(0.0007)$ | $(0.0010)$ | $(0.0008)$ |
+| Ret | $-0.0115$ | $-0.0208$ | $-0.0087$ | $-0.0223$ |
+| | $(0.0289)$ | $(0.0290)$ | $(0.0389)$ | $(0.0350)$ |
+| ra$^{BEX}$ | $0.0009$ | | | |
+| | $(0.0006)$ | | | |
+| unc$^{BEX}$ | | $0.0007$ | | |
+| | | $(0.0007)$ | | |
+| FEARS | | | $0.0009$ | |
+| | | | $(0.0007)$ | |
+| ARA | | | | $0.0001$ |
+| | | | | $(0.0060)$ |
+| Observations | 6,124 | 6,124 | 3,149 | 3,903 |
+| Adjusted R$^2$ | 0.0300 | 0.0249 | 0.0298 | 0.0270 |
+
+68
 
 ## Page 71
 
@@ -2969,117 +2966,64 @@ Adjusted R2
 ## Page 75
 
 Panel B: 10-year Treasury note in excess of cash
-Rett+1
 
-[page 75 failed: unverifiable table — see image]
-
-![Failed table page 75](figures/failed_table_p75.png)
-
-73
+| | (1) | (2) | (3) | (4) | (5) |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| Threshold | $0.0842^{***}$ | $0.0799^{***}$ | $0.0873^{***}$ | $0.0850^{***}$ | $0.0841^{***}$ |
+| | $(0.0269)$ | $(0.0269)$ | $(0.0270)$ | $(0.0270)$ | $(0.0270)$ |
+| Calendar | $-0.0129$ | $-0.0141$ | $-0.0137$ | $-0.0127$ | $-0.0148$ |
+| | $(0.0116)$ | $(0.0116)$ | $(0.0114)$ | $(0.0116)$ | $(0.0113)$ |
+| week4 | $0.0004^{***}$ | $0.0004^{***}$ | $0.0004^{***}$ | $0.0004^{***}$ | $0.0004^{***}$ |
+| | $(0.0001)$ | $(0.0001)$ | $(0.0001)$ | $(0.0001)$ | $(0.0001)$ |
+| Calendar *week4 | $0.0362^{***}$ | $0.0374^{***}$ | $0.0360^{***}$ | $0.0362^{***}$ | $0.0372^{***}$ |
+| | $(0.0128)$ | $(0.0128)$ | $(0.0127)$ | $(0.0128)$ | $(0.0127)$ |
+| Momentum | $-0.0005^{***}$ | $-0.0005^{***}$ | $-0.0005^{***}$ | $-0.0005^{***}$ | $-0.0005^{***}$ |
+| | $(0.0001)$ | $(0.0001)$ | $(0.0001)$ | $(0.0001)$ | $(0.0001)$ |
+| Ret | $-0.0020$ | $-0.0015$ | $-0.0030$ | $-0.0022$ | $-0.0027$ |
+| | $(0.0065)$ | $(0.0093)$ | $(0.0064)$ | $(0.0065)$ | $(0.0093)$ |
+| VIX | | $0.0020$ | | | $0.0020$ |
+| | | $(0.0067)$ | | | $(0.0066)$ |
+| MOVE | | $-0.0054^{***}$ | | | $-0.0055^{***}$ |
+| | | $(0.0017)$ | | | $(0.0017)$ |
+| EPU | | | $0.0002^{***}$ | | $0.0003^{***}$ |
+| | | | $(0.0001)$ | | $(0.0001)$ |
+| ADS | | | $0.0005$ | | $0.0005$ |
+| | | | $(0.0006)$ | | $(0.0007)$ |
+| Sentiment | | | | $-0.0017$ | $-0.0021$ |
+| | | | | $(0.0031)$ | $(0.0031)$ |
+| Observations | 6,226 | 6,226 | 6,226 | 6,226 | 6,226 |
+| Adjusted R² | 0.0074 | 0.0102 | 0.0087 | 0.0072 | 0.0117 |
 
 ## Page 76
 
 Table D.14: Cross-Asset Predictive Regressions: International Equity
-This table reports estimates for the multivariate predictive regression (4) for international equity returns.
-Ret is the difference between MSCI ACWI ex U.S. Index and the U.S. 3-month Treasury bill. Threshold and
-Calendar signals are constructed as described in Section 1.2. Momentum is computed by averaging the sign
-of 11 to 20, and 21, 42, 63, 126, and 252 trailing equity returns in excess of the 10-year Treasury note. VIX
-is the CBOE equity option-implied volatility index (divided by 100); MOVE is the U.S. bond market option-
-implied volatility index (divided by 100); EPU is the news-based measure of economic policy uncertainty
-from Baker, Bloom, and Davis (2016); ADS is the Aruoba, Diebold, and Scotti (2009) real-time business
-conditions index; Sentiment is the daily news-based sentiment index constructed in Shapiro, Sudhof, and
-Wilson (2022). Values in parentheses are heteroskedasticity-consistent standard errors. Constant estimates
-are not tabulated. Daily observations. The sample period is 1997-09-10 to 2023-03-17.
 
-[page 76 failed: unverifiable table — see image]
+This table reports estimates for the multivariate predictive regression (4) for international equity returns. $Ret$ is the difference between MSCI ACWI ex U.S. Index and the U.S. 3-month Treasury bill. Threshold and Calendar signals are constructed as described in Section 1.2. Momentum is computed by averaging the sign of 11 to 20, and 21, 42, 63, 126, and 252 trailing equity returns in excess of the 10-year Treasury note. VIX is the CBOE equity option-implied volatility index (divided by 100); MOVE is the U.S. bond market option-implied volatility index (divided by 100); EPU is the news-based measure of economic policy uncertainty from Baker, Bloom, and Davis (2016); ADS is the Aruoba, Diebold, and Scotti (2009) real-time business conditions index; Sentiment is the daily news-based sentiment index constructed in Shapiro, Sudhof, and Wilson (2022). Values in parentheses are heteroskedasticity-consistent standard errors. Constant estimates are not tabulated. Daily observations. The sample period is 1997-09-10 to 2023-03-17.
 
-![Failed table page 76](figures/failed_table_p76.png)
-
-Calendar
-0.0810∗
-0.0855∗∗
-0.0810∗
-0.0801∗
-0.0818∗
-(0.0453)
-(0.0427)
-(0.0447)
-(0.0457)
-(0.0433)
-week4
-0.0007∗∗
-0.0007∗∗
-0.0007∗∗
-0.0007∗∗
-0.0007∗∗
-(0.0003)
-(0.0003)
-(0.0003)
-(0.0003)
-(0.0003)
-Calendar *week4
-−0.2060∗∗∗
-−0.2055∗∗∗
-−0.2056∗∗∗
-−0.2061∗∗∗
-−0.2055∗∗∗
-(0.0535)
-(0.0539)
-(0.0536)
-(0.0535)
-(0.0539)
-Momentum
-0.0004
-0.0003
-0.0004
-0.0005
-0.0003
-(0.0003)
-(0.0004)
-(0.0003)
-(0.0003)
-(0.0004)
-2-day Trailing Returns
-0.0708∗∗∗
-0.0727∗∗∗
-0.0703∗∗∗
-0.0710∗∗∗
-0.0707∗∗∗
-(0.0145)
-(0.0141)
-(0.0145)
-(0.0145)
-(0.0143)
-VIX
-0.0035
-0.0011
-(0.0043)
-(0.0047)
-MOVE
-−0.0014∗
-−0.0011
-(0.0008)
-(0.0009)
-EPU
-0.0005∗∗
-0.0004
-(0.0002)
-(0.0003)
-ADS
-0.0001
-0.0001
-(0.0002)
-(0.0002)
-Sentiment
-−0.0008
-−0.0001
-(0.0009)
-(0.0009)
-
-|  |  |  |  |  |  |
-| --- | --- | --- | --- | --- | --- |
+| | (1) | (2) | (3) | (4) | (5) |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| | $Ret_{t+1}$ | | | | |
+| Threshold | $-0.2723^{***}$ | $-0.2773^{***}$ | $-0.2738^{***}$ | $-0.2766^{***}$ | $-0.2749^{***}$ |
+| | $(0.0870)$ | $(0.0857)$ | $(0.0870)$ | $(0.0868)$ | $(0.0865)$ |
+| Calendar | $0.0810^{*}$ | $0.0855^{**}$ | $0.0810^{*}$ | $0.0801^{*}$ | $0.0818^{*}$ |
+| | $(0.0453)$ | $(0.0427)$ | $(0.0447)$ | $(0.0457)$ | $(0.0433)$ |
+| week4 | $0.0007^{**}$ | $0.0007^{**}$ | $0.0007^{**}$ | $0.0007^{**}$ | $0.0007^{**}$ |
+| | $(0.0003)$ | $(0.0003)$ | $(0.0003)$ | $(0.0003)$ | $(0.0003)$ |
+| Calendar *week4 | $-0.2060^{***}$ | $-0.2055^{***}$ | $-0.2056^{***}$ | $-0.2061^{***}$ | $-0.2055^{***}$ |
+| | $(0.0535)$ | $(0.0539)$ | $(0.0536)$ | $(0.0535)$ | $(0.0539)$ |
+| Momentum | $0.0004$ | $0.0003$ | $0.0004$ | $0.0005$ | $0.0003$ |
+| | $(0.0003)$ | $(0.0004)$ | $(0.0003)$ | $(0.0003)$ | $(0.0004)$ |
+| 2-day Trailing Returns | $0.0708^{***}$ | $0.0727^{***}$ | $0.0703^{***}$ | $0.0710^{***}$ | $0.0707^{***}$ |
+| | $(0.0145)$ | $(0.0141)$ | $(0.0145)$ | $(0.0145)$ | $(0.0143)$ |
+| VIX | | $0.0035$ | | | $0.0011$ |
+| | | $(0.0043)$ | | | $(0.0047)$ |
+| MOVE | | $-0.0014^{*}$ | | | $-0.0011$ |
+| | | $(0.0008)$ | | | $(0.0009)$ |
+| EPU | | | $0.0005^{**}$ | | $0.0004$ |
+| | | | $(0.0002)$ | | $(0.0003)$ |
+| ADS | | | $0.0001$ | | $0.0001$ |
+| | | | $(0.0002)$ | | $(0.0002)$ |
+| Sentiment | | | | $-0.0008$ | $-0.0001$ |
+| | | | | $(0.0009)$ | $(0.0009)$ |
 | Observations | 6,097 | 6,097 | 6,097 | 6,097 | 6,097 |
-| R2 |  |  |  |  |  |
-| Adjusted | 0.0255 | 0.0262 | 0.0263 | 0.0255 | 0.0265 |
-
-74
+| Adjusted R² | 0.0255 | 0.0262 | 0.0263 | 0.0255 | 0.0265 |
