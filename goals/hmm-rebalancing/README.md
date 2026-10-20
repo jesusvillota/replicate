@@ -134,6 +134,7 @@ flowchart TD
     TASK_006["TASK-006 Fetch public futures and index price series"]
     TASK_007["TASK-007 Fetch CFTC positioning data"]
     TASK_008["TASK-008 Fetch ICI fund flows and CRR pension allocations"]
+    TASK_009["TASK-009 Extract CRSP ETF returns and daily stock dispersion on the cluster"]
   end
   subgraph M_2["M-2 · Core replication on the real panel"]
   end
@@ -145,6 +146,7 @@ flowchart TD
   TASK_001 --> TASK_006
   TASK_001 --> TASK_007
   TASK_001 --> TASK_008
+  TASK_001 --> TASK_009
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
   classDef decision fill:#f3e8ff,stroke:#7c3aed
