@@ -142,6 +142,7 @@ flowchart TD
   end
   subgraph M_2["M-2 · Core replication on the real panel"]
     TASK_013["TASK-013 Signal engine: Threshold, Calendar, momentum and calendar dummies"]
+    TASK_014["TASK-014 Regression toolkit and predictive-regression tables"]
   end
   subgraph M_3["M-3 · Extensions and final report"]
   end
@@ -169,6 +170,7 @@ flowchart TD
   TASK_010 --> TASK_012
   DEC_001 --> TASK_012
   TASK_001 --> TASK_013
+  TASK_001 --> TASK_014
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
   classDef decision fill:#f3e8ff,stroke:#7c3aed
