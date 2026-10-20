@@ -147,6 +147,7 @@ flowchart TD
     TASK_016["TASK-016 Rebalancing cost estimates"]
     TASK_017["TASK-017 Front-running strategy"]
     TASK_018["TASK-018 Core exhibits on the real panel and comparison with the paper"]
+    TASK_020["TASK-020 Paper target numbers and comparison report generator"]
   end
   subgraph M_3["M-3 · Extensions and final report"]
     TASK_019["TASK-019 Plan: decompose M-3"]
@@ -185,6 +186,7 @@ flowchart TD
   TASK_016 --> TASK_018
   TASK_017 --> TASK_018
   TASK_018 --> TASK_019
+  TASK_001 --> TASK_020
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
   classDef decision fill:#f3e8ff,stroke:#7c3aed
