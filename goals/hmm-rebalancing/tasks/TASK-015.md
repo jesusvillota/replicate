@@ -3,7 +3,7 @@ id: TASK-015
 title: Calibration and horizon figures
 milestone: M-2
 state: approved
-depends_on: [TASK-013, TASK-014]
+depends_on: [TASK-014]
 delivery: pr
 ---
 
