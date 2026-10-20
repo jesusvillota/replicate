@@ -131,6 +131,7 @@ flowchart TD
     TASK_003["TASK-003 Fetch Fed, FRED and OFR rate, volatility and stress series"]
     TASK_004["TASK-004 Fetch uncertainty and sentiment indices"]
     TASK_005["TASK-005 Fetch French and HXZ factor libraries"]
+    TASK_006["TASK-006 Fetch public futures and index price series"]
   end
   subgraph M_2["M-2 · Core replication on the real panel"]
   end
@@ -139,6 +140,7 @@ flowchart TD
   TASK_001 --> TASK_003
   TASK_001 --> TASK_004
   TASK_001 --> TASK_005
+  TASK_001 --> TASK_006
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
   classDef decision fill:#f3e8ff,stroke:#7c3aed
