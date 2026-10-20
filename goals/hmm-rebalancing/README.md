@@ -182,8 +182,6 @@ flowchart TD
   TASK_016 --> TASK_018
   TASK_017 --> TASK_018
   TASK_020 --> TASK_018
-  TASK_013 --> TASK_018
-  TASK_014 --> TASK_018
   TASK_018 --> TASK_019
   TASK_001 --> TASK_020
   classDef draft stroke-dasharray: 4 3
