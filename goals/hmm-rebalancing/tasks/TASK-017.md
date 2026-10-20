@@ -3,7 +3,7 @@ id: TASK-017
 title: Front-running strategy
 milestone: M-2
 state: approved
-depends_on: [TASK-013, TASK-014]
+depends_on: [TASK-014]
 delivery: pr
 ---
 
