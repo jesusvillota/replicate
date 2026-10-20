@@ -141,6 +141,7 @@ flowchart TD
     TASK_012["TASK-012 Build the daily panel and finalize the data source map"]
   end
   subgraph M_2["M-2 · Core replication on the real panel"]
+    TASK_013["TASK-013 Signal engine: Threshold, Calendar, momentum and calendar dummies"]
   end
   subgraph M_3["M-3 · Extensions and final report"]
   end
@@ -167,6 +168,7 @@ flowchart TD
   TASK_009 --> TASK_012
   TASK_010 --> TASK_012
   DEC_001 --> TASK_012
+  TASK_001 --> TASK_013
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
   classDef decision fill:#f3e8ff,stroke:#7c3aed
