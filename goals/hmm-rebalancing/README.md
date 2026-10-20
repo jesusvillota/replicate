@@ -144,6 +144,7 @@ flowchart TD
     TASK_013["TASK-013 Signal engine: Threshold, Calendar, momentum and calendar dummies"]
     TASK_014["TASK-014 Regression toolkit and predictive-regression tables"]
     TASK_015["TASK-015 Calibration and horizon figures"]
+    TASK_016["TASK-016 Rebalancing cost estimates"]
   end
   subgraph M_3["M-3 · Extensions and final report"]
   end
@@ -174,6 +175,8 @@ flowchart TD
   TASK_001 --> TASK_014
   TASK_013 --> TASK_015
   TASK_014 --> TASK_015
+  TASK_013 --> TASK_016
+  TASK_014 --> TASK_016
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
   classDef decision fill:#f3e8ff,stroke:#7c3aed
