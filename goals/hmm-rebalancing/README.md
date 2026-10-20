@@ -130,6 +130,7 @@ flowchart TD
     TASK_002["TASK-002 Set up WRDS login on the MacBook"]
     TASK_003["TASK-003 Fetch Fed, FRED and OFR rate, volatility and stress series"]
     TASK_004["TASK-004 Fetch uncertainty and sentiment indices"]
+    TASK_005["TASK-005 Fetch French and HXZ factor libraries"]
   end
   subgraph M_2["M-2 · Core replication on the real panel"]
   end
@@ -137,6 +138,7 @@ flowchart TD
   end
   TASK_001 --> TASK_003
   TASK_001 --> TASK_004
+  TASK_001 --> TASK_005
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
   classDef decision fill:#f3e8ff,stroke:#7c3aed
