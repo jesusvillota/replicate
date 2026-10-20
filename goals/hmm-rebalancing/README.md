@@ -126,6 +126,7 @@ Reproduce every exhibit of Harvey, Mazzoleni and Melone (2026) from WRDS, tape-k
 ```mermaid
 flowchart TD
   subgraph M_1["M-1 · Data sourced"]
+    DEC_001{{"DEC-001 Which series proxy the Bloomberg ES and TY futures returns?"}}
     TASK_001["TASK-001 Scaffold the rebal package, data contracts and demo fixtures"]
     TASK_002["TASK-002 Set up WRDS login on the MacBook"]
     TASK_003["TASK-003 Fetch Fed, FRED and OFR rate, volatility and stress series"]
@@ -142,6 +143,7 @@ flowchart TD
   end
   subgraph M_3["M-3 · Extensions and final report"]
   end
+  TASK_011 --> DEC_001
   TASK_001 --> TASK_003
   TASK_001 --> TASK_004
   TASK_001 --> TASK_005
@@ -158,6 +160,7 @@ flowchart TD
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
   classDef decision fill:#f3e8ff,stroke:#7c3aed
+  class DEC_001 decision
 ```
 <!-- goal:graph:end -->
 
