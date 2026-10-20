@@ -126,6 +126,7 @@ Reproduce every exhibit of Harvey, Mazzoleni and Melone (2026) from WRDS, tape-k
 ```mermaid
 flowchart TD
   subgraph M_1["M-1 · Data sourced"]
+    TASK_001["TASK-001 Scaffold the rebal package, data contracts and demo fixtures"]
   end
   subgraph M_2["M-2 · Core replication on the real panel"]
   end
