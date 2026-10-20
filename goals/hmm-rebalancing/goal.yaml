@@ -4,15 +4,22 @@ title: Replicate Harvey–Mazzoleni–Melone (2026), The Unintended Consequences
 objective: Reproduce every exhibit of Harvey, Mazzoleni and Melone (2026) from WRDS, tape-kit and public data, with a clear record of the data the paper needs, the source the authors used, and the proxy we actually use.
 base: main
 success:
-  SC-1: <observable result and how it is verified>
+  SC-1: "`docs/data/sources.md` has one row for each dataset D1–D28 in `goals/hmm-rebalancing/paper-notes.md` §2. Each row names the authors' source, the source we use, whether it is exact or a proxy, and its status. Verified by `grep -cE '^\\| D[0-9]+ ' docs/data/sources.md` printing 28 or more."
+  SC-2: "`uv run python3 -m rebal.panel --check` validates the daily panel against `docs/contracts/daily_panel.md` and prints the row count and date range. The range covers 1997-09-10 to 2023-03-17."
+  SC-3: "`uv run python3 -m rebal.exhibits --all` regenerates every core exhibit (Tables 1–3, C.1, C.2, D.1–D.3, D.5–D.8, D.10–D.13; Figures 2–4, C.1, D.1–D.4) into `output/` from the real panel, and `uv run pytest` passes."
+  SC-4: "`docs/results/core.md` puts each headline number of the core exhibits next to the paper's value. Table 1 column (1) has negative Threshold and Cal × week4 coefficients, significant at 5%, or the document explains the gap."
+  SC-5: "`docs/results/core.md` also reports the rebalancing cost (§2.1.1: Calendar, Threshold, random dates, dollar cost) and the front-running strategy (Table 6, Figure 6) next to the paper's values."
+  SC-6: "The extension exhibits (Tables 4, 5, D.4, D.9, D.14; Figures 1, 5, D.5) and `docs/results/replication_report.md` exist. The report says, for each exhibit, whether it replicates, and which proxies may explain each gap."
 milestones:
-  - {id: M-1, title: <first observable outcome>, success: [SC-1], exit: <verifiable evidence>}
+  - {id: M-1, title: Data sourced, documented and assembled, success: [SC-1, SC-2], exit: "TASK-012 merged: the panel check passes and docs/data/sources.md is final"}
+  - {id: M-2, title: Core replication on the real panel, success: [SC-3, SC-4, SC-5], exit: "TASK-018 merged: docs/results/core.md compares every core number with the paper"}
+  - {id: M-3, title: Extensions and final report, success: [SC-6], exit: "The replication report is merged"}
 policy:
   decide: human         # human | experts (a committee answers worker decision requests)
   orchestrator: {platform: claude, model: sonnet, effort: medium}
-  max_parallel: 7
+  max_parallel: 5
   default_route: null   # {platform: codex, model: MODEL, effort: LEVEL}
   agent: claude         # claude | codex | opencode | agy
   turn_budget: 40
   plan_commits: push    # push | commit | off
-  worktree_setup: null  # shell run in each new task worktree, e.g. "uv sync"
+  worktree_setup: "test -f pyproject.toml && uv sync || true"  # shell run in each new task worktree
