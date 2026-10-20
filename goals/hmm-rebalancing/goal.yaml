@@ -1,0 +1,18 @@
+format: goal/v2
+id: hmm-rebalancing
+title: Replicate Harvey–Mazzoleni–Melone (2026), The Unintended Consequences of Rebalancing
+objective: Reproduce every exhibit of Harvey, Mazzoleni and Melone (2026) from WRDS, tape-kit and public data, with a clear record of the data the paper needs, the source the authors used, and the proxy we actually use.
+base: main
+success:
+  SC-1: <observable result and how it is verified>
+milestones:
+  - {id: M-1, title: <first observable outcome>, success: [SC-1], exit: <verifiable evidence>}
+policy:
+  decide: human         # human | experts (a committee answers worker decision requests)
+  orchestrator: {platform: claude, model: sonnet, effort: medium}
+  max_parallel: 7
+  default_route: null   # {platform: codex, model: MODEL, effort: LEVEL}
+  agent: claude         # claude | codex | opencode | agy
+  turn_budget: 40
+  plan_commits: push    # push | commit | off
+  worktree_setup: null  # shell run in each new task worktree, e.g. "uv sync"
