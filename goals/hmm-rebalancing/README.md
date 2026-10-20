@@ -133,6 +133,7 @@ flowchart TD
     TASK_005["TASK-005 Fetch French and HXZ factor libraries"]
     TASK_006["TASK-006 Fetch public futures and index price series"]
     TASK_007["TASK-007 Fetch CFTC positioning data"]
+    TASK_008["TASK-008 Fetch ICI fund flows and CRR pension allocations"]
   end
   subgraph M_2["M-2 · Core replication on the real panel"]
   end
@@ -143,6 +144,7 @@ flowchart TD
   TASK_001 --> TASK_005
   TASK_001 --> TASK_006
   TASK_001 --> TASK_007
+  TASK_001 --> TASK_008
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
   classDef decision fill:#f3e8ff,stroke:#7c3aed
