@@ -45,8 +45,8 @@ Reproduce every exhibit of Harvey, Mazzoleni and Melone (2026) from WRDS, tape-k
 - Each fetcher validates what it wrote: columns, date range, no duplicate dates.
 
 **Data storage.** There are two classes, so licensed data never enters git:
-- **Public, redistributable** (Fed, FRED, OFR, CFTC, French, EPU, ADS, SF Fed, ICI, CRR, global-q): committed under `data/public/<source>/` as CSV, each file under 20 MB.
-- **Licensed or terms-restricted** (WRDS, CRSP via tape-kit, Yahoo, MSCI): stored under `$REPLICATE_DATA_DIR/licensed/<source>/`, never committed.
+- **Public, redistributable** (Fed, FRED, OFR, CFTC, French, EPU, ADS, SF Fed, CRR, global-q): committed under `data/public/<source>/` as CSV, each file under 20 MB.
+- **Licensed or terms-restricted** (WRDS, CRSP via tape-kit, Yahoo, MSCI, ICI, BEX, ARA): stored under `$REPLICATE_DATA_DIR/licensed/<source>/`, never committed.
   - The default is `~/data/replicate` on the MacBook.
   - The cluster copy lives under `/mnt/slurm-beegfs/Users/j-vill36/replicate-data/`.
   - Processed files go to `$REPLICATE_DATA_DIR/processed/`.
