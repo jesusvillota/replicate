@@ -128,11 +128,13 @@ flowchart TD
   subgraph M_1["M-1 · Data sourced"]
     TASK_001["TASK-001 Scaffold the rebal package, data contracts and demo fixtures"]
     TASK_002["TASK-002 Set up WRDS login on the MacBook"]
+    TASK_003["TASK-003 Fetch Fed, FRED and OFR rate, volatility and stress series"]
   end
   subgraph M_2["M-2 · Core replication on the real panel"]
   end
   subgraph M_3["M-3 · Extensions and final report"]
   end
+  TASK_001 --> TASK_003
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
   classDef decision fill:#f3e8ff,stroke:#7c3aed
