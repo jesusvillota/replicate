@@ -138,6 +138,7 @@ flowchart TD
     TASK_009["TASK-009 Extract CRSP ETF returns and daily stock dispersion on the cluster"]
     TASK_010["TASK-010 Inventory our WRDS libraries and extract WRDS series"]
     TASK_011["TASK-011 Compare candidate proxies for ES and TY futures returns"]
+    TASK_012["TASK-012 Build the daily panel and finalize the data source map"]
   end
   subgraph M_2["M-2 · Core replication on the real panel"]
   end
@@ -157,6 +158,15 @@ flowchart TD
   TASK_006 --> TASK_011
   TASK_009 --> TASK_011
   TASK_010 --> TASK_011
+  TASK_003 --> TASK_012
+  TASK_004 --> TASK_012
+  TASK_005 --> TASK_012
+  TASK_006 --> TASK_012
+  TASK_007 --> TASK_012
+  TASK_008 --> TASK_012
+  TASK_009 --> TASK_012
+  TASK_010 --> TASK_012
+  DEC_001 --> TASK_012
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
   classDef decision fill:#f3e8ff,stroke:#7c3aed
