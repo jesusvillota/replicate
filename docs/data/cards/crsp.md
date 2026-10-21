@@ -91,3 +91,8 @@ the task outcome records this breach of the one-job budget.
 | `etf_daily.parquet` | `5e7db3be218b2da873f0d4879a88fb85187ac9db9c284b01208bc1faf3fc3c17` |
 | `dispersion_daily.parquet` | `5283f121f81241c047fc74d8c4cfe0017ca05d46e9d4547adc598bb614432cd1` |
 | `benchmarks_daily.parquet` | `b51e748ede9b8e94b72266e853bab224473c637da68b242440e6bc70acdcb481` |
+
+## Paper datasets served
+
+D1, D2, D5, D6, and D18 use ETF proxy candidates. D4 uses SPY as a total-return
+check. D25 uses daily common-stock dispersion. No proxy choice is made here.
