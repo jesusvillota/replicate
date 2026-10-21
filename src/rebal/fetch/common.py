@@ -42,16 +42,19 @@ def download(url: str, dest: Path, *, retries: int = 3) -> Path:
     raise AssertionError("unreachable")
 
 
-def summarize(path: Path, date_col: str) -> None:
-    """Validate CSV, parquet or Excel data and emit exactly one summary line."""
+def summarize(path: Path, date_col: str, **read_kwargs) -> None:
+    """Validate a stored file and emit one summary line.
+
+    CSV/Excel reader options support published preambles and workbook notes.
+    """
     # pandas: file validation only; no analytical query or per-group computation.
     path = Path(path)
     if path.suffix.lower() == ".parquet":
         frame = pd.read_parquet(path)
     elif path.suffix.lower() in {".xls", ".xlsx"}:
-        frame = pd.read_excel(path)
+        frame = pd.read_excel(path, **read_kwargs)
     else:
-        frame = pd.read_csv(path)
+        frame = pd.read_csv(path, **read_kwargs)
     if frame.empty:
         raise ValueError(f"{path}: expected at least one row")
     if date_col not in frame:
