@@ -70,7 +70,7 @@ def test_stored_hxz_original_values_and_coverage():
     assert metadata["data_url"] == hxz.latest_daily_url(
         f'<a href="{metadata["data_url"]}">Daily</a>'
     )
-    assert metadata["rows"] == len(tidy)
+    assert set(metadata) == {"data_url", "sha256"}
 
 
 def french_fixture(tmp_path, rows, header=",Mom"):
@@ -188,9 +188,9 @@ def test_cli_is_idempotent_offline(tmp_path, monkeypatch, capsys, module):
 
     monkeypatch.setattr(module, "download", fake_download)
     module.main()
-    before = {p.name: p.read_bytes() for p in tmp_path.iterdir() if p.suffix != ".json"}
+    before = {p.name: p.read_bytes() for p in tmp_path.iterdir()}
     module.main()
-    after = {p.name: p.read_bytes() for p in tmp_path.iterdir() if p.suffix != ".json"}
+    after = {p.name: p.read_bytes() for p in tmp_path.iterdir()}
     assert before == after
     assert capsys.readouterr().out.count("OK ") == (20 if module is french else 4)
 

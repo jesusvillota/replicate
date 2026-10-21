@@ -11,7 +11,6 @@ import argparse
 import hashlib
 import json
 import re
-from datetime import UTC, datetime
 from html.parser import HTMLParser
 from pathlib import Path
 from tempfile import TemporaryDirectory
@@ -71,17 +70,8 @@ def main() -> None:
     summarize(raw, "date")
     store(frame, directory / "q5_factors_daily.csv")
     metadata = {
-        "module": "rebal.fetch.hxz",
-        "downloaded_utc": datetime.now(UTC).isoformat(),
-        "factors_page": PAGE_URL,
         "data_url": url,
-        "raw_file": raw.name,
-        "tidy_file": "q5_factors_daily.csv",
         "sha256": hashlib.sha256(raw.read_bytes()).hexdigest(),
-        "units": "percent per day",
-        "rows": len(frame),
-        "first": str(frame.date.min().date()),
-        "last": str(frame.date.max().date()),
     }
     (directory / "source.json").write_text(json.dumps(metadata, indent=2) + "\n")
 

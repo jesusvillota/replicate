@@ -11,8 +11,8 @@ Access: `uv run python3 -m rebal.fetch.hxz`, using
 `rebal.fetch.common.download`. The fetcher reads the official factors page
 each time and chooses the daily q5 link with the largest year suffix.
 It excludes monthly/weekly files, benchmark portfolios and external hosts.
-`data/public/hxz/source.json` records the chosen URL, UTC download time,
-raw SHA-256 checksum, row count, dates and units. No login or mirror was needed.
+`data/public/hxz/source.json` records only the chosen URL and raw SHA-256
+checksum. The download date is recorded below. No login or mirror was needed.
 
 ## Downloaded (date)
 
