@@ -1,0 +1,13 @@
+{
+  "module": "rebal.fetch.hxz",
+  "downloaded_utc": "2026-10-21T20:38:23.095346+00:00",
+  "factors_page": "https://global-q.org/factors.html",
+  "data_url": "https://global-q.org/uploads/1/2/2/6/122679606/q5_factors_daily_2025.csv",
+  "raw_file": "q5_factors_daily.raw.csv",
+  "tidy_file": "q5_factors_daily.csv",
+  "sha256": "db88d58740315586e63b18af3d1c2242f5891fe1954502c84ced076a5971e14b",
+  "units": "percent per day",
+  "rows": 14848,
+  "first": "1967-01-03",
+  "last": "2025-12-31"
+}
