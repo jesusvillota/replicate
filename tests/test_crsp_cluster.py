@@ -135,3 +135,20 @@ def test_dry_run_writes_nothing(tmp_path):
     make_demo(source)
     assert extract(source, output, list_remaining=True) == {}
     assert not output.exists()
+
+
+def test_dated_history_excludes_prior_observations(archive):
+    source, output = archive
+    path = source / "data/daily/1997.parquet"
+    with duckdb.connect() as con:
+        con.execute("CREATE TABLE d AS SELECT * FROM read_parquet(?)", [str(path)])
+        con.execute("""INSERT INTO d SELECT * REPLACE (DATE '1997-09-09' AS dlycaldt)
+            FROM d WHERE permno=100""")
+        con.execute("COPY d TO ? (FORMAT PARQUET)", [str(path)])
+    extract(source, output)
+    with duckdb.connect() as con:
+        assert con.execute(
+            """SELECT count(*), min(date) FROM read_parquet(?)
+            WHERE permno=100""",
+            [str(output / "etf_daily.parquet")],
+        ).fetchone() == (2, date(1997, 9, 10))

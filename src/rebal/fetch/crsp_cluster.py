@@ -3,7 +3,7 @@
 Commands:
     uv run python3 -m rebal.fetch.crsp_cluster --demo
     cluster-kit launch src/rebal/fetch/crsp_cluster.py --partition cpu_shared \
-        --slurm-cpus 4 --slurm-mem 16G --slurm-time 01:00:00 --skip-existing
+        --slurm-cpus 4 --slurm-mem 16G --slurm-time 01:00:00
 
 CLI arguments:
     --input-dir: CRSP root containing data/ and security_history/.
