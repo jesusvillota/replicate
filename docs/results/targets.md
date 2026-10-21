@@ -79,6 +79,28 @@ from the current exhibit contract's ID list. Their paper targets are retained.
 The comparison should report them missing until their CSVs exist.
 No task specification or exhibit contract is changed here.
 
+## Produced CSVs
+
+Each input filename is `<exhibit>.csv`. Real runs use `output/tables/` and
+`output/figures/`; demo runs use `output/demo/` directly.
+
+Regression CSVs follow the exhibit contract's full wide schema:
+
+```text
+exhibit,column,term,coef,se,t,p,nobs,adj_r2,se_type,sample_start,sample_end
+```
+
+Figure and summary exporters can use keyed long data:
+
+```text
+exhibit,column,term,stat,value
+```
+
+For example, a Figure 3 row can use
+`figure_3,days_4,calendar_interaction,t,-3.1`. A scalar summary can instead
+use wide data with `exhibit,column,term,value`. The comparison requires the
+exact target keys and units. It does not adapt arbitrary plotting columns.
+
 ## Source checks and corrections to paper-notes section 4
 
 1. Table D.1, PDF page 62, gives Calendar adjusted R-squared as **0.7194**.
