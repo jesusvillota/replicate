@@ -1,6 +1,6 @@
 # Paper comparison targets
 
-`targets.csv` records the numeric results in paper-notes section 4.
+[`targets.csv`](../results/targets.csv) records the numeric results in paper-notes section 4.
 The source is the January 14, 2026 version of Harvey, Mazzoleni and Melone,
 *The Unintended Consequences of Rebalancing*, stored at the repository root.
 The original PDF controls where the notes and the paper differ.
@@ -28,7 +28,10 @@ column numbers and axis coordinates are metadata, not separate estimates.
 Regression coefficients and standard errors retain the paper's units and
 rounding. Returns and portfolio weights use fractions where the table does.
 The canonical signal names are `threshold`, `calendar`, `week4`,
-`calendar_week4`, `momentum` and `ret`. Control names use lowercase.
+`calendar:week4`, `momentum` and `ret`. Other interactions also use colons:
+`threshold:week4`, `calendar:week1` and `calendar:week3`.
+The extension terms are `mom_fast`, `mom_medium`, `mom_slow`, `rev_st`,
+`eom_rev` and `threshold_perp`. Control names use lowercase.
 Regression `coef` targets have companion `se` targets where the paper gives
 standard errors. No t-statistics are invented from significance stars.
 A comparison may calculate `coef / se` from the printed values. Rounding can
@@ -40,26 +43,26 @@ columns and all displayed estimates. Table 2 is split into `table_2a` and
 `1`, `2`, `3` mean 1961-2023, 1961-1997 and 1997-2023. Table 5 columns
 `1`, `2` mean R1K/R2K and Value/Growth. Model `nobs` and `adj_r2` targets
 attach to the first estimated term, usually `threshold`. Exceptions are
-`ret_1d` for Table D.1, `short_term_reversal` for Table D.10 column 1,
-and `eom_reversal` for Table D.11 column 1. Produced regression CSVs repeat
+`ret_1` for Table D.1, `rev_st` for Table D.10 column 1,
+and `eom_rev` for Table D.11 column 1. Produced regression CSVs repeat
 these model statistics on their term rows, as the exhibit contract requires.
 
 Other keys follow these rules:
 
 | Exhibit | `column` | `term` and units |
 |---|---|---|
-| `table_1`, `table_3` | `one_sd_bps` | One-standard-deviation return magnitudes in basis points; Table 3 prefixes terms with `sp500_` or `ty_`. |
+| `table_1`, `table_3` | `1` (spread/equity), `3` (bonds) | `threshold`, `calendar:week4` with `stat=value`: signed one-SD effects in basis points, from `magnitudes.csv`. |
 | `table_6a` | `sp500`, `ty`, `strategy` | `mean_pct_pa`, `vol_pct_pa` are annual percentage points; `sharpe`, `skewness` are dimensionless. |
 | `table_6b` | `capm`, `c4`, `ff5`, `hxz` | `alpha_pct_pa`, with annual percentage-point SEs. |
 | `table_6c` | `ivol`, `liquidity`, `vix`, `move`, `epu` | `high_mean_pct_pa`, `low_mean_pct_pa`, with annual percentage-point SEs. |
 | `table_C1` | `threshold`, `calendar` | Printed `mean_annualized`, `sd_annualized`, `ar1`, `skewness`, `excess_kurtosis`; retain source scaling. |
 | `table_C2` | Matrix row name | Matrix column name; a correlation. |
-| `table_D1` | `threshold`, `calendar` | `ret_1d`: coefficient on trailing one-day return. |
-| `table_D7` | `86_14`, `50_50`, `70_30` | Equity/bond allocation identifies the regression. |
+| `table_D1` | `1`, `2` | Threshold and Calendar outcomes; `ret_1` is the trailing one-day return. |
+| `table_D7` | `1`, `2`, `3` | Equity/bond allocations 86/14, 50/50 and 70/30, respectively. |
 | `figure_1` | `equity_share` | `actual_min`, `actual_max`, `target_typical`, in fractions. |
 | `figure_2`, `figure_D1`, `figure_D3` | `delta_X_pct` | Threshold in percentage points identifies a plotted t-statistic. Figure D.3 terms identify the during/outside-rebalancing series. |
 | `figure_3`, `figure_D2` | `days_N` | `calendar_interaction`: t-statistic for the last-N-days interaction. |
-| `figure_4`, `figure_D4` | `day_N` | `threshold` or `calendar_week4`: predictive coefficient. |
+| `figure_4`, `figure_D4` | `day_N` | `threshold` or `calendar:week4`: predictive coefficient. |
 | `figure_4` | `summary` | First insignificant horizon, in trading days, based on the plotted 95% band. |
 | `figure_5` | Investor group/source | `threshold` or `calendar`: correlation. |
 | `figure_6` | `sample_end` | `strategy`, `sp500`: terminal readings on the axis labeled "Cumulative Gains (Log Scale)". |
@@ -81,8 +84,10 @@ No task specification or exhibit contract is changed here.
 
 ## Produced CSVs
 
-Each input filename is `<exhibit>.csv`. Real runs use `output/tables/` and
-`output/figures/`; demo runs use `output/demo/` directly.
+Real runs read CSVs under `output/tables/` and `output/figures/`.
+Demo runs read only `output/demo/`, including its subdirectories.
+The default report is `output/compare.md`, or `output/demo/compare.md` with
+`--demo`. `--out FILE` overrides the destination.
 
 Regression CSVs follow the exhibit contract's full wide schema:
 
@@ -100,6 +105,29 @@ For example, a Figure 3 row can use
 `figure_3,days_4,calendar_interaction,t,-3.1`. A scalar summary can instead
 use wide data with `exhibit,column,term,value`. The comparison requires the
 exact target keys and units. It does not adapt arbitrary plotting columns.
+
+The one-SD targets use the baseline columns of Tables 1 and 3. Their keys
+match the original `exhibit,column,term` fields in TASK-014's magnitude file.
+Only its signed `magnitude_bps` field becomes `stat=value`; its `coef` field
+is not loaded again. Demo input is `output/demo/magnitudes/magnitudes.csv`;
+real input is `output/tables/magnitudes.csv`. Spread and equity effects have
+negative paper values; bond effects have positive values. The paper describes
+the effect of a signal decrease, so those text magnitudes reverse direction
+when expressed as coefficient times a positive SD. No absolute value is taken.
+
+Each CSV is validated before any of its rows enter the join. Unsupported
+layouts, malformed rows, invalid statistics, non-finite values and duplicate
+keys cause that file to be skipped. A later file with a key already loaded
+is also skipped. Other files remain available. The summary lists every skipped
+file with its reason, including keyed files without any target keys.
+Invalid targets still fail: they are the comparison's required source.
+
+TASK-013's `table_C1.csv` uses `signal` rows. Its `table_C2.csv` uses a
+`predictor` matrix. Both are skipped and reported as missing until an explicit
+keyed export exists. `figure_C1.csv` also lacks comparison keys.
+TASK-014's D2, D5 and D13 have no targets in paper-notes section 4; their
+files are reported as skipped with no matching target keys. Every target
+for its other twelve produced tables must join, including the magnitude rows.
 
 ## Source checks and corrections to paper-notes section 4
 
@@ -123,6 +151,8 @@ exact target keys and units. It does not adapt arbitrary plotting columns.
 6. Figure 6, PDF page 42, labels its axis "Cumulative Gains (Log Scale)".
    The targets preserve the plotted readings, about 6.2 and 2.3. They do not
    assume a conversion to either wealth multiples or unshifted log returns.
+7. The bond one-SD effects, **4.1 bps** and **2.3 bps**, are on PDF page
+   **33**, with the equity effects. The previous citation to page 35 was wrong.
 
 All other section 4 numeric estimates agree with the source at their stated
 precision. Full table extraction was checked against the original PDF text.

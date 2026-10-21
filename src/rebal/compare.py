@@ -2,10 +2,11 @@
 
 CLI Arguments:
 --demo: read output/demo instead of output/tables and output/figures.
---out FILE: Markdown report destination (required).
+--out FILE: Markdown destination (default: output/demo/compare.md with --demo,
+otherwise output/compare.md).
 
 Reads docs/results/targets.csv and keyed exhibit CSVs (see
-docs/results/targets.md). Writes a comparison report with input lineage,
+docs/methods/comparison.md). Writes a comparison report with input lineage,
 coverage, sign and significance checks; never runs an exhibit.
 """
 
@@ -13,6 +14,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import math
 from collections import defaultdict
 from pathlib import Path
 
@@ -27,18 +29,56 @@ KEY = ("exhibit", "column", "term")
 
 def _read_csv(path: Path, required: tuple[str, ...]) -> list[dict[str, str]]:
     with path.open(newline="", encoding="utf-8-sig") as stream:
-        reader = csv.DictReader(stream)
+        reader = csv.DictReader(stream, strict=True)
         missing = set(required) - set(reader.fieldnames or [])
         if missing:
             raise ValueError(f"{path}: missing columns {', '.join(sorted(missing))}")
         rows = list(reader)
     for row in rows:
+        if None in row or any(value is None for value in row.values()):
+            raise ValueError(f"{path}: row width differs from header")
         if any(not row.get(key, "").strip() for key in KEY):
             raise ValueError(f"{path}: exhibit, column and term must be nonempty")
     return rows
 
 
-def compare(targets_path: Path, exhibit_dirs: list[Path]) -> list[dict]:
+def _read_actual(path: Path) -> list[tuple]:
+    """Normalize keyed estimates, including TASK-014's signed one-SD effects."""
+    rows = _read_csv(path, KEY)
+    actual = []
+    for row in rows:
+        key = tuple(row[name] for name in KEY)
+        if path.name == "magnitudes.csv":
+            if "magnitude_bps" not in row:
+                raise ValueError("magnitudes need a magnitude_bps column")
+            actual.append((*key, "value", row["magnitude_bps"]))
+        elif "stat" in row:
+            if "value" not in row:
+                raise ValueError("long-format statistics need a value column")
+            actual.append((*key, row["stat"], row["value"]))
+        else:
+            actual.extend((*key, stat, row[stat]) for stat in STATS if stat in row)
+    if not actual:
+        raise ValueError("no supported numeric statistics")
+    normalized = []
+    seen = set()
+    for *key, value in actual:
+        key = tuple(key)
+        if key in seen:
+            raise ValueError("duplicate exhibit/column/term/stat key")
+        seen.add(key)
+        if key[-1] not in STATS:
+            raise ValueError(f"invalid statistic {key[-1]!r}")
+        number = float(value) if value.strip() else None
+        if number is not None and not math.isfinite(number):
+            raise ValueError("non-finite value")
+        normalized.append((*key, number))
+    return normalized
+
+
+def compare(
+    targets_path: Path, exhibit_dirs: list[Path], *, skipped: list[str] | None = None
+) -> list[dict]:
     """Join exact string keys and statistic names; missing estimates stay NULL.
 
     Regression files follow docs/contracts/exhibits.md. Other exhibits can use
@@ -48,30 +88,28 @@ def compare(targets_path: Path, exhibit_dirs: list[Path]) -> list[dict]:
     targets = _read_csv(
         targets_path, (*KEY, "stat", "paper_value", "approx", "source_page")
     )
-    exhibits = {row["exhibit"] for row in targets}
-    paths = sorted(
-        {
-            p
-            for folder in exhibit_dirs
-            for p in folder.glob("*.csv")
-            if p.stem in exhibits
-        }
-    )
+    target_keys = {tuple(row[key] for key in KEY) for row in targets}
+    skipped = skipped if skipped is not None else []
+    paths = sorted({p for folder in exhibit_dirs for p in folder.rglob("*.csv")})
     actual = []
+    seen = set()
     for path in paths:
-        for row in _read_csv(path, KEY):
-            if "stat" in row:
-                if "value" not in row:
-                    raise ValueError(
-                        f"{path}: long-format statistics need a value column"
-                    )
-                actual.append((*[row[key] for key in KEY], row["stat"], row["value"]))
-            else:
-                actual.extend(
-                    (*[row[key] for key in KEY], stat, row[stat])
-                    for stat in STATS
-                    if stat in row
-                )
+        try:
+            incoming = _read_actual(path)
+            incoming = [row for row in incoming if row[:3] in target_keys]
+            if not incoming:
+                raise ValueError("no matching target keys")
+            keys = {row[:4] for row in incoming}
+            if seen & keys:
+                raise ValueError("duplicate key across CSV files")
+        except (OSError, UnicodeError, csv.Error, ValueError) as exc:
+            reason = str(exc)
+            skipped.append(
+                reason if reason.startswith(f"{path}:") else f"{path}: {reason}"
+            )
+            continue
+        seen.update(keys)
+        actual.extend(incoming)
 
     with duckdb.connect() as con:
         con.execute("""CREATE TEMP TABLE targets (
@@ -99,7 +137,7 @@ def compare(targets_path: Path, exhibit_dirs: list[Path]) -> list[dict]:
         if actual:
             con.executemany(
                 "INSERT INTO actual VALUES (?, ?, ?, ?, ?)",
-                [(*row[:4], row[4] if row[4] else None) for row in actual],
+                actual,
             )
         for table, value in (("targets", "paper_value"), ("actual", "value")):
             # Table/column names are constants above, never user-provided SQL.
@@ -165,7 +203,11 @@ def _cell(value: str) -> str:
 
 
 def render_report(
-    rows: list[dict], targets_path: Path, exhibit_dirs: list[Path]
+    rows: list[dict],
+    targets_path: Path,
+    exhibit_dirs: list[Path],
+    *,
+    skipped: list[str] | None = None,
 ) -> str:
     groups = defaultdict(list)
     for row in rows:
@@ -176,6 +218,7 @@ def render_report(
         if all(row["ours"] is None for row in group)
     ]
     matched = sum(row["ours"] is not None for row in rows)
+    matched_exhibits = [name for name in groups if name not in missing]
     lines = [
         "# Paper comparison",
         "",
@@ -195,6 +238,9 @@ def render_report(
     lines.extend(
         [
             f"- Missing exhibits: {', '.join(missing) if missing else 'none'}",
+            f"- Matched exhibits: {', '.join(matched_exhibits) if matched_exhibits else 'none'}",
+            f"- Skipped CSVs: {len(skipped or [])}",
+            *[f"  - {_cell(reason)}" for reason in (skipped or [])],
             "",
             f"Targets: `{targets_path}`. Inputs: "
             + ", ".join(f"`{folder}`" for folder in exhibit_dirs)
@@ -239,7 +285,9 @@ def parse_args() -> argparse.Namespace:
         "--demo", action="store_true", help="Read only output/demo CSVs."
     )
     parser.add_argument(
-        "--out", type=Path, required=True, help="Markdown report destination."
+        "--out",
+        type=Path,
+        help="Markdown destination (default: output/[demo/]compare.md).",
     )
     return parser.parse_args()
 
@@ -251,10 +299,16 @@ def main() -> None:
         REPO_ROOT / "output" / kind
         for kind in (("demo",) if args.demo else ("tables", "figures"))
     ]
-    rows = compare(targets, folders)
-    args.out.parent.mkdir(parents=True, exist_ok=True)
-    args.out.write_text(render_report(rows, targets, folders), encoding="utf-8")
-    Console().print(f"Comparison report: {args.out}", markup=False)
+    skipped: list[str] = []
+    rows = compare(targets, folders, skipped=skipped)
+    destination = args.out or REPO_ROOT / "output" / (
+        "demo/compare.md" if args.demo else "compare.md"
+    )
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    destination.write_text(
+        render_report(rows, targets, folders, skipped=skipped), encoding="utf-8"
+    )
+    Console().print(f"Comparison report: {destination}", markup=False)
 
 
 if __name__ == "__main__":

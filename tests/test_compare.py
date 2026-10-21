@@ -2,6 +2,7 @@
 
 import csv
 import sys
+from pathlib import Path
 
 import pytest
 
@@ -117,20 +118,178 @@ def test_empty_outputs_and_demo_isolation(targets, tmp_path, monkeypatch):
     assert "Targets matched: 1/9" in report_path.read_text()
 
 
-def test_duplicate_outputs_rejected(targets, tmp_path):
+def test_duplicate_outputs_skipped(targets, tmp_path):
     fields = ["exhibit", "column", "term", "coef"]
     row = ["table_1", "1", "threshold", -0.4]
     write_csv(tmp_path / "table_1.csv", fields, [row, row])
-    with pytest.raises(ValueError, match="duplicate"):
-        compare.compare(targets, [tmp_path])
+    skipped = []
+    rows = compare.compare(targets, [tmp_path], skipped=skipped)
+    assert all(row["ours"] is None for row in rows)
+    assert any("table_1.csv: duplicate" in reason for reason in skipped)
 
 
 @pytest.mark.parametrize("value", ["NaN", "inf", "-inf"])
-def test_nonfinite_outputs_rejected(targets, tmp_path, value):
+def test_nonfinite_outputs_skipped(targets, tmp_path, value):
     write_csv(
         tmp_path / "table_1.csv",
         ["exhibit", "column", "term", "coef"],
         [["table_1", "1", "threshold", value]],
     )
-    with pytest.raises(ValueError, match="non-finite"):
-        compare.compare(targets, [tmp_path])
+    skipped = []
+    rows = compare.compare(targets, [tmp_path], skipped=skipped)
+    assert all(row["ours"] is None for row in rows)
+    assert any("table_1.csv: non-finite" in reason for reason in skipped)
+
+
+@pytest.mark.parametrize(
+    "fields, values, reason",
+    [
+        (["signal", "mean"], [["threshold", 0.49]], "missing columns"),
+        (["predictor", "threshold"], [["calendar", 0.605]], "missing columns"),
+        (
+            ["exhibit", "column", "term", "stat"],
+            [["table_1", "1", "threshold", "coef"]],
+            "value column",
+        ),
+        (
+            ["exhibit", "column", "term", "coef"],
+            [["table_1", "1", "threshold", "bad"]],
+            "could not convert",
+        ),
+        (
+            ["exhibit", "column", "term", "value"],
+            [["table_1", "1", "threshold"]],
+            "row width",
+        ),
+        (
+            ["exhibit", "column", "term", "value"],
+            [["table_1", "1", "threshold", 1, 2]],
+            "row width",
+        ),
+        (
+            ["exhibit", "column", "term", "value"],
+            [["table_1", "", "threshold", 1]],
+            "nonempty",
+        ),
+        (
+            ["exhibit", "column", "term", "stat", "value"],
+            [["table_1", "1", "threshold", "bad", 1]],
+            "invalid statistic",
+        ),
+        (
+            ["exhibit", "column", "term", "date"],
+            [["table_1", "1", "threshold", "2000"]],
+            "no supported",
+        ),
+        (
+            ["exhibit", "column", "term", "coef"],
+            [["unknown", "1", "threshold", 1]],
+            "no matching target",
+        ),
+    ],
+)
+def test_unjoinable_csv_reported_while_valid_csv_matches(
+    targets, tmp_path, fields, values, reason
+):
+    folder = tmp_path / "output"
+    write_csv(folder / "unsupported.csv", fields, values)
+    write_csv(
+        folder / "figure_6.csv",
+        ["exhibit", "column", "term", "value"],
+        [["figure_6", "strategy", "end", 3.1]],
+    )
+    skipped = []
+    rows = compare.compare(targets, [folder], skipped=skipped)
+    report = compare.render_report(rows, targets, [folder], skipped=skipped)
+    assert "Targets matched: 1/9" in report
+    assert "Missing exhibits: table_1\n" in report
+    assert "Skipped CSVs: 1" in report
+    assert "unsupported.csv" in report and reason in report
+
+
+@pytest.mark.parametrize(
+    "relative_path", ["magnitudes/magnitudes.csv", "magnitudes.csv"]
+)
+def test_signed_magnitudes_and_zero(targets, tmp_path, relative_path):
+    folder = tmp_path / "output"
+    write_csv(
+        folder / "table_1.csv",
+        ["exhibit", "column", "term", "coef"],
+        [["table_1", "1", "threshold", -0.4], ["table_1", "1", "zero", 0]],
+    )
+    write_csv(
+        folder / relative_path,
+        ["exhibit", "column", "term", "coef", "magnitude_bps"],
+        [["table_1", "1", "threshold", -0.4, -20]],
+    )
+    with targets.open("a") as stream:
+        stream.write("table_1,1,threshold,value,-20,0,20\n")
+    skipped = []
+    rows = compare.compare(targets, [folder], skipped=skipped)
+    by_key = {(r["term"], r["stat"]): r for r in rows if r["column"] == "1"}
+    assert by_key["threshold", "value"]["ours"] == -20
+    assert by_key["threshold", "value"]["sign_match"] is True
+    assert by_key["threshold", "coef"]["ours"] == -0.4
+    assert by_key["zero", "coef"]["ours"] == 0
+    assert not skipped
+
+
+def test_duplicate_across_files_skips_whole_later_file(targets, tmp_path):
+    folder = tmp_path / "output"
+    fields = ["exhibit", "column", "term", "coef"]
+    write_csv(folder / "a.csv", fields, [["table_1", "1", "threshold", -0.4]])
+    write_csv(
+        folder / "b.csv",
+        fields,
+        [["table_1", "1", "threshold", 99], ["table_1", "1", "calendar", 99]],
+    )
+    skipped = []
+    rows = compare.compare(targets, [folder], skipped=skipped)
+    assert sum(row["ours"] is not None for row in rows) == 1
+    assert "b.csv: duplicate key across CSV files" in skipped[0]
+
+
+def test_invalid_targets_still_fail(targets, tmp_path):
+    with targets.open("a") as stream:
+        stream.write("table_1,1,threshold,coef,-0.4,0,20\n")
+    with pytest.raises(ValueError, match="targets: duplicate"):
+        compare.compare(targets, [tmp_path / "empty"])
+
+
+def test_current_predictive_outputs_match_all_their_targets(tmp_path, monkeypatch):
+    """Exercise the actual exporters so renamed keys cannot silently disappear."""
+    from rebal.exhibits import predictive_tables, signals_descriptive
+
+    # Build real demo exports in isolation; never depend on existing output/demo.
+    monkeypatch.setattr(predictive_tables, "output_dir", lambda kind: tmp_path)
+    monkeypatch.setattr(signals_descriptive, "output_dir", lambda kind: tmp_path)
+    predictive_tables.run(demo=True)
+    signals_descriptive.run(demo=True)
+    targets = Path(__file__).resolve().parents[1] / "docs/results/targets.csv"
+    skipped = []
+    rows = compare.compare(targets, [tmp_path], skipped=skipped)
+    produced = set(predictive_tables.EXHIBITS)
+    relevant = [row for row in rows if row["exhibit"] in produced]
+    assert len(relevant) == 238
+    assert all(row["ours"] is not None for row in relevant)
+    assert sum(row["stat"] == "value" for row in relevant) == 6
+    for name in (
+        "table_C1",
+        "table_C2",
+        "figure_C1",
+        "table_D2",
+        "table_D5",
+        "table_D13",
+    ):
+        assert any(f"{name}.csv:" in reason for reason in skipped)
+    # All six magnitude targets use emitted column keys and the signed source field.
+    with (tmp_path / "magnitudes" / "magnitudes.csv").open() as stream:
+        magnitudes = {
+            tuple(row[key] for key in compare.KEY): float(row["magnitude_bps"])
+            for row in csv.DictReader(stream)
+        }
+    for row in relevant:
+        if row["stat"] == "value":
+            assert row["ours"] == magnitudes[tuple(row[key] for key in compare.KEY)]
+            assert row["source_page"] == ("20" if row["exhibit"] == "table_1" else "33")
+            assert (row["paper_value"] > 0) == (row["column"] == "3")
