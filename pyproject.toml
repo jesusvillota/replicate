@@ -1,0 +1,26 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "replicate"
+version = "0.1.0"
+description = "Replication of Harvey–Mazzoleni–Melone (2026)"
+requires-python = ">=3.11"
+dependencies = [
+    "pandas", "numpy", "pyarrow", "duckdb", "statsmodels", "scipy",
+    "matplotlib", "requests", "rich", "yfinance", "openpyxl", "xlrd",
+    "wrds", "cluster-kit",
+]
+
+[dependency-groups]
+dev = ["pytest"]
+
+[tool.uv.sources]
+cluster-kit = { git = "https://github.com/jesusvillota/cluster-kit" }
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/rebal"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
