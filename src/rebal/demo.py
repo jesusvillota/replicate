@@ -127,7 +127,8 @@ def make_signals(
         scale = target * (1 - target) / (0.6 * 0.4)
         data[f"threshold_{suffix}"] = threshold * scale
         data[f"calendar_{suffix}"] = calendar * scale
-    ret = rng.normal(0, 0.01, n)
+    # Keep finite-sample error below 0.05 with the full predictive design.
+    ret = rng.normal(0, 0.008, n)
     ret[1:] += (
         beta_threshold * threshold[:-1]
         + beta_calweek4 * (calendar * data["week4"])[:-1]

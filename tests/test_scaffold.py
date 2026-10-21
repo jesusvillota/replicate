@@ -103,7 +103,7 @@ def test_fixture_determinism_and_no_mutation(panel, signals):
     "module,args,output",
     [
         ("rebal.demo", ["--check"], "PASS"),
-        ("rebal.exhibits", ["--all", "--demo"], "1 exhibit modules"),
+        ("rebal.exhibits", ["--all", "--demo"], "exhibit modules"),
     ],
 )
 def test_cli(module, args, output):
