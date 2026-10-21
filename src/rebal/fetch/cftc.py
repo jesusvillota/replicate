@@ -183,6 +183,13 @@ def write_ltpos(source: Path, directory: Path) -> dict:
         if market not in selected:
             continue
         found.add(market)
+        if [rows[1][offset + col].strip() for col in (2, 4, 6, 8)] != [
+            "Dealer intermediary",
+            "Asset Manager/ Institutional",
+            "Leveraged Funds",
+            "Other Reportable",
+        ]:
+            raise ValueError(f"LTPos: unexpected trader groups for {market}")
         if [value.strip() for value in rows[2][offset : offset + 2]] != [
             "Week Starting",
             "Week Ending",
@@ -230,6 +237,8 @@ def write_ltpos(source: Path, directory: Path) -> dict:
         raise ValueError("LTPos: incomplete 2009–2011 history")
     if frame.isna().any().any():
         raise ValueError("LTPos: missing observations")
+    if not frame.groupby("market").size().eq(125).all():
+        raise ValueError("LTPos: expected 125 periods per market")
     path = directory / "ltpos.csv"
     frame.to_csv(path, index=False)
     summarize(path, "date", key_cols=("market",))
