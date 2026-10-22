@@ -10,7 +10,7 @@ requires-python = ">=3.11"
 dependencies = [
     "pandas", "numpy", "pyarrow", "duckdb", "statsmodels", "scipy",
     "matplotlib", "requests", "rich", "yfinance", "openpyxl", "xlrd",
-    "wrds", "cluster-kit",
+    "wrds", "cluster-kit", "pypdf",
 ]
 
 [dependency-groups]
