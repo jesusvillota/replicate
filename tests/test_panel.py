@@ -129,9 +129,111 @@ def test_check_reopens_both_parquets_and_rejects_alternative_changes(
     output = io.StringIO()
     panel.check(Console(file=output, width=160))
     assert output.getvalue().rstrip().endswith("PANEL OK")
+    assert "date=datetime64[ns]" in output.getvalue()
     assert "rows=" in output.getvalue() and "regression N=6226" in output.getvalue()
     other = valid_panel.copy()
     other.loc[0, "epu"] += 1
     other.to_parquet(tmp_path / "daily_panel_alt.parquet", index=False)
     with pytest.raises(AssertionError):
         panel.check(Console(file=io.StringIO()))
+
+
+@pytest.mark.parametrize("hpw_available", [True, False])
+def test_assembly_maps_sources_without_filling_returns(
+    tmp_path, monkeypatch, hpw_available
+):
+    """Exercise the builder with distinct scales and independent flat-curve pricing."""
+    dates = pd.bdate_range("2001-09-07", "2001-10-05", name="date")
+    monkeypatch.setattr(panel, "licensed_dir", lambda source: tmp_path / source)
+    if hpw_available:
+        (tmp_path / "hpw").mkdir()
+        (tmp_path / "hpw/noise.csv").touch()
+
+    def source_reader(con, path, columns, paths, *, etfs=False):
+        paths.append(path)
+        if etfs:
+            frame = pd.DataFrame(
+                [
+                    (date, ticker, 0.02 + i / 1000)
+                    for date in dates
+                    for i, ticker in enumerate(("SPY", "IWB", "IWM", "IWD", "IWF"))
+                ],
+                columns=["date", "ticker", "ret"],
+            ).set_index("date")
+            frame.loc[(frame.index == "2001-09-19") & frame.ticker.eq("SPY"), "ret"] = (
+                np.nan
+            )
+            return frame
+        values = {
+            "Mkt-RF": 1,
+            "SMB": 2,
+            "HML": 3,
+            "RF": 0.01,
+            "RMW": 4,
+            "CMA": 5,
+            "Mom": 6,
+            "R_MKT": 7,
+            "R_ME": 8,
+            "R_IA": 9,
+            "R_ROE": 10,
+            "R_EG": 11,
+            "VIXCLS": 25,
+            "DTB3": 3.6,
+            "epu": 150,
+            "ads": -0.5,
+            "sentiment": 0.6,
+            "ra": 3,
+            "unc": 0.04,
+            "ara": 12,
+            "ivol": 0.03,
+            "Noise_bp": 2.5,
+            "Funding": -1.5,
+            "ret": 0.004,
+            **{f"SVENY{i:02}": 5 for i in [6, 7, 9, 10]},
+            "SVENPY10": 200 * np.expm1(5 / 200),
+            "BETA0": 5,
+            "BETA1": 0,
+            "BETA2": 0,
+            "BETA3": 0,
+            "TAU1": 1,
+            "TAU2": 2,
+        }
+        frame = pd.DataFrame(
+            {name: values.get(name, 100.0) for name in columns}, index=dates
+        )
+        if path.name == "feds200628.csv":
+            frame.loc["2001-09-24", ["SVENY06", "SVENY07"]] = np.nan
+        if path.name == "VBMFX_daily.parquet":
+            frame.loc["2001-09-20", "ret"] = np.nan
+        if path.name == "noise.csv":
+            frame.loc[pd.Timestamp("1990-01-01")] = 2.5
+            frame.loc[pd.Timestamp("2024-01-01")] = 2.5
+        return frame
+
+    monkeypatch.setattr(panel, "read_source", source_reader)
+    main, alt, _paths, choices = panel.assemble_panels()
+    indexed = main.set_index("date")
+    assert not main.date.between("2001-09-11", "2001-09-14").any()
+    assert not main.date.isin(
+        pd.to_datetime(["2001-09-19", "2001-09-24", "2001-09-25"])
+    ).any()
+    assert pd.isna(indexed.loc["2001-09-20", "r_agg"])
+    assert indexed.loc["2001-09-21", "r_agg"] == pytest.approx(0.004)
+    assert indexed.rf.eq(0.0001).all()
+    assert indexed.r_es.eq(0.0199).all()
+    # 9/17 uses the immediately preceding source session (9/14), then drops closures.
+    assert indexed.loc["2001-09-17", "r_ty"] == pytest.approx(
+        np.expm1(0.05 * 3 / 365.25) - 0.0001
+    )
+    np.testing.assert_allclose(
+        indexed.loc["2001-09-17", list(panel.FACTORS)], np.arange(1, 12) / 100
+    )
+    assert indexed.vix.eq(0.25).all() and indexed.move.eq(1).all()
+    assert indexed.ra_bex.eq(3).all() and indexed.unc_bex.eq(0.04).all()
+    assert indexed.liquidity.eq(2.5 if hpw_available else -1.5).all()
+    assert ("HPW" if hpw_available else "OFR") in choices["liquidity"]
+    assert indexed.loc["2001-09-18", "rf_3m"] == pytest.approx(0.036 * 2 / 360)
+    pd.testing.assert_frame_equal(
+        main.drop(columns=["r_es", "r_ty"]), alt.drop(columns=["r_es", "r_ty"])
+    )
+    assert not main.r_es.equals(alt.r_es)

@@ -350,7 +350,8 @@ def check(console: Console) -> None:
         validate_panel(panel)
         console.print(
             f"{name}: schema/dtypes OK (date=datetime64[ns], {len(COLUMNS) - 1} float64); "
-            "dates sorted, unique, midnight; core returns complete"
+            "dates sorted, unique, midnight; core returns complete",
+            markup=False,
         )
         for line in coverage_lines(panel):
             console.print(line, soft_wrap=True)
