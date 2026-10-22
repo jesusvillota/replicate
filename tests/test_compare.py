@@ -273,9 +273,17 @@ def test_current_predictive_outputs_match_all_their_targets(tmp_path, monkeypatc
     assert len(relevant) == 238
     assert all(row["ours"] is not None for row in relevant)
     assert sum(row["stat"] == "value" for row in relevant) == 6
+    descriptive_rows = [
+        row for row in rows if row["exhibit"] in {"table_C1", "table_C2"}
+    ]
+    assert len(descriptive_rows) == 14
+    assert all(row["ours"] is not None for row in descriptive_rows)
+    assert not any(
+        f"{name}.csv:" in reason
+        for name in ("table_C1", "table_C2")
+        for reason in skipped
+    )
     for name in (
-        "table_C1",
-        "table_C2",
         "figure_C1",
         "table_D2",
         "table_D5",
