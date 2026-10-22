@@ -1,0 +1,1 @@
+- Full CRSP Mutual Funds access is unavailable and will not be obtained for this goal. Proceed with existing access. Find public mutual-fund return sources or documented proxies for missing history; do not wait for a subscription change or shorten the 1997–2023 study to fit the WRDS sample.
