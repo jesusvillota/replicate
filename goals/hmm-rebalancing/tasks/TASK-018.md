@@ -6,7 +6,7 @@ state: approved
 depends_on: [TASK-012, TASK-015, TASK-016, TASK-017, TASK-020, TASK-021]
 delivery: pr
 kind: run
-route: {platform: codex, model: gpt-6-astra, effort: high}
+route: {platform: codex, model: gpt-6.1-sol, effort: high}
 ---
 
 ## Why
