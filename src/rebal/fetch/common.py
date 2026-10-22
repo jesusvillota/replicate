@@ -47,6 +47,7 @@ def summarize(
     path: Path,
     date_col: str | list[str],
     *,
+    key_cols: tuple[str, ...] = (),
     archive_member: str | None = None,
     **read_kwargs,
 ) -> None:
@@ -54,6 +55,7 @@ def summarize(
 
     CSV/Excel reader options support published preambles and workbook notes.
     A list of year/month/day columns supports dates published as separate fields.
+    key_cols identifies series in a panel; dates must be unique within each series.
     archive_member selects a CSV inside a published ZIP with additional documents.
     """
     # pandas: file validation only; no analytical query or per-group computation.
@@ -76,7 +78,10 @@ def summarize(
     if dates.isna().any() or dates.dt.tz is not None:
         raise ValueError(f"{path}: dates must be nonmissing and timezone-naive")
     dates = dates.dt.normalize()
-    if dates.duplicated().any():
+    keys = frame[list(key_cols)]
+    if keys.isna().any().any():
+        raise ValueError(f"{path}: series keys must be nonmissing")
+    if keys.assign(_date=dates).duplicated().any():
         raise ValueError(f"{path}: duplicate dates")
     Console().print(
         f"OK {path} rows={len(frame)} first={dates.min():%Y-%m-%d} "

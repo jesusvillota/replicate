@@ -1,0 +1,275 @@
+{
+  "script": "rebal.fetch.cftc",
+  "retrieved_on": "2026-10-21",
+  "end_year": 2026,
+  "archives": {
+    "deacot1997.zip": {
+      "url": "https://www.cftc.gov/files/dea/history/deacot1997.zip",
+      "bytes": 860259,
+      "sha256": "f96c77c777b65b69dfa8061a8ae7147d37141c607b89e28196a8f50dea24b73b"
+    },
+    "deacot1998.zip": {
+      "url": "https://www.cftc.gov/files/dea/history/deacot1998.zip",
+      "bytes": 882739,
+      "sha256": "e8056ea95d3ffbf027c36e837155214a12e50c338070063998bf062374d5934c"
+    },
+    "deacot1999.zip": {
+      "url": "https://www.cftc.gov/files/dea/history/deacot1999.zip",
+      "bytes": 862059,
+      "sha256": "0c4691c2d780d1eae58933e2194c3d406a7c573ccfaa7f3ddb268d1a1c8a80ab"
+    },
+    "deacot2000.zip": {
+      "url": "https://www.cftc.gov/files/dea/history/deacot2000.zip",
+      "bytes": 602915,
+      "sha256": "b4c06549db2f9a193ea5ee93851c090cdd76917595e76cdd01ca67a792c8277c"
+    },
+    "deacot2001.zip": {
+      "url": "https://www.cftc.gov/files/dea/history/deacot2001.zip",
+      "bytes": 543513,
+      "sha256": "d3227702d8fdbc6684de5f01a4b5652a72ec8950862dedd7f1d42c656453759e"
+    },
+    "deacot2002.zip": {
+      "url": "https://www.cftc.gov/files/dea/history/deacot2002.zip",
+      "bytes": 554233,
+      "sha256": "7cb90880840b5c91519d4eddca3d43ffd77109e645f9e588926b98c3b31f400b"
+    },
+    "deacot2003.zip": {
+      "url": "https://www.cftc.gov/files/dea/history/deacot2003.zip",
+      "bytes": 599665,
+      "sha256": "0290e2148f7adc7b5cece86a2aebd512ddc226d70fa9a79697e5834c1272e300"
+    },
+    "deacot2004.zip": {
+      "url": "https://www.cftc.gov/files/dea/history/deacot2004.zip",
+      "bytes": 649177,
+      "sha256": "e1b4940a7e8a24d381e1ba38c0633bb23e6cf67312631975a6e8356914773e44"
+    },
+    "deacot2005.zip": {
+      "url": "https://www.cftc.gov/files/dea/history/deacot2005.zip",
+      "bytes": 718285,
+      "sha256": "af1d5fdfe6994d33afda5b2c3ff3941f84ea18f9e5f3167969bf2598835624c1"
+    },
+    "deacot2006.zip": {
+      "url": "https://www.cftc.gov/files/dea/history/deacot2006.zip",
+      "bytes": 871821,
+      "sha256": "9e1dfcd978321cc93303f37d3f7f13c5e10b965c72afa6862d93243b87de0901"
+    },
+    "deacot2007.zip": {
+      "url": "https://www.cftc.gov/files/dea/history/deacot2007.zip",
+      "bytes": 868266,
+      "sha256": "5c82366a086509465478014b269f90266e38a82f41c23136e964d71cd7b794a9"
+    },
+    "deacot2008.zip": {
+      "url": "https://www.cftc.gov/files/dea/history/deacot2008.zip",
+      "bytes": 893057,
+      "sha256": "97a76edebe3cf7cc93a6fa862799076e9863fb7cbc42e8dba4c8762c07249fb9"
+    },
+    "deacot2009.zip": {
+      "url": "https://www.cftc.gov/files/dea/history/deacot2009.zip",
+      "bytes": 959612,
+      "sha256": "5558e169e558ee15a861fb623e2a986aaafcdc178d7ab2eaf7dc628ed217b32b"
+    },
+    "deacot2010.zip": {
+      "url": "https://www.cftc.gov/files/dea/history/deacot2010.zip",
+      "bytes": 1021288,
+      "sha256": "ba52af024b2cc24f4bf7699950b70b0ae70ce2a123fca63e88c93f5d67561253"
+    },
+    "deacot2011.zip": {
+      "url": "https://www.cftc.gov/files/dea/history/deacot2011.zip",
+      "bytes": 1046419,
+      "sha256": "8872d6e7d43cc09d5d5834122dcbf4dd426dc0590faa394d041f603234e8d16a"
+    },
+    "deacot2012.zip": {
+      "url": "https://www.cftc.gov/files/dea/history/deacot2012.zip",
+      "bytes": 1103492,
+      "sha256": "018de1a8b9c8c87ccdcac31652f56828f9af3b44f89df2de474fd460a0dfd6de"
+    },
+    "deacot2013.zip": {
+      "url": "https://www.cftc.gov/files/dea/history/deacot2013.zip",
+      "bytes": 1336525,
+      "sha256": "881bed5906e156c23dc2036f6b4312f3c2215a7b9aebe51ee7973458ec0bf845"
+    },
+    "deacot2014.zip": {
+      "url": "https://www.cftc.gov/files/dea/history/deacot2014.zip",
+      "bytes": 1545256,
+      "sha256": "65e8c7111bc628c1bc2801a246e7872c574fdead67f210a5dd58303b384dba1a"
+    },
+    "deacot2015.zip": {
+      "url": "https://www.cftc.gov/files/dea/history/deacot2015.zip",
+      "bytes": 1598000,
+      "sha256": "768b7be61d0f9895dd6c3ddcef9f1449c85773bd61dc8cc656fd43d30531871b"
+    },
+    "deacot2016.zip": {
+      "url": "https://www.cftc.gov/files/dea/history/deacot2016.zip",
+      "bytes": 1710723,
+      "sha256": "186c95a12c71fdbd241b83679afcfff2cc900c779b67bfe9bcd091d16a7ca0ce"
+    },
+    "deacot2017.zip": {
+      "url": "https://www.cftc.gov/files/dea/history/deacot2017.zip",
+      "bytes": 1711091,
+      "sha256": "5e910b93b5af5e1c8f4006eaeee10109754ee5dd2c7f9d04520bd9770c8ece2b"
+    },
+    "deacot2018.zip": {
+      "url": "https://www.cftc.gov/files/dea/history/deacot2018.zip",
+      "bytes": 1900546,
+      "sha256": "adaecbfadf54f117308cc8a135cd9ba827deac3eb1489a5febc642c403728527"
+    },
+    "deacot2019.zip": {
+      "url": "https://www.cftc.gov/files/dea/history/deacot2019.zip",
+      "bytes": 1904592,
+      "sha256": "3f2707b5fcab1491329684c82cc03759ab66899839f533e09ff0a5dcf517b0c5"
+    },
+    "deacot2020.zip": {
+      "url": "https://www.cftc.gov/files/dea/history/deacot2020.zip",
+      "bytes": 1838852,
+      "sha256": "8c83c820e5f6fd193a0923aa02cfe520d20dbe74bba571a576c92baf7a186317"
+    },
+    "deacot2021.zip": {
+      "url": "https://www.cftc.gov/files/dea/history/deacot2021.zip",
+      "bytes": 1882568,
+      "sha256": "423d20412ec3fb629500fcbfbaa7b6973c5868965000d13963e9b63700c90952"
+    },
+    "deacot2022.zip": {
+      "url": "https://www.cftc.gov/files/dea/history/deacot2022.zip",
+      "bytes": 1983765,
+      "sha256": "206364f467eb0013b0a5f8e9526426cc6fcfc5bad4e4f91b25e00311a0184cfa"
+    },
+    "deacot2023.zip": {
+      "url": "https://www.cftc.gov/files/dea/history/deacot2023.zip",
+      "bytes": 2116244,
+      "sha256": "fd17a44cb7c9acb068515380f5c9ff450052d4a89f45d6b97f0d71ca2d69425c"
+    },
+    "deacot2024.zip": {
+      "url": "https://www.cftc.gov/files/dea/history/deacot2024.zip",
+      "bytes": 2302771,
+      "sha256": "3a33564a5677a4dad90b2513b07a81d8d55308318f9dcd6c8e80690a25c6b768"
+    },
+    "deacot2025.zip": {
+      "url": "https://www.cftc.gov/files/dea/history/deacot2025.zip",
+      "bytes": 2392119,
+      "sha256": "e5ae323dadda5ebbf69b6989af0d912fb1a4aebd954372f999eccb3a692352f9"
+    },
+    "deacot2026.zip": {
+      "url": "https://www.cftc.gov/files/dea/history/deacot2026.zip",
+      "bytes": 2030174,
+      "sha256": "d86ba8739423092833a01e2c200f799a087ec5bdba1f40af226fb58f263d058e"
+    },
+    "fin_fut_txt_2006_2016.zip": {
+      "url": "https://www.cftc.gov/files/dea/history/fin_fut_txt_2006_2016.zip",
+      "bytes": 3166765,
+      "sha256": "c3a8d01765133a24ce9c082de88933816497d06f1b03eec8c53750bdd818f14b"
+    },
+    "fut_fin_txt_2017.zip": {
+      "url": "https://www.cftc.gov/files/dea/history/fut_fin_txt_2017.zip",
+      "bytes": 395830,
+      "sha256": "e6e2dd537efcc57cdd6cdcc4e45e567fd47e65d8afc8369d8383bf09195ae7f5"
+    },
+    "fut_fin_txt_2018.zip": {
+      "url": "https://www.cftc.gov/files/dea/history/fut_fin_txt_2018.zip",
+      "bytes": 458570,
+      "sha256": "6843d130a25a17c6248df67463810f02077ef4eeafdd629299d21c18f5125e40"
+    },
+    "fut_fin_txt_2019.zip": {
+      "url": "https://www.cftc.gov/files/dea/history/fut_fin_txt_2019.zip",
+      "bytes": 454803,
+      "sha256": "631b31880d513072aa50d63117c896184dd35db3cc8fcdd6debd80197ee7a661"
+    },
+    "fut_fin_txt_2020.zip": {
+      "url": "https://www.cftc.gov/files/dea/history/fut_fin_txt_2020.zip",
+      "bytes": 430721,
+      "sha256": "c90d98d94db708772d669f263fb8061c75f8a7f681ba231fb21247e5c9798e6b"
+    },
+    "fut_fin_txt_2021.zip": {
+      "url": "https://www.cftc.gov/files/dea/history/fut_fin_txt_2021.zip",
+      "bytes": 466549,
+      "sha256": "5c929991038c70ae2501661b6d442b9e784d3c29d3166ceac2e21b45ac93d56a"
+    },
+    "fut_fin_txt_2022.zip": {
+      "url": "https://www.cftc.gov/files/dea/history/fut_fin_txt_2022.zip",
+      "bytes": 494559,
+      "sha256": "94c9c1fdee9dfbe377a09923ddfe26b88d3460605dd076081f221ad367d88601"
+    },
+    "fut_fin_txt_2023.zip": {
+      "url": "https://www.cftc.gov/files/dea/history/fut_fin_txt_2023.zip",
+      "bytes": 506931,
+      "sha256": "43c3dbdd4d01fceefad5e457003751cdc0974c7cf46097b322e26e9e2fe44d7a"
+    },
+    "fut_fin_txt_2024.zip": {
+      "url": "https://www.cftc.gov/files/dea/history/fut_fin_txt_2024.zip",
+      "bytes": 563591,
+      "sha256": "3f00585741a7cf76c207df640951d644dd91ff22a1106b38ca37a2469c765637"
+    },
+    "fut_fin_txt_2025.zip": {
+      "url": "https://www.cftc.gov/files/dea/history/fut_fin_txt_2025.zip",
+      "bytes": 627068,
+      "sha256": "2ea0cda6395f7dd6501c27422be3763e1f2f5b41b768cfd36b871f092a07d438"
+    },
+    "fut_fin_txt_2026.zip": {
+      "url": "https://www.cftc.gov/files/dea/history/fut_fin_txt_2026.zip",
+      "bytes": 578812,
+      "sha256": "6722fc377087c9380d7504345ac7145a891185ea7d57c9ad3f184b29da43aa57"
+    }
+  },
+  "reports": {
+    "cot_legacy": {
+      "rows": 4316,
+      "first": "1997-01-07",
+      "last": "2026-10-13",
+      "columns": 131,
+      "markets": {
+        "043602": {
+          "first": "1997-01-07",
+          "last": "2026-10-13",
+          "rows": 1555
+        },
+        "138741": {
+          "first": "1997-01-07",
+          "last": "2021-09-14",
+          "rows": 1248
+        },
+        "13874A": {
+          "first": "1997-09-16",
+          "last": "2026-10-13",
+          "rows": 1513
+        }
+      }
+    },
+    "tff": {
+      "rows": 2882,
+      "first": "2006-06-13",
+      "last": "2026-10-13",
+      "columns": 89,
+      "markets": {
+        "043602": {
+          "first": "2006-06-13",
+          "last": "2026-10-13",
+          "rows": 1062
+        },
+        "138741": {
+          "first": "2006-06-13",
+          "last": "2021-09-14",
+          "rows": 758
+        },
+        "13874A": {
+          "first": "2006-06-13",
+          "last": "2026-10-13",
+          "rows": 1062
+        }
+      }
+    },
+    "ltpos": {
+      "rows": 750,
+      "first": "2009-01-09",
+      "last": "2011-05-27",
+      "markets": [
+        "CBT 10 Year Treasury (TY)",
+        "CBT 2 Year Treasury (TU)",
+        "CBT 5 Year Treasury (FB)",
+        "CBT T-Bond (US)",
+        "CME S&P 500 (SP)",
+        "CME S&P 500 E Mini (ES)"
+      ],
+      "url": "https://www.cftc.gov/idc/groups/public/@marketreports/documents/file/lgtraderpos-csv.csv",
+      "raw_sha256": "8fe5bfc6e9d6c3caa0105e5792333688b2d7ca23d1ff898012012fa8fe2f9c80"
+    }
+  }
+}
