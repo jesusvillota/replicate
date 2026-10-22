@@ -41,6 +41,24 @@ No cluster jobs in this task. Runs on the MacBook only; never connect to WRDS fr
 
 Write `docs/data/cards/wrds.md` with the exact table names, filters and coverage.
 
+**Access limits and public fallback (DEC-002).** Full CRSP Mutual Funds access will
+not become available. Complete this task with existing access. The readable
+2004–2006 sample may be extracted, but must be labelled as a sample. Missing full
+WRDS history is an accepted limitation, not a reason to wait for a subscription.
+
+Search public sources for VBMFX/VBTLX daily total returns, including the provider
+and adjusted-price sources. Record the sources tried, dates, return definition,
+coverage and access limits in the source card. If a usable source exists, add a
+repeatable fetch path in a source-specific module and document its output for
+TASK-012. Keep terms-restricted public downloads under licensed storage. Verify
+that the return calculation includes distributions; raw NAV changes alone are
+not total returns. Keep public and WRDS sample files separate.
+
+If public fund history cannot be obtained, document the evidence and recommend
+an available broad bond-market proxy, including AGG from TASK-009. State coverage
+gaps and differences from the paper's aggregate bond index. TASK-012 integrates
+the available series or proxy; do not shorten the 1997–2023 study or invent data.
+
 **Test.** `tests/test_wrds_extract.py` checks the parsing helpers offline, with no WRDS connection.
 
 Out of scope: proxy comparison (TASK-011).
@@ -51,6 +69,10 @@ Out of scope: proxy comparison (TASK-011).
 - `--extract` prints an `OK` line for each file it writes. `treasury_fixed_term.parquet` covers 1997-09-10 to 2023-03-17, or the card states that CRSP Treasuries are not in our subscription.
 - `git status --porcelain` lists no data file.
 - `uv run pytest tests/test_wrds_extract.py` passes.
+- The source card records public fund-history searches and either a verified
+  repeatable download or an evidenced limitation with an available proxy recommendation.
+  Any new public fetch path has offline tests, and the outcome gives the exact
+  regeneration command and its live result for review.
 
 ## Verify
 

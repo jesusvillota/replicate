@@ -43,7 +43,12 @@ No cluster jobs in this task. Runs on the MacBook. Inputs:
 - **Factors:** convert percent to decimals.
 - **Indices** (simple daily returns):
   - `r_sp500tr` from `^SP500TR`.
-  - `r_agg` from VBMFX (WRDS) if available, else AGG.
+  - `r_agg` from usable VBMFX/VBTLX total-return history found by TASK-010,
+    including public sources, else a documented broad bond-market proxy such as
+    AGG. Full CRSP Mutual Funds access is unavailable (DEC-002); the 2004–2006
+    WRDS sample alone must not take precedence over longer usable history.
+    Explain the source choice, coverage gaps and any splice. Do not shorten the
+    main study to the fund sample or forward-fill missing returns.
   - `r_acwxus` from MSCI if available, else the best CRSP ETF.
   - `r_r1k`, `r_r2k`, `r_r1kv`, `r_r1kg` from IWB, IWM, IWD, IWF.
   - `r_mkt_french` = (Mkt-RF + RF) / 100.
