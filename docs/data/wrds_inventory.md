@@ -1,14 +1,9 @@
 # WRDS library inventory
 
-Observed on 2026-10-22 UTC (2026-10-23 in Madrid), from the MacBook.
+Observed on 2026-10-22 UTC from the MacBook.
 
-`wrds.Connection()` authenticated without a prompt. `db.list_libraries()` returned
-229 libraries. `db.list_tables(library=...)` succeeded for every library.
-The table counts below include views and foreign tables. Aliases repeat some datasets.
-
-**A listed table does not prove data access.** Reads through the `crsp` and
-`optionm` aliases can fail because the underlying schema is outside our subscription.
-The relevant checks below used actual `SELECT` queries, not only the catalog.
+`db.list_libraries()` returned 229 libraries; all table listings succeeded.
+Listed aliases do not prove row access. Relevant tables were probed below.
 
 ## Libraries
 
@@ -248,16 +243,54 @@ The relevant checks below used actual `SELECT` queries, not only the catalog.
 
 | Item | Available? | Tables and observed limits |
 |---|---|---|
-| Futures prices: ES / 10-year T-note | **No** | `trsamp_dsfut.wrds_contract_info`, `wrds_fut_contract`, `wrds_cseries_info`, `wrds_fut_series` are readable samples (also exposed through `trdssamp`). The contract metadata has no ES, TY or ZN. Its S&P match is SP, the standard contract, not E-mini. The continuous-series metadata has standard S&P series, but no requested E-mini or 10-year Treasury series. `optionm.futures` and `optionm.futures_price` deny access to `optionm_europe`. |
-| CRSP Treasuries | **No** | `crsp.tfz_dly_ft` and `crsp.tfz_idx` both return `permission denied for schema crsp_a_treasuries`. CRSP Treasuries are not in our subscription. |
-| CRSP Mutual Funds | **No** (full product); **Yes** (limited sample) | `crsp.fund_hdr`, `fund_hdr_hist`, `fund_names`, `daily_returns` and `daily_nav_ret` deny access to `crsp_q_mutualfunds`. `crspsamp_mf.fund_names`, `fund_hdr_hist` and `daily_nav_ret` are readable. The sample identifies VBMFX as fund 31239 and VBTLX as fund 31244 using `nasdaq`, not `ticker`. See the source card for the short coverage. |
-| CRSP index files | **Yes** | Actual row reads succeeded for `crsp.dsp500` and `crsp.dsi`. Not extracted by TASK-010. |
-| MSCI index data | **No** | `msci_common_samp`, `msci_climate_samp`, `msci_esg_samp` and their aliases list issuer, climate and ESG tables, including `msci_esg_samp.msci_esg_ratings`. No MSCI index-return library/table was found. These samples do not supply ACWI ex USA Net TR USD. |
-| Russell / FTSE index data | **Yes** (sample only) | `ftsesamp.ctr_monthly_us` is readable: Russell Top 200 only, 2008-08-29 through 2017-09-29, monthly reports. `ftsesamp.idx_holdings_us` and `rgs_sw_us` are also listed; alias `ftsesamp_russell_us`. This is not the required daily Russell 1000/2000/value/growth history. No extraction; recorded for the M-3 planner. |
-| ANcerno (Abel Noser) | **No** | No ANcerno/Abel Noser library or table appeared in the full library/table inventory. |
-| Fama–French factors | **Yes** | Actual row read succeeded for `ff.factors_daily`. `ff.fivefactors_daily`, `factors_monthly` and `fivefactors_monthly` are also listed; alias `ff_all`. TASK-005 owns factor downloads. |
+| Futures prices: ES / 10-year T-note | **No** | `trsamp_dsfut.wrds_contract_info`: matched contracts below; standard SP is not ES. `optionm.futures_price`: see access probe. |
+| CRSP Treasuries | **No** | `crsp.tfz_dly_ft`, `crsp.tfz_idx` |
+| CRSP Mutual Funds | **No** (full); **Yes** (sample) | `crsp.fund_hdr`, `crsp.daily_returns`; `crspsamp_mf.fund_hdr_hist`, `daily_nav_ret`. Sample only, 2004–2006; see source card. |
+| CRSP index files | **Yes** | `crsp.dsp500`, `crsp.dsi` |
+| MSCI index data | **No** | Catalog MSCI samples concern ESG/climate/issuers, not ACWI ex USA returns. |
+| Russell / FTSE index data | **Yes** (sample only) | `ftsesamp.ctr_monthly_us`: monthly Russell Top 200 sample, not daily target indices. |
+| ANcerno (Abel Noser) | **No** | No matching library/table in catalog search below. |
+| Fama–French factors | **Yes** | `ff.factors_daily` |
 
-No absence claim above treats a connection error as proof of missing subscription.
-The CRSP and OptionMetrics exclusions come from PostgreSQL permission errors.
-The other exclusions describe the catalog and sample metadata inspected in this session.
-This is a recorded live inventory; the repeatable CLI remains pending the TASK-010 decision.
+### Live access probes
+
+- `treasury_returns`: SQLSTATE 42501: permission denied for schema crsp_a_treasuries. Query: `SELECT * FROM crsp.tfz_dly_ft LIMIT 1`
+- `treasury_ids`: SQLSTATE 42501: permission denied for schema crsp_a_treasuries. Query: `SELECT * FROM crsp.tfz_idx LIMIT 1`
+- `full_fund_header`: SQLSTATE 42501: permission denied for schema crsp_q_mutualfunds. Query: `SELECT * FROM crsp.fund_hdr LIMIT 1`
+- `full_fund_returns`: SQLSTATE 42501: permission denied for schema crsp_q_mutualfunds. Query: `SELECT * FROM crsp.daily_returns LIMIT 1`
+- `sample_header`: readable (4 probe rows). Query: `SELECT crsp_fundno, nasdaq, chgdt, chgenddt, first_offer_dt FROM crspsamp_mf.fund_hdr_hist WHERE nasdaq IN ('VBMFX', 'VBTLX') ORDER BY crsp_fundno, chgdt`
+- `sample_returns`: readable (1 probe rows). Query: `SELECT * FROM crspsamp_mf.daily_nav_ret LIMIT 1`
+- `sp500`: readable (1 probe rows). Query: `SELECT * FROM crsp.dsp500 LIMIT 1`
+- `stock_index`: readable (1 probe rows). Query: `SELECT * FROM crsp.dsi LIMIT 1`
+- `futures`: readable (1 probe rows). Query: `SELECT futcode, contrname, exchtickersymb, contrdate, lasttrddate, expirationdate FROM trsamp_dsfut.wrds_contract_info WHERE upper(exchtickersymb) IN ('ES', 'TY', 'ZN') OR contrname ILIKE '%S&P%' OR contrname ILIKE '%10%TREAS%'`
+- `optionmetrics`: SQLSTATE 42501: permission denied for schema optionm_europe. Query: `SELECT * FROM optionm.futures_price LIMIT 1`
+- `russell`: readable (1 probe rows). Query: `SELECT * FROM ftsesamp.ctr_monthly_us LIMIT 1`
+- `factors`: readable (1 probe rows). Query: `SELECT * FROM ff.factors_daily LIMIT 1`
+
+Futures metadata matches (not extracted):
+```json
+[
+  {
+    "futcode": "359638",
+    "contrname": "S&P 500 FUTURES",
+    "exchtickersymb": "SP",
+    "contrdate": "0620",
+    "lasttrddate": "2020-06-18",
+    "expirationdate": null
+  }
+]
+```
+
+MSCI catalog tables (no index-return product found):
+
+- `msci_climate_samp`: `capex`, `carbon_emiss_n_ener_use`, `carbon_emiss_scope_3_est`, `climate_change_targ_n_commit`, `climate_change_targ_n_commit_sum`, `country_climate_change_data`, `country_climate_change_data_ts`, `emissions_intensity_ts`, `environmental_impact_revenue`, `fossil_fuel_prod_n_res`, `low_carbon_patents`, `low_carbon_transition_scores`, `power_generation_n_capacity`, `prod_based_emiss_intensities`, `prod_based_emiss_intensities_ts`, `supplemental_carbon_emissions`
+- `msci_common_samp`: `mast_instrument_ref_wcuse`, `mast_issuer_ref`, `msci_metadata`
+- `msci_esg_samp`: `agm_data`, `comp_env_qual_inds`, `comp_soc_n_corp_beh_qual_inds`, `controversies`, `derived_esg_metrics`, `drill_down`, `governance_data`, `msci_esg_ratings`, `nat_cap_n_pol`, `soc_n_corp_beh`, `summary_scores`, `workforce_and_diversity`
+- `mscicoms`: `mast_instrument_ref_wcuse`, `mast_issuer_ref`, `msci_metadata`
+- `mscicsmp`: `capex`, `carbon_emiss_n_ener_use`, `carbon_emiss_scope_3_est`, `climate_change_targ_n_commit`, `climate_change_targ_n_commit_sum`, `country_climate_change_data`, `country_climate_change_data_ts`, `emissions_intensity_ts`, `environmental_impact_revenue`, `fossil_fuel_prod_n_res`, `low_carbon_patents`, `low_carbon_transition_scores`, `power_generation_n_capacity`, `prod_based_emiss_intensities`, `prod_based_emiss_intensities_ts`, `supplemental_carbon_emissions`
+- `msciesmp`: `agm_data`, `comp_env_qual_inds`, `comp_soc_n_corp_beh_qual_inds`, `controversies`, `derived_esg_metrics`, `drill_down`, `equit_cred_carb_emiss_n_ener_use`, `governance_data`, `mast_instrument_ref_wcuse`, `mast_issuer_ref`, `msci_esg_expanded`, `msci_esg_metadata`, `msci_esg_ratings`, `msci_esg_summary`, `nat_cap_n_pol`, `soc_n_corp_beh`, `summary_scores`, `workforce_and_diversity`
+
+ANcerno/Abel/Noser catalog matches: none.
+
+Regenerate with `uv run python3 -m rebal.fetch.wrds_extract --inventory`.
+See [the source card](cards/wrds.md) for coverage and subscription limits.
