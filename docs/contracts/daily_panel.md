@@ -22,7 +22,7 @@ Core returns must exist on every retained date. Optional sources can have missin
 | ra_bex | float64 | published index level | yes | D13 |
 | unc_bex | float64 | published index level | yes | D13 |
 | ara | float64 | published index level | yes | D15 |
-| liquidity | float64 | published OFR liquidity index level (proxy) | yes | D26 |
+| liquidity | float64 | selected source's published units: HPW `Noise_bp` in basis points when full-study history is available; otherwise OFR `Funding` in index points; see [methods](../methods/panel.md#cash-controls-and-units) and `panel.metadata.json` for the selected source | yes | D26 |
 | ivol | float64 | cross-sectional SD of simple decimal daily stock returns | yes | D25 |
 | mkt_rf | float64 | simple decimal daily factor return | yes | D24 |
 | smb | float64 | simple decimal daily factor return | yes | D24 |

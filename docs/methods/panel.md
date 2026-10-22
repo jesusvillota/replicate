@@ -87,9 +87,9 @@ HPW is selected because its observed history covers both study endpoints,
 span the study, use OFR FSI `Funding`, unchanged index points. Record that choice
 in metadata. OFR begins 2000-01-03, so this fallback leaves the earlier gap.
 No interpolation, normalization, winsorization or artificial history is added.
-The contract's liquidity unit describes the OFR option; this task's instructed
-HPW choice instead has basis-point units, recorded here and in metadata.
-No contract columns or dtypes change.
+The contract retains the selected source's published units: basis points for
+HPW `Noise_bp`, or index points for OFR `Funding`. These units differ across
+sources. `panel.metadata.json` records the selected source and its units.
 
 ## Factors
 
