@@ -6,6 +6,7 @@ state: approved
 depends_on: []
 delivery: manual
 priority: 1
+route: {platform: codex, model: gpt-6-astra, effort: high}
 ---
 
 ## Why
