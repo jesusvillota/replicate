@@ -365,6 +365,38 @@ def test_exhibits_write_demo_outputs(monkeypatch, tmp_path):
         p.parent == tmp_path / "output/demo" and p.stat().st_size > 0 for p in written
     )
     assert (tmp_path / "output/demo/figure_C1.pdf").read_bytes().startswith(b"%PDF")
+    c1 = pd.read_csv(tmp_path / "output/demo/table_C1.csv")
+    assert list(c1.columns) == [
+        "exhibit", "column", "nobs", "term", "value", "sample_start", "sample_end"
+    ]
+    c1_keys = c1.set_index(["exhibit", "column", "term"])
+    assert c1_keys.index.is_unique
+    assert set(c1_keys.index) == {
+        ("table_C1", signal, term)
+        for signal in ("threshold", "calendar")
+        for term in (
+            "mean_annualized", "sd_annualized", "ar1", "skewness", "excess_kurtosis"
+        )
+    }
+    plotted = pd.read_csv(tmp_path / "output/demo/figure_C1.csv")
+    assert list(plotted.columns) == ["date", "threshold", "calendar"]
+    for signal in ("threshold", "calendar"):
+        assert c1_keys.loc[("table_C1", signal, "mean_annualized"), "value"] == (
+            pytest.approx(plotted[signal].mean() * 252)
+        )
+        assert c1_keys.loc[("table_C1", signal, "sd_annualized"), "value"] == (
+            pytest.approx(plotted[signal].std() * np.sqrt(252))
+        )
+    c2 = pd.read_csv(tmp_path / "output/demo/table_C2.csv")
+    assert list(c2.columns) == ["exhibit", "column", "term", "value"]
+    c2_keys = c2.set_index(["exhibit", "column", "term"])
+    assert c2_keys.index.is_unique
+    assert set(c2_keys.index) == {
+        ("table_C2", row, column)
+        for row in descriptive.PREDICTORS
+        for column in descriptive.PREDICTORS
+    }
+    assert np.isfinite(c1.value).all() and np.isfinite(c2.value).all()
     metadata = json.loads(
         (tmp_path / "output/demo/signals_descriptive.json").read_text()
     )

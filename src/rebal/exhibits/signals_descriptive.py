@@ -7,7 +7,11 @@ CLI Arguments:
 
 Reads the panel and built signals (builds in memory for demo). Writes descriptive
 CSVs table_C1/table_C2, figure_C1 PDF and its plotted CSV, plus JSON lineage.
-Mean is daily decimal deviation times 252; SD is daily SD times sqrt(252).
+C.1 (paper PDF page 56) annualizes the mean and SD of daily signal weights.
+We use 252 trading days: mean is daily decimal deviation times 252; SD is
+daily SD times sqrt(252), with no percentage conversion. Other moments and
+C.2 correlations are dimensionless. Both tables use exhibit,column,term,value
+comparison keys; C.2 includes both orientations of each predictor pair.
 Figure columns threshold/calendar are decimal weights, plotted in percent.
 """
 
@@ -117,11 +121,23 @@ def run(demo: bool, *, end: str = SAMPLE_END) -> list[Path]:
     figures = output_dir("demo" if demo else "figures")
     c1, c2 = tables / "table_C1.csv", tables / "table_C2.csv"
     plotted, pdf = figures / "figure_C1.csv", figures / "figure_C1.pdf"
-    summary = describe(frame)
+    # pandas: reshape the final small tables into the comparison key schema.
+    summary = describe(frame).rename(
+        columns={
+            "signal": "column",
+            "mean": "mean_annualized",
+            "sd": "sd_annualized",
+        }
+    ).melt(id_vars=["column", "nobs"], var_name="term", value_name="value")
+    summary.insert(0, "exhibit", "table_C1")
     summary["sample_start"] = frame.date.min().date().isoformat()
     summary["sample_end"] = frame.date.max().date().isoformat()
     summary.to_csv(c1, index=False)
-    correlations(frame).to_csv(c2, index=False)
+    matrix = correlations(frame).rename(columns={"predictor": "column"}).melt(
+        id_vars="column", var_name="term", value_name="value"
+    )
+    matrix.insert(0, "exhibit", "table_C2")
+    matrix.to_csv(c2, index=False)
     frame[["date", "threshold", "calendar"]].to_csv(plotted, index=False)
     plot_signals(frame, pdf, demo)
     metadata = tables / "signals_descriptive.json"
