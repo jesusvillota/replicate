@@ -1,10 +1,19 @@
 """Source-format regressions: no monthly flows or lost plan-year keys."""
 
+import base64
+import hashlib
+
 import numpy as np
 import pandas as pd
 import pytest
 
-from rebal.fetch.ici import read_weekly
+from rebal.fetch.ici import (
+    archive_path,
+    fetch_archive,
+    read_pdf_rows,
+    read_weekly,
+    validate_weekly,
+)
 from rebal.fetch.ppd import BASE, GEOGRAPHY, read_allocations
 
 
@@ -31,8 +40,15 @@ def workbook(tmp_path):
     return path
 
 
-def test_ici_excludes_monthly_and_maps_categories(tmp_path):
-    result = read_weekly(workbook(tmp_path))
+@pytest.mark.parametrize("units", ["Millions, U.S. dollars", "Millions, U.S. dolllars"])
+def test_ici_excludes_monthly_and_maps_categories(tmp_path, units):
+    path = workbook(tmp_path)
+    frame = pd.read_excel(path, header=None)
+    frame.iat[2, 0] = units
+    frame.to_excel(
+        path, sheet_name="Weekly MF Flow Estimates", header=False, index=False
+    )
+    result = read_weekly(path)
     assert result.date.dt.strftime("%Y-%m-%d").tolist() == ["2025-12-23", "2025-12-30"]
     assert result.iloc[0, 1:].tolist() == [3, 5, 17, 23, 27, 39, 1]
     assert result.iloc[1, 1:].tolist() == [-3, -5, -17, -23, -27, -39, -1]
@@ -46,6 +62,56 @@ def test_ici_rejects_changed_schema(tmp_path):
         path, sheet_name="Weekly MF Flow Estimates", header=False, index=False
     )
     with pytest.raises(ValueError, match="units"):
+        read_weekly(path)
+
+
+@pytest.mark.parametrize("world_header", ["Foreign", "World"])
+def test_ici_legacy_layout_excludes_monthly_and_maps_bond_columns(
+    tmp_path, world_header
+):
+    rows = [[None] * 9 for _ in range(13)]
+    rows[2][0] = "(Dollar Figures in Millions)"
+    rows[4] = [
+        None,
+        "Total",
+        "Domestic",
+        world_header,
+        None,
+        "Total",
+        "Taxable",
+        "Municipal",
+        None,
+    ]
+    rows[5] = [
+        "Date",
+        "Equity",
+        "Equity",
+        "Equity",
+        "Hybrid",
+        "Bond",
+        "Bond",
+        "Bond",
+        "Total",
+    ]
+    rows[7] = ["2015-01-31", *([999999] * 8)]
+    rows[8][0] = "Estimated Weekly Net New Cash Flow"
+    rows[9] = ["2015-02-04", 10, 4, 6, -3, 20, 18, 2, 27]
+    rows[10] = ["2015-02-11", -10, -4, -6, 3, -20, -18, -2, -27]
+    rows[12][0] = "Weekly cash flows are estimates"
+    path = tmp_path / "legacy.xlsx"
+    pd.DataFrame(rows).to_excel(
+        path, sheet_name="aggregate_summary012109", header=False, index=False
+    )
+    result = read_weekly(path)
+    assert result.date.dt.strftime("%Y-%m-%d").tolist() == ["2015-02-04", "2015-02-11"]
+    assert result.iloc[0, 1:].tolist() == [10, 4, 6, -3, 18, 2, 27]
+    assert result.iloc[1, 1:].tolist() == [-10, -4, -6, 3, -18, -2, -27]
+    frame = pd.read_excel(path, header=None)
+    frame.iat[5, 6] = "Equity"
+    frame.to_excel(
+        path, sheet_name="aggregate_summary012109", header=False, index=False
+    )
+    with pytest.raises(ValueError, match="column changed"):
         read_weekly(path)
 
 
@@ -89,3 +155,44 @@ def test_ppd_rejects_invalid_panel(tmp_path, problem):
     frame.to_csv(raw, index=False)
     with pytest.raises(ValueError):
         read_allocations(raw, detailed)
+
+
+@pytest.mark.parametrize("day", ["12/23/08", "12/23/2008"])
+def test_ici_pdf_preserves_old_dates_and_excludes_monthly(day):
+    text = f"""Investment Company Institute
+(Dollar Figures in Millions)
+Total Domestic Foreign Total Taxable Municipal
+Date Equity Equity Equity Hybrid Bond Bond Bond Total
+Monthly Net New Cash Flow
+1/31/2007 999 999 999 999 999 999 999 999
+Estimated Weekly Net New Cash Flow
+{day} -10 -4 -6 3 -20 -18 -2 -27
+Weekly cash flows are estimates.
+"""
+    result = validate_weekly(read_pdf_rows(text))
+    assert result.date.dt.strftime("%Y-%m-%d").tolist() == ["2008-12-23"]
+    assert result.iloc[0, 1:].tolist() == [-10, -4, -6, 3, -18, -2, -27]
+    with pytest.raises(ValueError, match="weekly row"):
+        read_pdf_rows(text.replace(" -27", ""))
+    with pytest.raises(ValueError, match="units"):
+        read_pdf_rows(text.replace("Millions", "Billions"))
+
+
+def test_ici_immutable_cache_validates_published_digest(tmp_path, monkeypatch):
+    payload = b"published workbook bytes"
+    source = {
+        "snapshot": "20150405035035",
+        "original_url": "http://www.ici.org/info/flows_data_2015.xls",
+        "sha1_base32": base64.b32encode(hashlib.sha1(payload).digest()).decode(),
+    }
+    path = archive_path(tmp_path, source["snapshot"], source["original_url"])
+    path.write_bytes(payload)
+
+    def unexpected_download(*args, **kwargs):
+        pytest.fail("Verified immutable archives should not need network access")
+
+    monkeypatch.setattr("rebal.fetch.ici.download", unexpected_download)
+    assert fetch_archive(tmp_path, source)[0] == path
+    path.write_bytes(b"different archive capture")
+    with pytest.raises(ValueError, match="CDX digest"):
+        fetch_archive(tmp_path, source)

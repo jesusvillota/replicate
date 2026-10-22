@@ -11,6 +11,7 @@ import json
 import re
 from datetime import date
 from pathlib import Path
+from tempfile import TemporaryDirectory
 from urllib.parse import urlencode
 
 import numpy as np
@@ -88,8 +89,11 @@ def read_allocations(raw: Path, detailed: Path) -> pd.DataFrame:
 def fetch() -> None:
     directory = public_dir("ppd")
     # The site's own full-download variable list includes all current fields.
-    script = download(SCRIPT_URL, directory / "download.raw.js")
-    match = re.search(r'postargs\["variables"\]\s*=\s*"([^"]+)"', script.read_text())
+    with TemporaryDirectory(prefix="ppd-download-") as temporary:
+        script = download(SCRIPT_URL, Path(temporary) / "ppd.js")
+        match = re.search(
+            r'postargs\["variables"\]\s*=\s*"([^"]+)"', script.read_text()
+        )
     if match is None:
         raise ValueError("Cannot locate CRR's full-dataset variable list")
     query = urlencode(
@@ -122,7 +126,7 @@ def fetch() -> None:
     coverage_path = directory / "ppd_coverage.csv"
     coverage.to_csv(coverage_path, index=False, date_format="%Y-%m-%d")
     summarize(coverage_path, "date")
-    paths = [script, raw, detail, codebook, detail_codebook, output, coverage_path]
+    paths = [raw, detail, codebook, detail_codebook, output, coverage_path]
     for path in paths:
         if path.stat().st_size >= 20_000_000:
             raise ValueError(f"{path}: exceeds 20 MB; retain only required columns")

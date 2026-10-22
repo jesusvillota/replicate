@@ -17,12 +17,13 @@ Retirement Administrators, and Government Finance Officers Association.
 
 ## Downloaded (date)
 
-2026-10-21. Run `uv run python3 -m rebal.fetch.ppd` to download again.
+2026-10-22. Run `uv run python3 -m rebal.fetch.ppd` to download again.
 
 ## License class
 
 Public, redistributable, with CRR attribution. Stored under `data/public/ppd/`.
-Keep original full CSV, detailed workbook, both codebooks, and download definition.
+Keep original full CSV, detailed workbook, and both codebooks.
+Read the download definition in a temporary directory; it is not committed.
 Each is below 20 MB, so the full raw dataset is retained unchanged.
 `ppd_allocations.csv` contains only the needed fields. `metadata.json` records URLs.
 
