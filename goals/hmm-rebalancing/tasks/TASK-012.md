@@ -5,7 +5,7 @@ milestone: M-1
 state: approved
 depends_on: [TASK-004, TASK-005, TASK-007, TASK-008, DEC-001]
 delivery: pr
-route: {platform: codex, model: gpt-6-astra, effort: high}
+route: {platform: codex, model: gpt-6.1-sol, effort: high}
 ---
 
 ## Why
