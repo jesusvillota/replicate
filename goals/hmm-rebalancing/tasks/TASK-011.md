@@ -6,7 +6,7 @@ state: approved
 depends_on: [TASK-003, TASK-006, TASK-009, TASK-010]
 delivery: pr
 kind: discovery
-route: {platform: codex, model: gpt-6-astra, effort: high}
+route: {platform: codex, model: gpt-6.1-sol, effort: high}
 ---
 
 ## Why
