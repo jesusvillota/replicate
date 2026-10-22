@@ -91,9 +91,9 @@ Captured output, including the test tail:
 ```text
 [00:49:33] Input: stored source-card files                        proxies.py:607
            Report:                                                proxies.py:610
-           /Users/jesusvillotamiranda/orca/workspaces/replicate/g               
-           oal-hmm-rebalancing-task-011/docs/data/proxy_compariso               
-           n.md                                                                 
+           /Users/jesusvillotamiranda/orca/workspaces/replicate/g
+           oal-hmm-rebalancing-task-011/docs/data/proxy_compariso
+           n.md
 OK docs/data/proxy_comparison.md candidates=8 pairs=15
 ## Recommendation for DEC-001
 
