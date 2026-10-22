@@ -42,10 +42,13 @@ def download(url: str, dest: Path, *, retries: int = 3) -> Path:
     raise AssertionError("unreachable")
 
 
-def summarize(path: Path, date_col: str, **read_kwargs) -> None:
+def summarize(
+    path: Path, date_col: str, *, key_cols: tuple[str, ...] = (), **read_kwargs
+) -> None:
     """Validate a stored file and emit one summary line.
 
     CSV/Excel reader options support published preambles and workbook notes.
+    key_cols identifies series in a panel; dates must be unique within each series.
     """
     # pandas: file validation only; no analytical query or per-group computation.
     path = Path(path)
@@ -63,7 +66,10 @@ def summarize(path: Path, date_col: str, **read_kwargs) -> None:
     if dates.isna().any() or dates.dt.tz is not None:
         raise ValueError(f"{path}: dates must be nonmissing and timezone-naive")
     dates = dates.dt.normalize()
-    if dates.duplicated().any():
+    frame[date_col] = dates
+    if key_cols and frame[list(key_cols)].isna().any().any():
+        raise ValueError(f"{path}: series keys must be nonmissing")
+    if frame.duplicated([date_col, *key_cols]).any():
         raise ValueError(f"{path}: duplicate dates")
     Console().print(
         f"OK {path} rows={len(frame)} first={dates.min():%Y-%m-%d} "
