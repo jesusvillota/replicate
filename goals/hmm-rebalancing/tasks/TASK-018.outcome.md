@@ -151,3 +151,11 @@ command, restore both directories, and retain the hand-written section.
 A direct read of `table_1.csv` independently confirmed the reported main
 coefficients. Local verification determines delivery. GitHub Actions were
 not read or used; no merge was performed.
+
+## Delivery
+
+PR: https://github.com/jesusvillota/replicate/pull/31, into `main`, with
+`Goal-Task: hmm-rebalancing/TASK-018` and label `goal:hmm-rebalancing`.
+Artifact/report commit: `2c7a6ca`. This follow-up commit records the PR link.
+The local suite and exact Verify block passed before the PR was marked ready.
+The branch contains only the scoped run artifacts, report and this outcome.
