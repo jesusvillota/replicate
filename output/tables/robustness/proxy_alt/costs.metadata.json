@@ -1,0 +1,20 @@
+{
+  "script": "rebal.exhibits.costs",
+  "created_utc": "2026-10-22T23:24:55.293202+00:00",
+  "source": "daily_panel_alt.parquet (DEC-001 E2/T2), with clean signals built in memory from its complete history",
+  "parameters": {
+    "n_sims": 10000,
+    "seed": 16,
+    "end": "2023-03-17",
+    "controls": false,
+    "assets": 20000000000000.0,
+    "fed_assets": 37800000000000.0
+  },
+  "sample_start": "1997-09-10",
+  "sample_end": "2023-03-17 00:00:00",
+  "outputs": [
+    "/Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-018/output/tables/robustness/proxy_alt/costs.csv",
+    "/Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-018/output/figures/robustness/proxy_alt/figure_D5.csv",
+    "/Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-018/output/figures/robustness/proxy_alt/figure_D5.pdf"
+  ]
+}

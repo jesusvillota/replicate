@@ -1,0 +1,44 @@
+{
+  "module": "rebal.exhibits.predictive_tables",
+  "created_utc": "2026-10-22T23:24:27.205691+00:00",
+  "demo": false,
+  "sample": [
+    "1997-09-10",
+    "2023-03-17"
+  ],
+  "se": "hc1",
+  "hac_lags": null,
+  "timing": "clean",
+  "inputs": [
+    "daily_panel.parquet",
+    "signals_clean.parquet"
+  ],
+  "outputs": [
+    "table_1.csv",
+    "table_2a.csv",
+    "table_2b.csv",
+    "table_3.csv",
+    "table_D1.csv",
+    "table_D2.csv",
+    "table_D3.csv",
+    "table_D5.csv",
+    "table_D6.csv",
+    "table_D7.csv",
+    "table_D8.csv",
+    "table_D10.csv",
+    "table_D11.csv",
+    "table_D12.csv",
+    "table_D13.csv",
+    "magnitudes.csv"
+  ],
+  "table_3_outcomes": {
+    "1": "r_es",
+    "2": "r_es",
+    "3": "r_ty",
+    "4": "r_ty"
+  },
+  "table_D13_panels": {
+    "A": "r_es",
+    "B": "r_ty"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "script": "rebal.exhibits.signals_descriptive",
+  "created_utc": "2026-10-22T23:24:27.314810+00:00",
+  "source": "rebal.io panel and signals_clean.parquet",
+  "parameters": {
+    "timing": "clean",
+    "momentum": "medium-slow",
+    "start": "1997-09-10",
+    "end": "2023-03-17"
+  },
+  "sample_start": "1997-09-10 00:00:00",
+  "sample_end": "2023-03-17 00:00:00",
+  "rows": 6318,
+  "correlation_nobs": 5044,
+  "outputs": [
+    "/Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-018/output/tables/table_C1.csv",
+    "/Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-018/output/tables/table_C2.csv",
+    "/Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-018/output/figures/figure_C1.csv",
+    "/Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-018/output/figures/figure_C1.pdf"
+  ]
+}
