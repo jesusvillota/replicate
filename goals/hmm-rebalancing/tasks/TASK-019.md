@@ -6,6 +6,7 @@ state: approved
 depends_on: [TASK-018]
 delivery: pr
 kind: plan
+route: {platform: codex, model: gpt-6-astra, effort: high}
 ---
 
 ## Why
