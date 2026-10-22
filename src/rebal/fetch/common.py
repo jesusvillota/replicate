@@ -3,6 +3,7 @@
 from pathlib import Path
 from tempfile import NamedTemporaryFile
 from time import sleep
+from zipfile import ZipFile
 
 import pandas as pd
 import requests
@@ -43,16 +44,26 @@ def download(url: str, dest: Path, *, retries: int = 3) -> Path:
 
 
 def summarize(
-    path: Path, date_col: str, *, key_cols: tuple[str, ...] = (), **read_kwargs
+    path: Path,
+    date_col: str | list[str],
+    *,
+    key_cols: tuple[str, ...] = (),
+    archive_member: str | None = None,
+    **read_kwargs,
 ) -> None:
     """Validate a stored file and emit one summary line.
 
     CSV/Excel reader options support published preambles and workbook notes.
+    A list of year/month/day columns supports dates published as separate fields.
     key_cols identifies series in a panel; dates must be unique within each series.
+    archive_member selects a CSV inside a published ZIP with additional documents.
     """
     # pandas: file validation only; no analytical query or per-group computation.
     path = Path(path)
-    if path.suffix.lower() == ".parquet":
+    if archive_member is not None:
+        with ZipFile(path) as archive, archive.open(archive_member) as member:
+            frame = pd.read_csv(member, **read_kwargs)
+    elif path.suffix.lower() == ".parquet":
         frame = pd.read_parquet(path)
     elif path.suffix.lower() in {".xls", ".xlsx"}:
         frame = pd.read_excel(path, **read_kwargs)
@@ -60,16 +71,17 @@ def summarize(
         frame = pd.read_csv(path, **read_kwargs)
     if frame.empty:
         raise ValueError(f"{path}: expected at least one row")
-    if date_col not in frame:
+    date_columns = [date_col] if isinstance(date_col, str) else date_col
+    if not date_columns or any(column not in frame for column in date_columns):
         raise ValueError(f"{path}: missing date column {date_col!r}")
     dates = pd.to_datetime(frame[date_col], errors="raise")
     if dates.isna().any() or dates.dt.tz is not None:
         raise ValueError(f"{path}: dates must be nonmissing and timezone-naive")
     dates = dates.dt.normalize()
-    frame[date_col] = dates
-    if key_cols and frame[list(key_cols)].isna().any().any():
+    keys = frame[list(key_cols)]
+    if keys.isna().any().any():
         raise ValueError(f"{path}: series keys must be nonmissing")
-    if frame.duplicated([date_col, *key_cols]).any():
+    if keys.assign(_date=dates).duplicated().any():
         raise ValueError(f"{path}: duplicate dates")
     Console().print(
         f"OK {path} rows={len(frame)} first={dates.min():%Y-%m-%d} "
