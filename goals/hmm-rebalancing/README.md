@@ -148,6 +148,7 @@ flowchart TD
     TASK_017["TASK-017 Front-running strategy"]
     TASK_018["TASK-018 Core exhibits on the real panel and comparison with the paper"]
     TASK_020["TASK-020 Paper target numbers and comparison report generator"]
+    TASK_021["TASK-021 Export Tables C.1 and C.2 in the comparison key schema"]
   end
   subgraph M_3["M-3 · Extensions and final report"]
     TASK_019["TASK-019 Plan: decompose M-3"]
