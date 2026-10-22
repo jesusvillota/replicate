@@ -23,7 +23,7 @@
   A separate assertion checked all 28 rows: ten columns, accepted status syntax,
   and existing source-card links. The zero-match grep returns 1 by definition;
   the exact multi-command Verify block still exits 0 after pytest.
-- [x] `uv run pytest -q tests/test_panel.py` passed: **19 passed in 1.45s**
+- [x] `uv run pytest -q tests/test_panel.py` passed: **19 passed**
   in the exact Verify run. Synthetic tests cover DTB3 percent/day-count units,
   the five-session fill limit, unfilled returns, all four September closures,
   source mapping, flat-curve bond pricing, HPW/OFR selection, contract failures,
@@ -41,7 +41,11 @@ Integrated validated public Yahoo VBMFX returns under DEC-002, without a splice.
 The 2004–2006 WRDS sample does not replace longer public history. Integrated
 the exact MSCI 899901 USD NETR series rather than a later-starting ETF.
 Selected HPW `Noise_bp` for liquidity because it spans the study; OFR Funding
-is a documented, tested fallback. Input hashes, choices and output coverage
+is a documented, tested fallback. The contract and methods now agree that
+liquidity retains the selected source's published units: HPW `Noise_bp` in
+basis points with full-study history, otherwise OFR `Funding` in index points.
+The contract cites the methods and `panel.metadata.json` for the selected source.
+These sources do not have identical units. Input hashes, choices and output coverage
 are recorded in external `panel.metadata.json`.
 
 Added `docs/methods/panel.md` with every transform, scale, choice and limitation.
@@ -61,9 +65,14 @@ The public FEARS subset does not supply the private extension; ANcerno and
 qualitative numerical replication remain unavailable. ICI coverage gaps remain
 documented. None of these optional-source gaps shortens the main study.
 
-Verified implementation revision: `0c2eba60a3d02b953ce7ab353f8bc180f9ef8517`,
-after a conflict-free rebase onto `origin/main` at `5f121e4`.
-This outcome is a documentation-only follow-up. Branch:
+Verified implementation and units-documentation revision:
+`fff7d21cd1c5590c83afc3f6b6691cf3e3d4672b`, after a conflict-free rebase onto
+`origin/main` at `d1e20118fc7fbc3e09244ad7050081296b4d585b`.
+The exact Verify block and `git diff --check origin/main...HEAD` also passed
+on the final committed revision before push; the PR body records its SHA.
+This resume changes only the liquidity contract row, its related methods text,
+and this outcome. Code behavior and all other contract rows stay unchanged.
+Branch:
 `goal/hmm-rebalancing/task-012`. PR:
 https://github.com/jesusvillota/replicate/pull/27, into `main`, with marker
 `Goal-Task: hmm-rebalancing/TASK-012` and label `goal:hmm-rebalancing`.
@@ -71,9 +80,16 @@ Local verification determines delivery. GitHub Actions were not read or used.
 No merge was performed. No task spec, other outcome, decision or goal definition
 was edited. No material decision remains open.
 
-Additional checks: Ruff check passed; Ruff format reported both Python files
-formatted; `rebal.panel --help` exited 0; `git diff --check` passed.
-The full local suite, `uv run pytest -q`, exited **0**:
+Additional checks in this resume:
+`uv run --with ruff ruff check src/rebal/panel.py tests/test_panel.py` passed;
+`uv run --with ruff ruff format --check src/rebal/panel.py tests/test_panel.py`
+reported both files formatted. All 19 metadata source hashes match the current
+input files; metadata selects `HPW Noise_bp (basis points)`. All 28 source-map
+IDs, ten-column rows, statuses and source-card links passed fresh assertions.
+GitHub returned no PR review threads or comments to resolve.
+
+Earlier implementation-session evidence, retained for context:
+`rebal.panel --help` exited 0. The full local suite, `uv run pytest -q`, exited **0**:
 **314 passed, 4 warnings in 192.05s**. The warnings are Python escape-sequence
 warnings inside the installed WRDS dependency.
 Proposed follow-ups: existing analysis tasks consume the panel and its documented
@@ -81,7 +97,9 @@ coverage. No new task or decision is required.
 
 ## Verify evidence
 
-The exact task Verify block ran locally on 2026-10-23 and exited **0**:
+The exact task Verify block reran locally on 2026-10-23 and exited **0**.
+It also passed on the final committed revision, as did
+`git diff --check origin/main...HEAD`:
 
 ```sh
 uv run python3 -m rebal.panel --build && uv run python3 -m rebal.panel --check
@@ -112,5 +130,5 @@ PANEL OK
 28
 0
 ...................                                                      [100%]
-19 passed in 1.45s
+19 passed
 ```
