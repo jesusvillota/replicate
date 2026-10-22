@@ -2,11 +2,12 @@
 id: TASK-002
 title: Set up WRDS login on the MacBook
 milestone: M-1
-state: approved
+state: done
 depends_on: []
 delivery: manual
 priority: 1
 route: {platform: codex, model: gpt-6-astra, effort: high}
+reason: 'WRDS port now reachable. Exact Verify command passed in fresh interactive zsh: 229 libraries, no password prompt. Added PGUSER from WRDS_USERNAME in ~/.zshrc because wrds.Connection() uses PostgreSQL environment variables.'
 ---
 
 ## Why
