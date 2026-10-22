@@ -57,6 +57,9 @@ No cluster jobs ran. No PR was merged. GitHub Actions were not read or used.
 
 ## Local verification
 
+Verified implementation revision: `2f310fbf693347c60f079484d3e2ea07254d5bb3`.
+This outcome reference is a documentation-only follow-up.
+
 All TASK-010 Verify commands ran successfully:
 
 ```sh
