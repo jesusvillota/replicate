@@ -30,6 +30,6 @@ Serves SC-5 (compare each result with the paper). The TASK-020 review found that
 ## Verify
 
 ```sh
-uv run python3 -m rebal.exhibits --all --demo && uv run python3 -m rebal.compare --demo 2>&1 | grep -E 'table_C[12]'
+uv run python3 -m rebal.exhibits --all --demo && uv run python3 -m rebal.compare --demo && grep -E 'table_C[12]' output/demo/compare.md
 uv run pytest -q
 ```
