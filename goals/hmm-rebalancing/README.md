@@ -213,6 +213,7 @@ flowchart TD
   TASK_028 --> TASK_030
   TASK_029 --> TASK_030
   DEC_004 --> TASK_030
+  TASK_032 --> TASK_030
   TASK_031 --> TASK_032
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45

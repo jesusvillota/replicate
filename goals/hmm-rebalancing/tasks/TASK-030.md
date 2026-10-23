@@ -3,7 +3,7 @@ id: TASK-030
 title: 'Final run: all exhibits on the real panel and the replication report'
 milestone: M-3
 state: approved
-depends_on: [TASK-024, TASK-025, TASK-026, TASK-027, TASK-028, TASK-029, DEC-004]
+depends_on: [TASK-024, TASK-025, TASK-026, TASK-027, TASK-028, TASK-029, DEC-004, TASK-032]
 delivery: pr
 kind: run
 ---
