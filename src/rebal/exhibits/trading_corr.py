@@ -131,7 +131,7 @@ def align_trading(
         reference = source.groupby("block").date.shift(lag_weeks)
         # CFTC gaps and ICI gaps must never turn a one-week lag into months.
         distance = (source.date - reference).dt.days
-        reference = reference.where(distance.between(6 * lag_weeks, 8 * lag_weeks))
+        reference = reference.where(distance.between(lag_weeks, 8 * lag_weeks))
     sampled = sample_signals(signals, reference, aggregation)
     source["signal_date"] = reference
     source[TERMS] = sampled[TERMS]

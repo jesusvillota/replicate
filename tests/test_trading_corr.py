@@ -108,6 +108,24 @@ def test_ici_uses_domestic_equity_and_both_bond_categories():
     assert result.block.tolist() == [0, 0, 1]
 
 
+def test_ici_retains_short_holiday_interval_inside_block():
+    dates = pd.to_datetime(["2013-12-18", "2013-12-23", "2013-12-31"])
+    signals = pd.DataFrame(
+        {"date": dates, "threshold": [1, 2, 3], "calendar": [3, 2, 1]}
+    )
+    raw = pd.DataFrame(
+        {
+            "date": dates,
+            "domestic_equity": [1, 2, 3],
+            "taxable_bond": 0,
+            "municipal_bond": 0,
+        }
+    )
+    aligned = tc.align_trading(tc.ici_trading(raw), signals)
+    assert aligned.date.tolist() == dates[1:].tolist()
+    assert aligned.threshold.tolist() == [1, 2]
+
+
 def test_ltpos_preserves_mean_daily_changes_and_uses_prior_friday():
     raw = pd.DataFrame(
         {

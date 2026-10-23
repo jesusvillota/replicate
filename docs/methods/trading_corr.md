@@ -99,7 +99,8 @@ The real source contains 39 blocks. The default paper endpoint uses 32 blocks;
 later blocks remain in the metadata with zero usable observations.
 At lag one, pair a flow with the previous observed endpoint inside its own block.
 Drop the first flow in every block. At lag k, require k prior endpoints in that
-same block and an elapsed time between `6*k` and `8*k` days.
+same block and an elapsed time between `k` and `8*k` days.
+Short holiday intervals, including the five-day interval ending 2013-12-23, are retained.
 No pair crosses a missing interval. Signal means use only the trailing
 seven days ending at the selected reference, not the interval spanning a gap.
 
