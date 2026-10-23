@@ -14,7 +14,7 @@ from rebal.paths import REPO_ROOT
 def write_csv(path, fields, rows):
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", newline="") as stream:
-        writer = csv.writer(stream)
+        writer = csv.writer(stream, lineterminator="\n")
         writer.writerow(fields)
         writer.writerows(rows)
 
