@@ -83,6 +83,7 @@ def test_cli_protects_all_other_outputs(tmp_path, monkeypatch, demo, timing):
         "magnitudes.csv",
         "metadata.json",
         "robustness/other/table_1.csv",
+        "archive/latest/table_1.csv",
     ):
         path = tmp_path / "output/tables" / name
         path.parent.mkdir(parents=True, exist_ok=True)
@@ -90,12 +91,15 @@ def test_cli_protects_all_other_outputs(tmp_path, monkeypatch, demo, timing):
     demo_table = tmp_path / "output/demo/table_1.csv"
     demo_table.parent.mkdir(parents=True, exist_ok=True)
     demo_table.write_text("preserve demo main\n")
+    destination = (
+        tmp_path / "output" / ("demo" if demo else "tables") / "robustness/latest"
+    )
 
     def snapshot():
         return {
             path.relative_to(tmp_path): (path.read_bytes(), path.stat().st_mtime_ns)
             for path in (tmp_path / "output").rglob("*")
-            if path.is_file() and "latest" not in path.relative_to(tmp_path).parts
+            if path.is_file() and not path.is_relative_to(destination)
         }
 
     before = snapshot()
@@ -114,9 +118,6 @@ def test_cli_protects_all_other_outputs(tmp_path, monkeypatch, demo, timing):
     latest.main()
     assert seen == [{"demo": demo, "timing": timing}]
     assert snapshot() == before  # detects edits, deletions and new files anywhere else
-    destination = (
-        tmp_path / "output" / ("demo" if demo else "tables") / "robustness/latest"
-    )
     assert {path.name for path in destination.iterdir()} == {
         "table_1.csv",
         "table_3.csv",
