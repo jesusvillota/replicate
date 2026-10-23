@@ -165,6 +165,7 @@ flowchart TD
     TASK_028["TASK-028 Figure 5: trading-correlation code on demo data"]
     TASK_029["TASK-029 Final-report generator on fixture outputs"]
     TASK_030["TASK-030 Final run: all exhibits on the real panel and the replication report"]
+    TASK_031["TASK-031 Latest sample (footnote 32): code on demo data"]
   end
   TASK_011 --> DEC_001
   TASK_001 --> TASK_003
