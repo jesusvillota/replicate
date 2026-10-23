@@ -2,7 +2,7 @@
   "variant": "literal",
   "panel": "/Users/jesusvillotamiranda/data/replicate/processed/daily_panel.parquet",
   "timing": "literal",
-  "analysis_revision": "07a995b2ccc54e37cbd86492cd720384f39d12dd",
+  "analysis_revision": "28daff83285f5f150a85d444c0b2e8a8cae92a58",
   "signals": "signals_literal.parquet",
   "se": "hc1",
   "sample": [
@@ -10,9 +10,10 @@
     "2023-03-17"
   ],
   "panel_sha256": "0aa723f34422fae7bcedb41bfaf0e7a5c3685688a1a9c7e3addec7af0463a4cd",
-  "signals_sha256": "8ee9a1115a1cc6476e173d9c482d60a62e0236b285ae6627376e997f7379b500",
   "output_selection": [
     "table_1",
     "figure_2"
-  ]
+  ],
+  "created_utc": "2026-10-23T16:01:10.150225+00:00",
+  "signals_sha256": "8ee9a1115a1cc6476e173d9c482d60a62e0236b285ae6627376e997f7379b500"
 }

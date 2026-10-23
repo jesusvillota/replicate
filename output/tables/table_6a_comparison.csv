@@ -1,0 +1,13 @@
+exhibit,column,term,stat,value
+table_6a,strategy,mean_pct_pa,value,6.449675588374807
+table_6a,strategy,vol_pct_pa,value,8.786028846225372
+table_6a,strategy,sharpe,value,0.7340831337181071
+table_6a,strategy,skewness,value,3.883923768383337
+table_6a,sp500,mean_pct_pa,value,7.615510210542981
+table_6a,sp500,vol_pct_pa,value,19.71995299266306
+table_6a,sp500,sharpe,value,0.3861829799176693
+table_6a,sp500,skewness,value,-0.2876459989478933
+table_6a,ty,mean_pct_pa,value,3.3924035429291775
+table_6a,ty,vol_pct_pa,value,6.100749528437845
+table_6a,ty,sharpe,value,0.5560634028845034
+table_6a,ty,skewness,value,0.06925965671415883

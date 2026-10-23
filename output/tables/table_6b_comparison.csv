@@ -1,0 +1,9 @@
+exhibit,column,term,stat,value
+table_6b,capm,alpha_pct_pa,coef,5.7105448140618496
+table_6b,capm,alpha_pct_pa,se,1.6988791026767054
+table_6b,c4,alpha_pct_pa,coef,5.756399820055968
+table_6b,c4,alpha_pct_pa,se,1.697766874991588
+table_6b,ff5,alpha_pct_pa,coef,5.675330063705937
+table_6b,ff5,alpha_pct_pa,se,1.6738953269658603
+table_6b,hxz,alpha_pct_pa,coef,5.561605763050669
+table_6b,hxz,alpha_pct_pa,se,1.6691132779036046

@@ -1,0 +1,44 @@
+{
+  "module": "rebal.exhibits.segments",
+  "created_utc": "2026-10-23T16:02:56.951846+00:00",
+  "demo": false,
+  "input": "/Users/jesusvillotamiranda/data/replicate/processed/daily_panel.parquet",
+  "requested_sample": [
+    "2006-08-17",
+    "2023-03-17"
+  ],
+  "weights": {
+    "1": 0.9,
+    "2": 0.9
+  },
+  "terms": [
+    "threshold",
+    "calendar",
+    "week4",
+    "calendar:week4",
+    "momentum",
+    "ret"
+  ],
+  "timing": "clean",
+  "momentum": "medium-slow",
+  "se": "hc1",
+  "hac_lags": null,
+  "cash": "rf_3m subtracted from both ETF total returns",
+  "estimation": [
+    {
+      "column": "1",
+      "nobs": 4109,
+      "sample_start": "2006-08-18",
+      "sample_end": "2023-03-17"
+    },
+    {
+      "column": "2",
+      "nobs": 4109,
+      "sample_start": "2006-08-18",
+      "sample_end": "2023-03-17"
+    }
+  ],
+  "outputs": [
+    "table_5.csv"
+  ]
+}
