@@ -3,7 +3,7 @@ id: TASK-019
 title: 'Plan: decompose M-3'
 milestone: M-3
 state: approved
-depends_on: [TASK-018]
+depends_on: [TASK-018, DEC-003]
 delivery: pr
 kind: plan
 route: {platform: codex, model: gpt-6.1-sol, effort: high}

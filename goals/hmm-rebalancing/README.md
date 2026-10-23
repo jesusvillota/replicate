@@ -152,6 +152,7 @@ flowchart TD
     TASK_021["TASK-021 Export Tables C.1 and C.2 in the comparison key schema"]
   end
   subgraph M_3["M-3 · Extensions and final report"]
+    DEC_003{{"DEC-003 How should TASK-019 create and verify its replan while preserving branch isolation?"}}
     TASK_019["TASK-019 Plan: decompose M-3"]
   end
   TASK_011 --> DEC_001
@@ -187,12 +188,14 @@ flowchart TD
   TASK_020 --> TASK_018
   TASK_021 --> TASK_018
   TASK_018 --> TASK_019
+  DEC_003 --> TASK_019
   TASK_001 --> TASK_020
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
   classDef decision fill:#f3e8ff,stroke:#7c3aed
   class DEC_001 decision
   class DEC_002 decision
+  class DEC_003 decision
 ```
 <!-- goal:graph:end -->
 
