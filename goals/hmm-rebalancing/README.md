@@ -154,6 +154,7 @@ flowchart TD
   subgraph M_3["M-3 · Extensions and final report"]
     DEC_003{{"DEC-003 How should TASK-019 create and verify its replan while preserving branch isolation?"}}
     TASK_019["TASK-019 Plan: decompose M-3"]
+    TASK_022["TASK-022 Audit the cost units and the delta=0 contribution"]
   end
   TASK_011 --> DEC_001
   TASK_001 --> TASK_003
