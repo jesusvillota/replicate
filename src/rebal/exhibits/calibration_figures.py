@@ -6,6 +6,7 @@ CLI Arguments:
 --se: HC variant, hc0 or hc1 (default); D1/D2 always use HAC.
 --hac-lags: optional nonnegative Newey–West lag count.
 --timing: signal file suffix (default clean).
+--weakening-critical-t: Figure 2 summary reference (default 2.58, the paper's 1%).
 
 Reads panel/signals contracts; writes five PDFs, their plotted CSVs and lineage.
 delta_pct is percent portfolio weight; window_days is trading days. coef is
@@ -22,6 +23,7 @@ import numpy as np
 import pandas as pd
 from rich.console import Console
 
+from rebal.comparison_exports import write_figure_comparisons
 from rebal.exhibits._figure_output import write_figures
 from rebal.io import load_panel, load_signals
 from rebal.regress import DEFAULT_SAMPLE, ols, predictive, predictive_data
@@ -133,7 +135,10 @@ def run(
     se: str = "hc1",
     hac_lags: int | None = None,
     timing: str = "clean",
+    weakening_critical_t: float = 2.58,
 ) -> list[Path]:
+    if not np.isfinite(weakening_critical_t) or weakening_critical_t <= 0:
+        raise ValueError("weakening_critical_t must be finite and positive")
     frames = build_figures(
         load_signals(demo=demo, timing=timing),
         load_panel(demo=demo),
@@ -141,7 +146,7 @@ def run(
         se=se,
         hac_lags=hac_lags,
     )
-    return write_figures(
+    outputs = write_figures(
         frames,
         demo=demo,
         module=__name__,
@@ -151,7 +156,11 @@ def run(
             "se": se,
             "hac_lags": hac_lags,
             "timing": timing,
+            "weakening_critical_t": weakening_critical_t,
         },
+    )
+    return write_figure_comparisons(
+        frames, outputs, weakening_critical_t=weakening_critical_t
     )
 
 
@@ -164,6 +173,12 @@ def main() -> None:
     parser.add_argument("--se", choices=["hc0", "hc1"], default="hc1")
     parser.add_argument("--hac-lags", type=int)
     parser.add_argument("--timing", default="clean")
+    parser.add_argument(
+        "--weakening-critical-t",
+        type=float,
+        default=2.58,
+        help="Figure 2 summary reference (default: 2.58, paper 1%%).",
+    )
     args = parser.parse_args()
     if args.hac_lags is not None and args.hac_lags < 0:
         parser.error("--hac-lags must be nonnegative")

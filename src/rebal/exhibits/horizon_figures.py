@@ -21,6 +21,7 @@ import pandas as pd
 from rich.console import Console
 from scipy.stats import norm
 
+from rebal.comparison_exports import write_figure_comparisons
 from rebal.exhibits._figure_output import write_figures
 from rebal.exhibits.predictive_tables import BASE
 from rebal.io import load_panel, load_signals
@@ -84,7 +85,7 @@ def run(
     frames = build_figures(
         load_signals(demo=demo, timing=timing), load_panel(demo=demo), end=end, se=se
     )
-    return write_figures(
+    outputs = write_figures(
         frames,
         demo=demo,
         module=__name__,
@@ -98,6 +99,7 @@ def run(
             "cumulative_transform": "sum(log1p(ret))",
         },
     )
+    return write_figure_comparisons(frames, outputs)
 
 
 def main() -> None:

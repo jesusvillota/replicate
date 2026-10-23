@@ -85,7 +85,11 @@ No task specification or exhibit contract is changed here.
 ## Produced CSVs
 
 Real runs read CSVs under `output/tables/` and `output/figures/`.
-Demo runs read only `output/demo/`, including its subdirectories.
+Demo runs read only `output/demo/`. Both modes read only top-level CSVs,
+plus the named legacy `magnitudes/magnitudes.csv` file. They do not scan
+subdirectories recursively. `--variant NAME` instead reads only
+`robustness/NAME/` below each selected folder, with no fallback to main.
+Variant magnitudes may use the same named legacy subfolder.
 The default report is `output/compare.md`, or `output/demo/compare.md` with
 `--demo`. `--out FILE` overrides the destination.
 
@@ -122,9 +126,8 @@ is also skipped. Other files remain available. The summary lists every skipped
 file with its reason, including keyed files without any target keys.
 Invalid targets still fail: they are the comparison's required source.
 
-TASK-013's `table_C1.csv` uses `signal` rows. Its `table_C2.csv` uses a
-`predictor` matrix. Both are skipped and reported as missing until an explicit
-keyed export exists. `figure_C1.csv` also lacks comparison keys.
+Tables C.1 and C.2 already have keyed exports. Their fourteen targets join.
+`figure_C1.csv` lacks comparison keys and is listed as skipped.
 TASK-014's D2, D5 and D13 have no targets in paper-notes section 4; their
 files are reported as skipped with no matching target keys. Every target
 for its other twelve produced tables must join, including the magnitude rows.
@@ -147,7 +150,9 @@ for its other twelve produced tables must join, including the magnitude rows.
 5. Figure D.5, PDF page 61, prints **Mean = -0.6 bps** in its legend.
    The cost discussion on PDF page 22 reports a positive **0.6 bps** cost.
    Both source conventions are retained: signed chart mean in `figure_D5`,
-   positive cost magnitude in `costs`. They are separate targets.
+   positive cost magnitude in `costs`. They are separate targets. The sign
+   conflict remains unresolved; comparison sidecars leave all four random-cost
+   values blank. No sign flip or absolute value is applied.
 6. Figure 6, PDF page 42, labels its axis "Cumulative Gains (Log Scale)".
    The targets preserve the plotted readings, about 6.2 and 2.3. They do not
    assume a conversion to either wealth multiples or unshifted log returns.
@@ -159,3 +164,53 @@ precision. Full table extraction was checked against the original PDF text.
 Chart readings were checked on rendered PDF pages 9, 13, 15, 24, 28, 42,
 58, 59, 60 and 61. The quoted household cost remains the paper's rounded
 "almost $200" estimate, not a new calculation.
+
+## Canonical sidecars (TASK-023)
+
+Each changed exporter writes `<id>_comparison.csv` next to `<id>.csv`.
+The sidecar uses `exhibit,column,term,stat,value`. Discovery reads it through
+its top-level `*.csv` rule. The original plotted data and regression layouts
+remain available. Sidecars use computed values, never the paper targets.
+
+Costs map `calendar`, `threshold_min`, `threshold_max`, `threshold_average`,
+`threshold_fixed_1pct_average` and `headline` to their named annual-bps keys.
+`dollar_cost_paper` and `per_household_paper` supply annual dollar targets.
+Values already use the corrected TASK-022 units. DEC-005 excludes delta=0
+from default summaries; all raw per-delta estimates remain available.
+
+Table 6A maps `r_es/r_ty` to `sp500/ty` and `volatility_pct_pa` to
+`vol_pct_pa`. Table 6B lowercases model names and maps `alpha` to
+`alpha_pct_pa`. Table 6C splits `control:H/L` into its control column and
+`high_mean_pct_pa/low_mean_pct_pa`. No further annualization is applied.
+
+Calibration figures use one-decimal delta keys (`delta_1.8_pct`), or
+`days_N` window keys. Figure D3 maps the rebalancing/other series to
+during/outside-rebalancing terms. Horizon figures use `day_N` and preserve
+coefficients in decimal return per decimal weight.
+
+The Figure 2 weakening summary is the first increasing sampled delta where
+`abs(t) < 2.58`. This is a grid summary, not an interpolated crossing or a
+claim that all later deltas remain insignificant. Use the calibration CLI's
+`--weakening-critical-t` to change this reference. Its default follows the
+paper's 1% line; comparison significance checks still use 1.96.
+Figure 4 summaries use the first sampled horizon whose 95% confidence band
+contains zero, including an endpoint. If no crossing occurs on the sampled
+grid, the summary value is blank. Undefined subset estimates are also blank.
+
+Figure 6 and Figure D5 sidecars retain target keys with blank values.
+Figure 6 requires an unresolved paper axis transformation. Figure D5 and
+the random-cost summary require an unresolved sign convention. Keeping their
+keys supports export coverage checks without inventing numeric comparisons.
+The report lists these as `paper-only data` with the specific ambiguity.
+It counts numeric matches separately from joined export keys.
+
+Every target without a numeric match has a reason: `no export`,
+`paper-only data`, or `not available`. Private FEARS (Table D9 column 3)
+and licensed ANcerno targets are `not available`; they are not failures.
+A supplied blank value is `not available` when no finite estimate or crossing
+exists. A missing selected file or statistic is `no export`.
+
+The comparison integration lives in `rebal.comparison_exports`. The shared
+`rebal.compare` module only calls discovery and coverage helpers, adds the
+variant argument, and records whether each target key joined. No target
+keys, paper readings, contracts or analysis specifications were changed.
