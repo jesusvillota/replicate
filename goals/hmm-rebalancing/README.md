@@ -153,6 +153,7 @@ flowchart TD
   end
   subgraph M_3["M-3 · Extensions and final report"]
     DEC_003{{"DEC-003 How should TASK-019 create and verify its replan while preserving branch isolation?"}}
+    DEC_004{{"DEC-004 Choose the optional extensions: latest sample and 3:30 PM check"}}
     TASK_019["TASK-019 Plan: decompose M-3"]
     TASK_022["TASK-022 Audit the cost units and the delta=0 contribution"]
     TASK_023["TASK-023 Comparison: main-run discovery and canonical exports"]
@@ -206,6 +207,7 @@ flowchart TD
   class DEC_001 decision
   class DEC_002 decision
   class DEC_003 decision
+  class DEC_004 decision
 ```
 <!-- goal:graph:end -->
 
