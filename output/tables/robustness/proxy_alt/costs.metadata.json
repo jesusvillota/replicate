@@ -1,20 +1,21 @@
 {
   "script": "rebal.exhibits.costs",
-  "created_utc": "2026-10-22T23:24:55.293202+00:00",
-  "source": "daily_panel_alt.parquet (DEC-001 E2/T2), with clean signals built in memory from its complete history",
+  "created_utc": "2026-10-23T16:03:52.151933+00:00",
+  "source": "/Users/jesusvillotamiranda/data/replicate/processed/daily_panel_alt.parquet; rebal.signals.build on full alternative panel",
   "parameters": {
     "n_sims": 10000,
     "seed": 16,
     "end": "2023-03-17",
     "controls": false,
     "assets": 20000000000000.0,
-    "fed_assets": 37800000000000.0
+    "fed_assets": 37800000000000.0,
+    "delta_zero": "exclude"
   },
+  "cost_formula": "-slope * decimal_trade_size**2 * trades_per_year * 10000",
   "sample_start": "1997-09-10",
   "sample_end": "2023-03-17 00:00:00",
   "outputs": [
-    "/Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-018/output/tables/robustness/proxy_alt/costs.csv",
-    "/Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-018/output/figures/robustness/proxy_alt/figure_D5.csv",
-    "/Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-018/output/figures/robustness/proxy_alt/figure_D5.pdf"
+    "/Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-030/output/tables/robustness/proxy_alt/costs.csv",
+    "/Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-030/output/tables/robustness/proxy_alt/costs_comparison.csv"
   ]
 }

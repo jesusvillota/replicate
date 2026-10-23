@@ -1,0 +1,72 @@
+{
+  "module": "rebal.exhibits.robustness_extra",
+  "created_utc": "2026-10-23T16:02:55.722803+00:00",
+  "demo": false,
+  "parameters": {
+    "end": "2023-03-17",
+    "d4_signals": "index",
+    "d14_lag": 1,
+    "timing": "clean",
+    "se": "hc1",
+    "hac_lags": null
+  },
+  "sample": [
+    "1997-09-10",
+    "2023-03-17"
+  ],
+  "samples": {
+    "table_D4": {
+      "1": {
+        "nobs": 6317,
+        "sample_start": "1997-09-11",
+        "sample_end": "2023-03-17"
+      }
+    },
+    "table_D9": {
+      "1": {
+        "nobs": 6317,
+        "sample_start": "1997-09-11",
+        "sample_end": "2023-03-17"
+      },
+      "2": {
+        "nobs": 6317,
+        "sample_start": "1997-09-11",
+        "sample_end": "2023-03-17"
+      },
+      "4": {
+        "nobs": 3843,
+        "sample_start": "2004-07-02",
+        "sample_end": "2020-01-02"
+      }
+    },
+    "table_D14": {
+      "1": {
+        "nobs": 5503,
+        "sample_start": "2001-01-02",
+        "sample_end": "2023-03-17"
+      }
+    }
+  },
+  "inputs": [
+    "daily_panel.parquet",
+    "signals_clean.parquet"
+  ],
+  "control_scaling": {
+    "ra_bex": "published level; multiplier 1",
+    "unc_bex": "published level; multiplier 1",
+    "ara": "published level; multiplier 1"
+  },
+  "d14_control": "(1+r_sp500tr[t])*(1+r_sp500tr[t-1])-1",
+  "d14_interaction": "calendar[t-d14_lag] * week4[t]",
+  "demo_betas": null,
+  "skipped": {
+    "table_D9": {
+      "3": "FEARS: authors' private full-sample data unavailable"
+    }
+  },
+  "outputs": [
+    "table_D4.csv",
+    "table_D9.csv",
+    "table_D14.csv"
+  ]
+}

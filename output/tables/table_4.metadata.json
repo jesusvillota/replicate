@@ -1,0 +1,63 @@
+{
+  "module": "rebal.exhibits.long_sample",
+  "created_utc": "2026-10-23T16:02:53.834497+00:00",
+  "demo": false,
+  "inputs": [
+    "/Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-030/data/public/french/F-F_Research_Data_Factors_daily.csv",
+    "/Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-030/data/public/gsw/feds200628.csv",
+    "/Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-030/data/public/fred/DGS10.csv"
+  ],
+  "sha256": {
+    "/Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-030/data/public/french/F-F_Research_Data_Factors_daily.csv": "2f288d35b1786a429cda4f1f9c197c053441fc59ef5ace6d5b138026d27799d6",
+    "/Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-030/data/public/gsw/feds200628.csv": "9f2a8d6ba54d13cdb9b4f19811f9c61f72c870b8fab1562d5b8bd6dd70b337b7",
+    "/Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-030/data/public/fred/DGS10.csv": "cbf5871fb1b3e12a83f6e89dd291564b9512301f0cf0fc1a0965772a8f352b3b"
+  },
+  "parameters": {
+    "pre_1971": "dgs10",
+    "end": "2023-03-17",
+    "timing": "clean",
+    "momentum": "medium-slow",
+    "se": "hc1",
+    "hac_lags": null
+  },
+  "first_return_date": "1962-01-03",
+  "first_momentum_date": "1963-01-10",
+  "samples": [
+    {
+      "column": "1",
+      "nobs": 14796,
+      "sample_start": "1963-01-11",
+      "sample_end": "2023-03-17"
+    },
+    {
+      "column": "2",
+      "nobs": 8478,
+      "sample_start": "1963-01-11",
+      "sample_end": "1997-09-09"
+    },
+    {
+      "column": "3",
+      "nobs": 6317,
+      "sample_start": "1997-09-11",
+      "sample_end": "2023-03-17"
+    }
+  ],
+  "terms": [
+    "threshold",
+    "calendar",
+    "week4",
+    "calendar:week4",
+    "momentum",
+    "ret"
+  ],
+  "omitted_controls": [
+    "vix",
+    "move",
+    "epu",
+    "ads",
+    "sentiment"
+  ],
+  "outputs": [
+    "table_4.csv"
+  ]
+}

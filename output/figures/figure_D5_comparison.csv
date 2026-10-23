@@ -1,0 +1,4 @@
+exhibit,column,term,stat,value
+figure_D5,random,mean_bps,value,
+figure_D5,random,ci95_low_bps,value,
+figure_D5,random,ci95_high_bps,value,

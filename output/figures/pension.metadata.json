@@ -1,0 +1,18 @@
+{
+  "module": "rebal.exhibits.pension",
+  "created_utc": "2026-10-23T16:02:53.963559+00:00",
+  "demo": false,
+  "weighting": "assets",
+  "start": 2003,
+  "end": 2022,
+  "inputs": [
+    "data/public/ppd/ppd_allocations.csv",
+    "data/public/ppd/ppd_coverage.csv"
+  ],
+  "outputs": [
+    "figure_1.csv",
+    "figure_1.pdf",
+    "figure_1_yearly.csv"
+  ],
+  "units": "fraction of net market assets; counts are plans"
+}

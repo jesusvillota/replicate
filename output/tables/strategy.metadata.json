@@ -1,6 +1,6 @@
 {
   "module": "rebal.exhibits.strategy",
-  "created_utc": "2026-10-22T23:24:27.544109+00:00",
+  "created_utc": "2026-10-23T16:02:57.238444+00:00",
   "demo": false,
   "inputs": [
     "rebal.io.load_panel",
@@ -28,10 +28,14 @@
   "strategy_volatility_scale": 2.2444671350168726,
   "cost_source": "Harvey et al. (2018), PDF p. 5; see docs/methods/strategy.md",
   "outputs": [
-    "/Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-018/output/tables/table_6a.csv",
-    "/Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-018/output/tables/table_6b.csv",
-    "/Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-018/output/tables/table_6c.csv",
-    "/Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-018/output/figures/figure_6.csv",
-    "/Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-018/output/figures/figure_6.pdf"
+    "/Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-030/output/tables/table_6a.csv",
+    "/Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-030/output/tables/table_6a_comparison.csv",
+    "/Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-030/output/tables/table_6b.csv",
+    "/Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-030/output/tables/table_6b_comparison.csv",
+    "/Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-030/output/tables/table_6c.csv",
+    "/Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-030/output/tables/table_6c_comparison.csv",
+    "/Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-030/output/figures/figure_6.csv",
+    "/Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-030/output/figures/figure_6.pdf",
+    "/Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-030/output/figures/figure_6_comparison.csv"
   ]
 }

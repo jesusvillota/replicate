@@ -2,31 +2,32 @@
 
 ## Summary
 
-- Targets matched: 252/399
-- Sign-match rate: 97.5% (116/119 eligible targets)
-- Significance-match rate: 85.9% (85/99 eligible targets)
-- Missing exhibits: costs, figure_1, figure_2, figure_3, figure_4, figure_5, figure_6, figure_D1, figure_D2, figure_D3, figure_D4, figure_D5, table_4, table_5, table_6a, table_6b, table_6c, table_D14, table_D4, table_D9
-- Matched exhibits: table_1, table_2a, table_2b, table_3, table_C1, table_C2, table_D1, table_D10, table_D11, table_D12, table_D3, table_D6, table_D7, table_D8
-- Skipped CSVs: 17
-  - /Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-018/output/figures/figure_2.csv: missing columns column
-  - /Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-018/output/figures/figure_3.csv: missing columns column
-  - /Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-018/output/figures/figure_4.csv: missing columns column
-  - /Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-018/output/figures/figure_6.csv: missing columns column, exhibit, term
-  - /Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-018/output/figures/figure_C1.csv: missing columns column, exhibit, term
-  - /Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-018/output/figures/figure_D1.csv: missing columns column
-  - /Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-018/output/figures/figure_D2.csv: missing columns column
-  - /Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-018/output/figures/figure_D3.csv: missing columns column
-  - /Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-018/output/figures/figure_D4.csv: missing columns column
-  - /Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-018/output/figures/figure_D5.csv: missing columns column, exhibit, term
-  - /Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-018/output/tables/costs.csv: missing columns column, exhibit, term
-  - /Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-018/output/tables/table_6a.csv: missing columns column, exhibit, term
-  - /Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-018/output/tables/table_6b.csv: no matching target keys
-  - /Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-018/output/tables/table_6c.csv: no matching target keys
-  - /Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-018/output/tables/table_D13.csv: no matching target keys
-  - /Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-018/output/tables/table_D2.csv: no matching target keys
-  - /Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-018/output/tables/table_D5.csv: no matching target keys
+- Targets matched: 388/399
+- Sign-match rate: 92.5% (196/212 eligible targets)
+- Significance-match rate: 83.1% (123/148 eligible targets)
+- Missing exhibits: figure_6, figure_D5
+- Matched exhibits: costs, figure_1, figure_2, figure_3, figure_4, figure_5, figure_D1, figure_D2, figure_D3, figure_D4, table_1, table_2a, table_2b, table_3, table_4, table_5, table_6a, table_6b, table_6c, table_C1, table_C2, table_D1, table_D10, table_D11, table_D12, table_D14, table_D3, table_D4, table_D6, table_D7, table_D8, table_D9
+- Skipped CSVs: 18
+  - /Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-030/output/figures/figure_1_yearly.csv: missing columns column, exhibit, term
+  - /Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-030/output/figures/figure_2.csv: missing columns column
+  - /Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-030/output/figures/figure_3.csv: missing columns column
+  - /Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-030/output/figures/figure_4.csv: missing columns column
+  - /Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-030/output/figures/figure_6.csv: missing columns column, exhibit, term
+  - /Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-030/output/figures/figure_C1.csv: missing columns column, exhibit, term
+  - /Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-030/output/figures/figure_D1.csv: missing columns column
+  - /Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-030/output/figures/figure_D2.csv: missing columns column
+  - /Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-030/output/figures/figure_D3.csv: missing columns column
+  - /Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-030/output/figures/figure_D4.csv: missing columns column
+  - /Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-030/output/figures/figure_D5.csv: missing columns column, exhibit, term
+  - /Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-030/output/tables/costs.csv: missing columns column, exhibit, term
+  - /Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-030/output/tables/table_6a.csv: missing columns column, exhibit, term
+  - /Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-030/output/tables/table_6b.csv: no matching target keys
+  - /Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-030/output/tables/table_6c.csv: no matching target keys
+  - /Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-030/output/tables/table_D13.csv: no matching target keys
+  - /Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-030/output/tables/table_D2.csv: no matching target keys
+  - /Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-030/output/tables/table_D5.csv: no matching target keys
 
-Targets: `/Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-018/docs/results/targets.csv`. Inputs: `/Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-018/output/tables`, `/Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-018/output/figures`.
+Targets: `/Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-030/docs/results/targets.csv`. Inputs: `/Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-030/output/tables`, `/Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-030/output/figures`.
 
 Each row compares one statistic. Approximate chart readings have a `~` prefix. Sign checks apply to coef, t and value. Significance checks apply to coef and t, using |t| ≥ 1.96 on both sides (or neither). Where t is absent, coef/se is used. N/A means missing data, an inapplicable check, or division by zero. Missing exhibits have no matched numeric targets; partial exhibits retain N/A rows.
 
@@ -34,58 +35,58 @@ Each row compares one statistic. Approximate chart readings have a `~` prefix. S
 
 | term | paper | ours | ours/paper | sign match | significance match |
 |---|---:|---:|---:|---|---|
-| calendar: annual_bps [value] | 5 | N/A | N/A | N/A | N/A |
-| headline: annual_bps [value] | 8 | N/A | N/A | N/A | N/A |
-| headline: annual_usd [value] | 1.6e+10 | N/A | N/A | N/A | N/A |
-| household: annual_usd [value] | 200 | N/A | N/A | N/A | N/A |
+| calendar: annual_bps [value] | 5 | 3.33281 | 0.666561 | yes | N/A |
+| headline: annual_bps [value] | 8 | 1.22151 | 0.152689 | yes | N/A |
+| headline: annual_usd [value] | 1.6e+10 | 2.44303e+09 | 0.152689 | yes | N/A |
+| household: annual_usd [value] | 200 | 28.8547 | 0.144273 | yes | N/A |
 | random: annual_bps [value] | 0.6 | N/A | N/A | N/A | N/A |
-| threshold: annual_max_bps [value] | 27 | N/A | N/A | N/A | N/A |
-| threshold: annual_mean_bps [value] | 15 | N/A | N/A | N/A | N/A |
-| threshold: annual_min_bps [value] | 6 | N/A | N/A | N/A | N/A |
-| threshold: annual_one_pct_trade_bps [value] | 11 | N/A | N/A | N/A | N/A |
+| threshold: annual_max_bps [value] | 27 | 6.56819 | 0.243266 | yes | N/A |
+| threshold: annual_mean_bps [value] | 15 | -5.55416 | -0.370277 | no | N/A |
+| threshold: annual_min_bps [value] | 6 | -18.5702 | -3.09504 | no | N/A |
+| threshold: annual_one_pct_trade_bps [value] | 11 | -0.889777 | -0.0808888 | no | N/A |
 
 ## figure_1
 
 | term | paper | ours | ours/paper | sign match | significance match |
 |---|---:|---:|---:|---|---|
-| equity_share: actual_max [value] | ~0.68 | N/A | N/A | N/A | N/A |
-| equity_share: actual_min [value] | ~0.63 | N/A | N/A | N/A | N/A |
-| equity_share: target_typical [value] | ~0.65 | N/A | N/A | N/A | N/A |
+| equity_share: actual_max [value] | ~0.68 | 0.619532 | 0.911076 | yes | N/A |
+| equity_share: actual_min [value] | ~0.63 | 0.412023 | 0.654005 | yes | N/A |
+| equity_share: target_typical [value] | ~0.65 | 0.483315 | 0.743561 | yes | N/A |
 
 ## figure_2
 
 | term | paper | ours | ours/paper | sign match | significance match |
 |---|---:|---:|---:|---|---|
-| delta_0.0_pct: threshold [t] | ~-3.8 | N/A | N/A | N/A | N/A |
-| delta_1.0_pct: threshold [t] | ~-4.2 | N/A | N/A | N/A | N/A |
-| delta_1.8_pct: threshold [t] | ~-4.3 | N/A | N/A | N/A | N/A |
-| summary: one_pct_weakening_delta_pct [value] | ~2.7 | N/A | N/A | N/A | N/A |
+| delta_0.0_pct: threshold [t] | ~-3.8 | -3.62997 | 0.955256 | yes | yes |
+| delta_1.0_pct: threshold [t] | ~-4.2 | -4.22201 | 1.00524 | yes | yes |
+| delta_1.8_pct: threshold [t] | ~-4.3 | -3.94458 | 0.917344 | yes | yes |
+| summary: one_pct_weakening_delta_pct [value] | ~2.7 | 1.4 | 0.518519 | yes | N/A |
 
 ## figure_3
 
 | term | paper | ours | ours/paper | sign match | significance match |
 |---|---:|---:|---:|---|---|
-| days_1: calendar_interaction [t] | ~-0.85 | N/A | N/A | N/A | N/A |
-| days_10: calendar_interaction [t] | ~-0.1 | N/A | N/A | N/A | N/A |
-| days_2: calendar_interaction [t] | ~-1.15 | N/A | N/A | N/A | N/A |
-| days_3: calendar_interaction [t] | ~-1 | N/A | N/A | N/A | N/A |
-| days_4: calendar_interaction [t] | ~-3.1 | N/A | N/A | N/A | N/A |
-| days_5: calendar_interaction [t] | ~-2.8 | N/A | N/A | N/A | N/A |
-| days_6: calendar_interaction [t] | ~-2.4 | N/A | N/A | N/A | N/A |
-| days_7: calendar_interaction [t] | ~-1.35 | N/A | N/A | N/A | N/A |
-| days_8: calendar_interaction [t] | ~-1 | N/A | N/A | N/A | N/A |
-| days_9: calendar_interaction [t] | ~-0.5 | N/A | N/A | N/A | N/A |
+| days_1: calendar_interaction [t] | ~-0.85 | 2.08786 | -2.4563 | no | no |
+| days_10: calendar_interaction [t] | ~-0.1 | 0.0755611 | -0.755611 | no | yes |
+| days_2: calendar_interaction [t] | ~-1.15 | 0.984378 | -0.855981 | no | yes |
+| days_3: calendar_interaction [t] | ~-1 | 0.323106 | -0.323106 | no | yes |
+| days_4: calendar_interaction [t] | ~-3.1 | 0.00206371 | -0.000665714 | no | no |
+| days_5: calendar_interaction [t] | ~-2.8 | -2.45407 | 0.876454 | yes | yes |
+| days_6: calendar_interaction [t] | ~-2.4 | -1.98411 | 0.826711 | yes | yes |
+| days_7: calendar_interaction [t] | ~-1.35 | -1.90806 | 1.41338 | yes | yes |
+| days_8: calendar_interaction [t] | ~-1 | -1.19001 | 1.19001 | yes | yes |
+| days_9: calendar_interaction [t] | ~-0.5 | -0.360719 | 0.721437 | yes | yes |
 
 ## figure_4
 
 | term | paper | ours | ours/paper | sign match | significance match |
 |---|---:|---:|---:|---|---|
-| day_15: calendar:week4 [coef] | ~-0.13 | N/A | N/A | N/A | N/A |
-| day_15: threshold [coef] | ~-0.12 | N/A | N/A | N/A | N/A |
-| day_2: calendar:week4 [coef] | ~-0.52 | N/A | N/A | N/A | N/A |
-| day_4: threshold [coef] | ~-0.95 | N/A | N/A | N/A | N/A |
-| summary: calendar_week4_first_insignificant_day [value] | ~6 | N/A | N/A | N/A | N/A |
-| summary: threshold_first_insignificant_day [value] | ~9 | N/A | N/A | N/A | N/A |
+| day_15: calendar:week4 [coef] | ~-0.13 | 0.252764 | -1.94434 | no | N/A |
+| day_15: threshold [coef] | ~-0.12 | -0.801446 | 6.67872 | yes | N/A |
+| day_2: calendar:week4 [coef] | ~-0.52 | -0.283967 | 0.546091 | yes | N/A |
+| day_4: threshold [coef] | ~-0.95 | -0.987082 | 1.03903 | yes | N/A |
+| summary: calendar_week4_first_insignificant_day [value] | ~6 | 3 | 0.5 | yes | N/A |
+| summary: threshold_first_insignificant_day [value] | ~9 | 7 | 0.777778 | yes | N/A |
 
 ## figure_5
 
@@ -93,16 +94,16 @@ Each row compares one statistic. Approximate chart readings have a `~` prefix. S
 |---|---:|---:|---:|---|---|
 | ancerno: calendar [value] | ~-0.1 | N/A | N/A | N/A | N/A |
 | ancerno: threshold [value] | ~-0.1 | N/A | N/A | N/A | N/A |
-| cftc_hedgers: calendar [value] | ~-0.13 | N/A | N/A | N/A | N/A |
-| cftc_hedgers: threshold [value] | ~-0.1 | N/A | N/A | N/A | N/A |
-| cftc_speculators: calendar [value] | ~0.17 | N/A | N/A | N/A | N/A |
-| cftc_speculators: threshold [value] | ~0.11 | N/A | N/A | N/A | N/A |
-| ici: calendar [value] | ~-0.19 | N/A | N/A | N/A | N/A |
-| ici: threshold [value] | ~-0.17 | N/A | N/A | N/A | N/A |
-| ltpos_asset_managers: calendar [value] | ~-0.12 | N/A | N/A | N/A | N/A |
-| ltpos_asset_managers: threshold [value] | ~-0.08 | N/A | N/A | N/A | N/A |
-| ltpos_leveraged_funds: calendar [value] | ~0.13 | N/A | N/A | N/A | N/A |
-| ltpos_leveraged_funds: threshold [value] | ~0.18 | N/A | N/A | N/A | N/A |
+| cftc_hedgers: calendar [value] | ~-0.13 | -0.128595 | 0.98919 | yes | N/A |
+| cftc_hedgers: threshold [value] | ~-0.1 | -0.0897218 | 0.897218 | yes | N/A |
+| cftc_speculators: calendar [value] | ~0.17 | 0.153255 | 0.9015 | yes | N/A |
+| cftc_speculators: threshold [value] | ~0.11 | 0.0940242 | 0.854765 | yes | N/A |
+| ici: calendar [value] | ~-0.19 | -0.174532 | 0.91859 | yes | N/A |
+| ici: threshold [value] | ~-0.17 | -0.0446147 | 0.262439 | yes | N/A |
+| ltpos_asset_managers: calendar [value] | ~-0.12 | -0.04124 | 0.343667 | yes | N/A |
+| ltpos_asset_managers: threshold [value] | ~-0.08 | -0.0218508 | 0.273135 | yes | N/A |
+| ltpos_leveraged_funds: calendar [value] | ~0.13 | 0.0890576 | 0.685058 | yes | N/A |
+| ltpos_leveraged_funds: threshold [value] | ~0.18 | 0.0187796 | 0.104331 | yes | N/A |
 
 ## figure_6
 
@@ -115,31 +116,31 @@ Each row compares one statistic. Approximate chart readings have a `~` prefix. S
 
 | term | paper | ours | ours/paper | sign match | significance match |
 |---|---:|---:|---:|---|---|
-| delta_1.8_pct: threshold [t] | ~-4.5 | N/A | N/A | N/A | N/A |
+| delta_1.8_pct: threshold [t] | ~-4.5 | -3.73356 | 0.829681 | yes | yes |
 
 ## figure_D2
 
 | term | paper | ours | ours/paper | sign match | significance match |
 |---|---:|---:|---:|---|---|
-| days_4: calendar_interaction [t] | ~-3.65 | N/A | N/A | N/A | N/A |
+| days_4: calendar_interaction [t] | ~-3.65 | 0.00249157 | -0.000682621 | no | no |
 
 ## figure_D3
 
 | term | paper | ours | ours/paper | sign match | significance match |
 |---|---:|---:|---:|---|---|
-| delta_0.0_pct: during_rebalancing [t] | ~-3.8 | N/A | N/A | N/A | N/A |
-| delta_0.3_pct: outside_rebalancing [t] | ~2.5 | N/A | N/A | N/A | N/A |
-| delta_1.8_pct: during_rebalancing [t] | ~-6.1 | N/A | N/A | N/A | N/A |
-| delta_2.3_pct: outside_rebalancing [t] | ~-3 | N/A | N/A | N/A | N/A |
+| delta_0.0_pct: during_rebalancing [t] | ~-3.8 | -3.62997 | 0.955256 | yes | yes |
+| delta_0.3_pct: outside_rebalancing [t] | ~2.5 | 1.01573 | 0.406292 | yes | no |
+| delta_1.8_pct: during_rebalancing [t] | ~-6.1 | -4.58305 | 0.751319 | yes | yes |
+| delta_2.3_pct: outside_rebalancing [t] | ~-3 | -1.92976 | 0.643252 | yes | no |
 
 ## figure_D4
 
 | term | paper | ours | ours/paper | sign match | significance match |
 |---|---:|---:|---:|---|---|
-| day_1: calendar:week4 [coef] | ~-0.3 | N/A | N/A | N/A | N/A |
-| day_1: threshold [coef] | ~-0.42 | N/A | N/A | N/A | N/A |
-| day_2: calendar:week4 [coef] | ~-0.2 | N/A | N/A | N/A | N/A |
-| day_2: threshold [coef] | ~-0.2 | N/A | N/A | N/A | N/A |
+| day_1: calendar:week4 [coef] | ~-0.3 | -0.260256 | 0.867519 | yes | N/A |
+| day_1: threshold [coef] | ~-0.42 | -0.464414 | 1.10575 | yes | N/A |
+| day_2: calendar:week4 [coef] | ~-0.2 | -0.0164074 | 0.0820371 | yes | N/A |
+| day_2: threshold [coef] | ~-0.2 | -0.193701 | 0.968504 | yes | N/A |
 
 ## figure_D5
 
@@ -367,96 +368,96 @@ Each row compares one statistic. Approximate chart readings have a `~` prefix. S
 
 | term | paper | ours | ours/paper | sign match | significance match |
 |---|---:|---:|---:|---|---|
-| 1: calendar:week4 [coef] | -0.1536 | N/A | N/A | N/A | N/A |
-| 1: calendar:week4 [se] | 0.0471 | N/A | N/A | N/A | N/A |
-| 1: threshold [adj_r2] | 0.0053 | N/A | N/A | N/A | N/A |
-| 1: threshold [coef] | -0.1809 | N/A | N/A | N/A | N/A |
-| 1: threshold [nobs] | 15291 | N/A | N/A | N/A | N/A |
-| 1: threshold [se] | 0.062 | N/A | N/A | N/A | N/A |
-| 2: calendar:week4 [coef] | -0.0284 | N/A | N/A | N/A | N/A |
-| 2: calendar:week4 [se] | 0.0596 | N/A | N/A | N/A | N/A |
-| 2: threshold [adj_r2] | 0.0204 | N/A | N/A | N/A | N/A |
-| 2: threshold [coef] | -0.0157 | N/A | N/A | N/A | N/A |
-| 2: threshold [nobs] | 8870 | N/A | N/A | N/A | N/A |
-| 2: threshold [se] | 0.0576 | N/A | N/A | N/A | N/A |
-| 3: calendar:week4 [coef] | -0.2569 | N/A | N/A | N/A | N/A |
-| 3: calendar:week4 [se] | 0.067 | N/A | N/A | N/A | N/A |
-| 3: threshold [adj_r2] | 0.017 | N/A | N/A | N/A | N/A |
-| 3: threshold [coef] | -0.3685 | N/A | N/A | N/A | N/A |
-| 3: threshold [nobs] | 6421 | N/A | N/A | N/A | N/A |
-| 3: threshold [se] | 0.1103 | N/A | N/A | N/A | N/A |
+| 1: calendar:week4 [coef] | -0.1536 | -0.151346 | 0.985326 | yes | yes |
+| 1: calendar:week4 [se] | 0.0471 | 0.0459788 | 0.976195 | N/A | N/A |
+| 1: threshold [adj_r2] | 0.0053 | 0.0053391 | 1.00738 | N/A | N/A |
+| 1: threshold [coef] | -0.1809 | -0.173107 | 0.956923 | yes | yes |
+| 1: threshold [nobs] | 15291 | 14796 | 0.967628 | N/A | N/A |
+| 1: threshold [se] | 0.062 | 0.0613394 | 0.989344 | N/A | N/A |
+| 2: calendar:week4 [coef] | -0.0284 | -0.106168 | 3.73831 | yes | yes |
+| 2: calendar:week4 [se] | 0.0596 | 0.0612268 | 1.0273 | N/A | N/A |
+| 2: threshold [adj_r2] | 0.0204 | 0.0265478 | 1.30136 | N/A | N/A |
+| 2: threshold [coef] | -0.0157 | -0.0185372 | 1.18071 | yes | yes |
+| 2: threshold [nobs] | 8870 | 8478 | 0.955806 | N/A | N/A |
+| 2: threshold [se] | 0.0576 | 0.059397 | 1.0312 | N/A | N/A |
+| 3: calendar:week4 [coef] | -0.2569 | -0.200243 | 0.779458 | yes | yes |
+| 3: calendar:week4 [se] | 0.067 | 0.0669303 | 0.998959 | N/A | N/A |
+| 3: threshold [adj_r2] | 0.017 | 0.0139001 | 0.817654 | N/A | N/A |
+| 3: threshold [coef] | -0.3685 | -0.363704 | 0.986985 | yes | yes |
+| 3: threshold [nobs] | 6421 | 6317 | 0.983803 | N/A | N/A |
+| 3: threshold [se] | 0.1103 | 0.109614 | 0.993779 | N/A | N/A |
 
 ## table_5
 
 | term | paper | ours | ours/paper | sign match | significance match |
 |---|---:|---:|---:|---|---|
-| 1: calendar:week4 [coef] | -0.1174 | N/A | N/A | N/A | N/A |
-| 1: calendar:week4 [se] | 0.0683 | N/A | N/A | N/A | N/A |
-| 1: threshold [adj_r2] | 0.0094 | N/A | N/A | N/A | N/A |
-| 1: threshold [coef] | -0.2054 | N/A | N/A | N/A | N/A |
-| 1: threshold [nobs] | 4175 | N/A | N/A | N/A | N/A |
-| 1: threshold [se] | 0.0597 | N/A | N/A | N/A | N/A |
-| 2: calendar:week4 [coef] | -0.0678 | N/A | N/A | N/A | N/A |
-| 2: calendar:week4 [se] | 0.0654 | N/A | N/A | N/A | N/A |
-| 2: threshold [adj_r2] | 0.0023 | N/A | N/A | N/A | N/A |
-| 2: threshold [coef] | -0.0339 | N/A | N/A | N/A | N/A |
-| 2: threshold [nobs] | 4175 | N/A | N/A | N/A | N/A |
-| 2: threshold [se] | 0.0478 | N/A | N/A | N/A | N/A |
+| 1: calendar:week4 [coef] | -0.1174 | -0.0743924 | 0.633666 | yes | yes |
+| 1: calendar:week4 [se] | 0.0683 | 0.171212 | 2.50677 | N/A | N/A |
+| 1: threshold [adj_r2] | 0.0094 | 0.00135596 | 0.144251 | N/A | N/A |
+| 1: threshold [coef] | -0.2054 | 5.81835e-05 | -0.000283269 | no | no |
+| 1: threshold [nobs] | 4175 | 4109 | 0.984192 | N/A | N/A |
+| 1: threshold [se] | 0.0597 | 0.0392838 | 0.65802 | N/A | N/A |
+| 2: calendar:week4 [coef] | -0.0678 | -0.151665 | 2.23695 | yes | yes |
+| 2: calendar:week4 [se] | 0.0654 | 0.176584 | 2.70006 | N/A | N/A |
+| 2: threshold [adj_r2] | 0.0023 | 0.00109898 | 0.477816 | N/A | N/A |
+| 2: threshold [coef] | -0.0339 | 0.0109586 | -0.323261 | no | yes |
+| 2: threshold [nobs] | 4175 | 4109 | 0.984192 | N/A | N/A |
+| 2: threshold [se] | 0.0478 | 0.0332114 | 0.694798 | N/A | N/A |
 
 ## table_6a
 
 | term | paper | ours | ours/paper | sign match | significance match |
 |---|---:|---:|---:|---|---|
-| sp500: mean_pct_pa [value] | 7.11 | N/A | N/A | N/A | N/A |
-| sp500: sharpe [value] | 0.35 | N/A | N/A | N/A | N/A |
-| sp500: skewness [value] | -0.08 | N/A | N/A | N/A | N/A |
-| sp500: vol_pct_pa [value] | 20.05 | N/A | N/A | N/A | N/A |
-| strategy: mean_pct_pa [value] | 10.2 | N/A | N/A | N/A | N/A |
-| strategy: sharpe [value] | 1.11 | N/A | N/A | N/A | N/A |
-| strategy: skewness [value] | 5.23 | N/A | N/A | N/A | N/A |
-| strategy: vol_pct_pa [value] | 9.17 | N/A | N/A | N/A | N/A |
-| ty: mean_pct_pa [value] | 2.92 | N/A | N/A | N/A | N/A |
-| ty: sharpe [value] | 0.48 | N/A | N/A | N/A | N/A |
-| ty: skewness [value] | 0.03 | N/A | N/A | N/A | N/A |
-| ty: vol_pct_pa [value] | 6.13 | N/A | N/A | N/A | N/A |
+| sp500: mean_pct_pa [value] | 7.11 | 7.61551 | 1.0711 | yes | N/A |
+| sp500: sharpe [value] | 0.35 | 0.386183 | 1.10338 | yes | N/A |
+| sp500: skewness [value] | -0.08 | -0.287646 | 3.59557 | yes | N/A |
+| sp500: vol_pct_pa [value] | 20.05 | 19.72 | 0.983539 | yes | N/A |
+| strategy: mean_pct_pa [value] | 10.2 | 6.44968 | 0.632321 | yes | N/A |
+| strategy: sharpe [value] | 1.11 | 0.734083 | 0.661336 | yes | N/A |
+| strategy: skewness [value] | 5.23 | 3.88392 | 0.742624 | yes | N/A |
+| strategy: vol_pct_pa [value] | 9.17 | 8.78603 | 0.958127 | yes | N/A |
+| ty: mean_pct_pa [value] | 2.92 | 3.3924 | 1.16178 | yes | N/A |
+| ty: sharpe [value] | 0.48 | 0.556063 | 1.15847 | yes | N/A |
+| ty: skewness [value] | 0.03 | 0.0692597 | 2.30866 | yes | N/A |
+| ty: vol_pct_pa [value] | 6.13 | 6.10075 | 0.995228 | yes | N/A |
 
 ## table_6b
 
 | term | paper | ours | ours/paper | sign match | significance match |
 |---|---:|---:|---:|---|---|
-| c4: alpha_pct_pa [coef] | 9.64 | N/A | N/A | N/A | N/A |
-| c4: alpha_pct_pa [se] | 1.78 | N/A | N/A | N/A | N/A |
-| capm: alpha_pct_pa [coef] | 9.61 | N/A | N/A | N/A | N/A |
-| capm: alpha_pct_pa [se] | 1.77 | N/A | N/A | N/A | N/A |
-| ff5: alpha_pct_pa [coef] | 9.49 | N/A | N/A | N/A | N/A |
-| ff5: alpha_pct_pa [se] | 1.74 | N/A | N/A | N/A | N/A |
-| hxz: alpha_pct_pa [coef] | 9.43 | N/A | N/A | N/A | N/A |
-| hxz: alpha_pct_pa [se] | 1.75 | N/A | N/A | N/A | N/A |
+| c4: alpha_pct_pa [coef] | 9.64 | 5.7564 | 0.597137 | yes | yes |
+| c4: alpha_pct_pa [se] | 1.78 | 1.69777 | 0.953802 | N/A | N/A |
+| capm: alpha_pct_pa [coef] | 9.61 | 5.71054 | 0.594229 | yes | yes |
+| capm: alpha_pct_pa [se] | 1.77 | 1.69888 | 0.959819 | N/A | N/A |
+| ff5: alpha_pct_pa [coef] | 9.49 | 5.67533 | 0.598033 | yes | yes |
+| ff5: alpha_pct_pa [se] | 1.74 | 1.6739 | 0.962009 | N/A | N/A |
+| hxz: alpha_pct_pa [coef] | 9.43 | 5.56161 | 0.589778 | yes | yes |
+| hxz: alpha_pct_pa [se] | 1.75 | 1.66911 | 0.953779 | N/A | N/A |
 
 ## table_6c
 
 | term | paper | ours | ours/paper | sign match | significance match |
 |---|---:|---:|---:|---|---|
-| epu: high_mean_pct_pa [coef] | 15.16 | N/A | N/A | N/A | N/A |
-| epu: high_mean_pct_pa [se] | 3.26 | N/A | N/A | N/A | N/A |
-| epu: low_mean_pct_pa [coef] | 5.24 | N/A | N/A | N/A | N/A |
-| epu: low_mean_pct_pa [se] | 1.56 | N/A | N/A | N/A | N/A |
-| ivol: high_mean_pct_pa [coef] | 15.68 | N/A | N/A | N/A | N/A |
-| ivol: high_mean_pct_pa [se] | 3.44 | N/A | N/A | N/A | N/A |
-| ivol: low_mean_pct_pa [coef] | 5.09 | N/A | N/A | N/A | N/A |
-| ivol: low_mean_pct_pa [se] | 1.28 | N/A | N/A | N/A | N/A |
-| liquidity: high_mean_pct_pa [coef] | 17.96 | N/A | N/A | N/A | N/A |
-| liquidity: high_mean_pct_pa [se] | 3.33 | N/A | N/A | N/A | N/A |
-| liquidity: low_mean_pct_pa [coef] | 3.79 | N/A | N/A | N/A | N/A |
-| liquidity: low_mean_pct_pa [se] | 1.85 | N/A | N/A | N/A | N/A |
-| move: high_mean_pct_pa [coef] | 14.85 | N/A | N/A | N/A | N/A |
-| move: high_mean_pct_pa [se] | 3.32 | N/A | N/A | N/A | N/A |
-| move: low_mean_pct_pa [coef] | 5.55 | N/A | N/A | N/A | N/A |
-| move: low_mean_pct_pa [se] | 1.43 | N/A | N/A | N/A | N/A |
-| vix: high_mean_pct_pa [coef] | 16.5 | N/A | N/A | N/A | N/A |
-| vix: high_mean_pct_pa [se] | 3.44 | N/A | N/A | N/A | N/A |
-| vix: low_mean_pct_pa [coef] | 3.91 | N/A | N/A | N/A | N/A |
-| vix: low_mean_pct_pa [se] | 1.11 | N/A | N/A | N/A | N/A |
+| epu: high_mean_pct_pa [coef] | 15.16 | 11.6837 | 0.770693 | yes | yes |
+| epu: high_mean_pct_pa [se] | 3.26 | 3.05939 | 0.938463 | N/A | N/A |
+| epu: low_mean_pct_pa [coef] | 5.24 | 1.2173 | 0.232309 | yes | no |
+| epu: low_mean_pct_pa [se] | 1.56 | 1.71599 | 1.09999 | N/A | N/A |
+| ivol: high_mean_pct_pa [coef] | 15.68 | 11.3562 | 0.724249 | yes | yes |
+| ivol: high_mean_pct_pa [se] | 3.44 | 3.19438 | 0.9286 | N/A | N/A |
+| ivol: low_mean_pct_pa [coef] | 5.09 | 1.54468 | 0.303473 | yes | no |
+| ivol: low_mean_pct_pa [se] | 1.28 | 1.45019 | 1.13296 | N/A | N/A |
+| liquidity: high_mean_pct_pa [coef] | 17.96 | 12.611 | 0.702172 | yes | yes |
+| liquidity: high_mean_pct_pa [se] | 3.33 | 3.11009 | 0.933961 | N/A | N/A |
+| liquidity: low_mean_pct_pa [coef] | 3.79 | 0.290288 | 0.0765931 | yes | no |
+| liquidity: low_mean_pct_pa [se] | 1.85 | 1.62029 | 0.875831 | N/A | N/A |
+| move: high_mean_pct_pa [coef] | 14.85 | 11.9026 | 0.801523 | yes | yes |
+| move: high_mean_pct_pa [se] | 3.32 | 3.48596 | 1.04999 | N/A | N/A |
+| move: low_mean_pct_pa [coef] | 5.55 | 0.33658 | 0.0606451 | yes | no |
+| move: low_mean_pct_pa [se] | 1.43 | 1.56808 | 1.09656 | N/A | N/A |
+| vix: high_mean_pct_pa [coef] | 16.5 | 13.0256 | 0.789433 | yes | yes |
+| vix: high_mean_pct_pa [se] | 3.44 | 3.29315 | 0.957312 | N/A | N/A |
+| vix: low_mean_pct_pa [coef] | 3.91 | -0.124205 | -0.0317659 | no | no |
+| vix: low_mean_pct_pa [se] | 1.11 | 1.20438 | 1.08503 | N/A | N/A |
 
 ## table_C1
 
@@ -522,11 +523,11 @@ Each row compares one statistic. Approximate chart readings have a `~` prefix. S
 
 | term | paper | ours | ours/paper | sign match | significance match |
 |---|---:|---:|---:|---|---|
-| 1: calendar:week4 [coef] | -0.206 | N/A | N/A | N/A | N/A |
-| 1: calendar:week4 [se] | 0.0535 | N/A | N/A | N/A | N/A |
-| 1: threshold [coef] | -0.2723 | N/A | N/A | N/A | N/A |
-| 1: threshold [nobs] | 6097 | N/A | N/A | N/A | N/A |
-| 1: threshold [se] | 0.087 | N/A | N/A | N/A | N/A |
+| 1: calendar:week4 [coef] | -0.206 | -0.15501 | 0.752476 | yes | yes |
+| 1: calendar:week4 [se] | 0.0535 | 0.0541024 | 1.01126 | N/A | N/A |
+| 1: threshold [coef] | -0.2723 | -0.668625 | 2.45547 | yes | yes |
+| 1: threshold [nobs] | 6097 | 5503 | 0.902575 | N/A | N/A |
+| 1: threshold [se] | 0.087 | 0.0817158 | 0.939262 | N/A | N/A |
 
 ## table_D3
 
@@ -543,10 +544,10 @@ Each row compares one statistic. Approximate chart readings have a `~` prefix. S
 
 | term | paper | ours | ours/paper | sign match | significance match |
 |---|---:|---:|---:|---|---|
-| 1: calendar:week4 [coef] | -0.3189 | N/A | N/A | N/A | N/A |
-| 1: calendar:week4 [se] | 0.0866 | N/A | N/A | N/A | N/A |
-| 1: threshold [coef] | -0.397 | N/A | N/A | N/A | N/A |
-| 1: threshold [se] | 0.1199 | N/A | N/A | N/A | N/A |
+| 1: calendar:week4 [coef] | -0.3189 | -0.261891 | 0.821232 | yes | yes |
+| 1: calendar:week4 [se] | 0.0866 | 0.0771764 | 0.891183 | N/A | N/A |
+| 1: threshold [coef] | -0.397 | -0.449384 | 1.13195 | yes | yes |
+| 1: threshold [se] | 0.1199 | 0.110055 | 0.917891 | N/A | N/A |
 
 ## table_D6
 
@@ -589,299 +590,34 @@ Each row compares one statistic. Approximate chart readings have a `~` prefix. S
 
 | term | paper | ours | ours/paper | sign match | significance match |
 |---|---:|---:|---:|---|---|
-| 1: threshold [coef] | -0.4493 | N/A | N/A | N/A | N/A |
-| 1: threshold [nobs] | 6124 | N/A | N/A | N/A | N/A |
-| 1: threshold [se] | 0.1152 | N/A | N/A | N/A | N/A |
+| 1: threshold [coef] | -0.4493 | -0.491847 | 1.0947 | yes | yes |
+| 1: threshold [nobs] | 6124 | 6317 | 1.03152 | N/A | N/A |
+| 1: threshold [se] | 0.1152 | 0.115902 | 1.00609 | N/A | N/A |
 | 3: threshold [coef] | -0.4226 | N/A | N/A | N/A | N/A |
 | 3: threshold [nobs] | 3149 | N/A | N/A | N/A | N/A |
 | 3: threshold [se] | 0.1719 | N/A | N/A | N/A | N/A |
-| 4: threshold [coef] | -0.3731 | N/A | N/A | N/A | N/A |
-| 4: threshold [nobs] | 3903 | N/A | N/A | N/A | N/A |
-| 4: threshold [se] | 0.1537 | N/A | N/A | N/A | N/A |
+| 4: threshold [coef] | -0.3731 | -0.385589 | 1.03347 | yes | yes |
+| 4: threshold [nobs] | 3903 | 3843 | 0.984627 | N/A | N/A |
+| 4: threshold [se] | 0.1537 | 0.150572 | 0.979648 | N/A | N/A |
 
-## Reading the gaps
+## Export coverage
 
-### Scope and headline results
+Joined exhibit keys: costs, figure_1, figure_2, figure_3, figure_4, figure_5, figure_6, figure_D1, figure_D2, figure_D3, figure_D4, figure_D5, table_1, table_2a, table_2b, table_3, table_4, table_5, table_6a, table_6b, table_6c, table_C1, table_C2, table_D1, table_D10, table_D11, table_D12, table_D14, table_D3, table_D4, table_D6, table_D7, table_D8, table_D9
 
-The main run uses DEC-001 E1/T3 cash-market proxies and `clean` timing. The sample spans 1997-09-10 through 2023-03-17.
-There are 6,318 panel rows and 6,317 baseline return pairs. The paper reports 6,226 regression observations.
-Initialization uses earlier history. No return is filled, no sample is shortened, and no parameter is fitted to the paper.
+Blank canonical values join keys only; they do not count as numeric matches.
 
-The automated summary above covers 252/399 target statistics. Its sign rate is 97.5% (116/119). Its significance rate is 85.9% (85/99).
-These rates apply only to joined targets. They exclude the direct comparisons below. A sign match does not imply a size match.
-An automated “missing exhibit” can mean missing comparison keys. All required core artifacts exist.
-Costs, Table 6 and the figures need keyed exports: [issue #29](https://github.com/jesusvillota/replicate/issues/29).
+## Unmatched targets
 
-The report was regenerated with robustness folders temporarily outside its input roots. All main CSVs remained unchanged.
-Otherwise recursive discovery can substitute robustness values: [issue #28](https://github.com/jesusvillota/replicate/issues/28).
-The generated tables above and the rates here describe the main run only.
-
-| Headline | Paper | Main run |
-|---|---:|---:|
-| Table 1 (1), Threshold: coefficient (t) | -0.4144 (-3.6098) | -0.464414 (-4.012118) |
-| Table 1 (1), Cal × week4: coefficient (t) | -0.3029 (-3.7488) | -0.260256 (-3.418693) |
-| Headline cost, bps/year | 8 | 4193.686081 |
-| Headline cost, USD/year on $20T | 16,000,000,000 | 8,387,372,162,951 |
-| Strategy Sharpe ratio, gross | 1.11 | 0.734083 |
-
-Paper t-statistics above equal printed coefficient divided by printed standard error. Rounding limits their precision.
-Both Table 1 signals replicate in sign and 5% significance. Threshold is 12.1% larger in absolute size; Calendar is 14.1% smaller.
-One-standard-deviation return effects are −22.1274 and −16.7609 bps, versus −20 and −19.2 bps.
-One basis point (bps) is 0.01 percentage points. Sharpe ratio means annual mean return divided by annual volatility.
-
-### Which exhibits agree, and which differ
-
-| Exhibits | Result and most likely source of the gap |
-|---|---|
-| Table 1 | Both main signals agree in sign and significance. Small control coefficients differ. Cash-market returns and control vintages are likely causes. |
-| Tables 2A and 2B | All nine and six eligible signs agree. Table 2A has 9/9 significance matches; Table 2B has 2/6. Quarter-month subsets amplify proxy and sample differences. |
-| Table 3 | Equity and bond Threshold slopes keep their expected signs. Bond Calendar is +0.01523 (t=1.234), versus +0.0362 (t≈2.317). The bond proxy is the main candidate. Overall significance agrees for 19/24 targets. |
-| Tables C.1 and C.2; Figure C.1 | All 14 targeted signs agree. Distribution levels and correlations differ. These describe the proxy signals, rather than exact futures signals. Figure C.1 has no numeric targets. |
-| Table D.1 | Targeted signs and significance agree. Contemporaneous return-driven signal variation is retained. |
-| Tables D.2, D.5 and D.13 | Required CSVs exist. The target catalogue has no numeric targets for these tables. Selected signal estimates are listed below; no match rate is claimed. |
-| Tables D.3, D.6 and D.7 | All eligible targeted signs and significance decisions agree. Sizes still differ with the proxy returns and signal distributions. |
-| Table D.8 | All three signs agree. The small-signal effect is significant here, unlike the paper. Proxy measurement and the small/large split are likely causes. |
-| Tables D.10–D.12 | Signs agree. D.11 end-of-month reversal is significant here, unlike the paper. D.12 week1 loses significance; week3 retains it. Calendar alignment, proxy returns and sample differences are plausible causes. |
-| Figures 2 and D.1 | Negative Threshold prediction and stronger low-threshold evidence broadly agree. Some exact threshold readings differ. Timing and proxy construction both matter. |
-| Figures 3 and D.2 | The four-day-window result fails: t≈0.002 instead of −3.1/−3.65. The strongest negative window here is five days. Cash-market close times, month-end calendars and timing are leading candidates. |
-| Figures 4 and D.4 | Short-run negative prediction partly agrees. Cumulative effects first lose 5% significance at days 7/3, versus about 9/6. Calendar day2 is −0.0164 rather than about −0.20. Proxy close times and horizon/error conventions in paper-notes §5 are plausible causes. |
-| Costs and Figure D.5 | Economic sizes fail badly. The worked-example unit mismatch and extreme delta=0 cost need code review. They cannot be explained as successful proxy replication. |
-| Table 6 and Figure 6 | Gross Sharpe ratio is positive but falls from 1.11 to 0.7341. Factor alphas stay positive and significant. Low-regime means mostly lose significance. Proxy returns and the documented Calendar-reversal reading can contribute. |
-
-[Proxy comparison](../data/proxy_comparison.md) reports E1/T3 correlation 0.9917 and tracking error 2.8069% per year.
-E2/T2 gives 0.9810 and 4.5655%. These use 4,839 clean benchmark days, starting in 2000.
-They do not validate Bloomberg equivalence or the 1997–2000 period. Equity and Treasury close times differ.
-
-The panel has 91 more baseline regression pairs than the paper. Earlier initialization avoids imposing an extra 252-day burn-in.
-The panel method records 52 missing GSW quote sessions and 104 removed holding returns. Returns remain unfilled.
-Sample counts can explain some significance changes, but cannot identify their cause.
-
-Paper-notes §5 also leaves HC/HAC error settings, control scaling, momentum and horizon conventions unclear.
-The merged methods fix these choices in [signals](../methods/signals.md), [regressions](../methods/regressions.md),
-[horizons](../methods/horizons.md), [costs](../methods/costs.md) and [strategy](../methods/strategy.md).
-No new method was selected in this run. A controlled rerun would be needed to assign each gap to one cause.
-
-### Timing and proxy robustness
-
-Literal timing changes only signal construction. The alternative proxy rebuilds every signal from the full E2/T2 panel with clean timing.
-Existing analysis functions produced these outputs. No analysis source file was changed.
-
-| Variant | Threshold coefficient (t), Table 1 (1) | Cal × week4 coefficient (t) | Headline cost, bps/year |
-|---|---:|---:|---:|
-| main | -0.464414 (-4.012118) | -0.260256 (-3.418693) | 4193.686081 |
-| literal | -0.269997 (-2.729659) | -0.260521 (-3.366775) | not requested |
-| proxy_alt | -0.377347 (-3.389297) | -0.223696 (-3.126650) | 5552.083263 |
-
-| Figure 2 threshold | Main t | Literal t |
-|---|---:|---:|
-| 0.0% | -3.629972 | -3.629972 |
-| 1.0% | -4.222008 | -3.375253 |
-| 1.8% | -3.944581 | -2.089239 |
-
-Alternative-proxy Table 3 checks:
-
-| Column and term | Main coefficient (t) | Alternative coefficient (t) |
-|---|---:|---:|
-| 1: threshold | -0.368583 (-3.455851) | -0.291017 (-2.960534) |
-| 1: calendar:week4 | -0.245028 (-3.452627) | -0.212080 (-3.317561) |
-| 3: threshold | 0.095832 (3.551138) | 0.086330 (2.670872) |
-| 3: calendar:week4 | 0.015227 (1.234278) | 0.011616 (0.738411) |
-
-Both robustness runs retain negative, significant headline signals. Literal timing weakens Threshold materially.
-The proxy alternative does not repair the cost failure. Default clean timing and the accepted proxies remain the reported main specification.
-
-### Direct comparisons for outputs without matching keys
-
-These rows read the committed CSVs directly. They supplement the generated N/A rows; they do not change its match-rate denominators.
-Units follow [comparison conventions](../methods/comparison.md). Approximate paper chart readings retain `~`.
-
-#### costs — direct CSV readings
-
-| Target | Paper | Main run |
-|---|---:|---:|
-| calendar: annual_bps [value] | 5 | 353.352 |
-| threshold: annual_min_bps [value] | 6 | -1107.41 |
-| threshold: annual_max_bps [value] | 27 | 48202.1 |
-| threshold: annual_mean_bps [value] | 15 | 1595.41 |
-| threshold: annual_one_pct_trade_bps [value] | 11 | 8034.02 |
-| headline: annual_bps [value] | 8 | 4193.69 |
-| headline: annual_usd [value] | 1.6e+10 | 8.38737e+12 |
-| household: annual_usd [value] | 200 | 99063.5 |
-| random: annual_bps [value] | 0.6 | 6.99019 |
-
-#### table_6a — direct CSV readings
-
-| Target | Paper | Main run |
-|---|---:|---:|
-| sp500: mean_pct_pa [value] | 7.11 | 7.61551 |
-| sp500: vol_pct_pa [value] | 20.05 | 19.72 |
-| sp500: sharpe [value] | 0.35 | 0.386183 |
-| sp500: skewness [value] | -0.08 | -0.287646 |
-| ty: mean_pct_pa [value] | 2.92 | 3.3924 |
-| ty: vol_pct_pa [value] | 6.13 | 6.10075 |
-| ty: sharpe [value] | 0.48 | 0.556063 |
-| ty: skewness [value] | 0.03 | 0.0692597 |
-| strategy: mean_pct_pa [value] | 10.2 | 6.44968 |
-| strategy: vol_pct_pa [value] | 9.17 | 8.78603 |
-| strategy: sharpe [value] | 1.11 | 0.734083 |
-| strategy: skewness [value] | 5.23 | 3.88392 |
-
-#### table_6b — direct CSV readings
-
-| Target | Paper | Main run |
-|---|---:|---:|
-| capm: alpha_pct_pa [coef] | 9.61 | 5.71054 |
-| capm: alpha_pct_pa [se] | 1.77 | 1.69888 |
-| c4: alpha_pct_pa [coef] | 9.64 | 5.7564 |
-| c4: alpha_pct_pa [se] | 1.78 | 1.69777 |
-| ff5: alpha_pct_pa [coef] | 9.49 | 5.67533 |
-| ff5: alpha_pct_pa [se] | 1.74 | 1.6739 |
-| hxz: alpha_pct_pa [coef] | 9.43 | 5.56161 |
-| hxz: alpha_pct_pa [se] | 1.75 | 1.66911 |
-
-#### table_6c — direct CSV readings
-
-| Target | Paper | Main run |
-|---|---:|---:|
-| ivol: high_mean_pct_pa [coef] | 15.68 | 11.3562 |
-| ivol: high_mean_pct_pa [se] | 3.44 | 3.19438 |
-| ivol: low_mean_pct_pa [coef] | 5.09 | 1.54468 |
-| ivol: low_mean_pct_pa [se] | 1.28 | 1.45019 |
-| liquidity: high_mean_pct_pa [coef] | 17.96 | 12.611 |
-| liquidity: high_mean_pct_pa [se] | 3.33 | 3.11009 |
-| liquidity: low_mean_pct_pa [coef] | 3.79 | 0.290288 |
-| liquidity: low_mean_pct_pa [se] | 1.85 | 1.62029 |
-| vix: high_mean_pct_pa [coef] | 16.5 | 13.0256 |
-| vix: high_mean_pct_pa [se] | 3.44 | 3.29315 |
-| vix: low_mean_pct_pa [coef] | 3.91 | -0.124205 |
-| vix: low_mean_pct_pa [se] | 1.11 | 1.20438 |
-| move: high_mean_pct_pa [coef] | 14.85 | 11.9026 |
-| move: high_mean_pct_pa [se] | 3.32 | 3.48596 |
-| move: low_mean_pct_pa [coef] | 5.55 | 0.33658 |
-| move: low_mean_pct_pa [se] | 1.43 | 1.56808 |
-| epu: high_mean_pct_pa [coef] | 15.16 | 11.6837 |
-| epu: high_mean_pct_pa [se] | 3.26 | 3.05939 |
-| epu: low_mean_pct_pa [coef] | 5.24 | 1.2173 |
-| epu: low_mean_pct_pa [se] | 1.56 | 1.71599 |
-
-#### figure_2 — direct CSV readings
-
-| Target | Paper | Main run |
-|---|---:|---:|
-| delta_0.0_pct: threshold [t] | ~-3.8 | -3.62997 |
-| delta_1.0_pct: threshold [t] | ~-4.2 | -4.22201 |
-| delta_1.8_pct: threshold [t] | ~-4.3 | -3.94458 |
-| summary: one_pct_weakening_delta_pct [value] | ~2.7 | not reduced to one threshold |
-
-#### figure_3 — direct CSV readings
-
-| Target | Paper | Main run |
-|---|---:|---:|
-| days_10: calendar_interaction [t] | ~-0.1 | 0.0755611 |
-| days_9: calendar_interaction [t] | ~-0.5 | -0.360719 |
-| days_8: calendar_interaction [t] | ~-1 | -1.19001 |
-| days_7: calendar_interaction [t] | ~-1.35 | -1.90806 |
-| days_6: calendar_interaction [t] | ~-2.4 | -1.98411 |
-| days_5: calendar_interaction [t] | ~-2.8 | -2.45407 |
-| days_4: calendar_interaction [t] | ~-3.1 | 0.00206371 |
-| days_3: calendar_interaction [t] | ~-1 | 0.323106 |
-| days_2: calendar_interaction [t] | ~-1.15 | 0.984378 |
-| days_1: calendar_interaction [t] | ~-0.85 | 2.08786 |
-
-#### figure_4 — direct CSV readings
-
-| Target | Paper | Main run |
-|---|---:|---:|
-| day_4: threshold [coef] | ~-0.95 | -0.987082 |
-| day_15: threshold [coef] | ~-0.12 | -0.801446 |
-| day_2: calendar:week4 [coef] | ~-0.52 | -0.283967 |
-| day_15: calendar:week4 [coef] | ~-0.13 | 0.252764 |
-| summary: threshold_first_insignificant_day [value] | ~9 | 7 |
-| summary: calendar_week4_first_insignificant_day [value] | ~6 | 3 |
-
-#### figure_6 — direct CSV readings
-
-| Target | Paper | Main run |
-|---|---:|---:|
-| sample_end: strategy [value] | ~6.2 | 3.15401 |
-| sample_end: sp500 [value] | ~2.3 | 1.4201 |
-
-#### figure_D1 — direct CSV readings
-
-| Target | Paper | Main run |
-|---|---:|---:|
-| delta_1.8_pct: threshold [t] | ~-4.5 | -3.73356 |
-
-#### figure_D2 — direct CSV readings
-
-| Target | Paper | Main run |
-|---|---:|---:|
-| days_4: calendar_interaction [t] | ~-3.65 | 0.00249157 |
-
-#### figure_D3 — direct CSV readings
-
-| Target | Paper | Main run |
-|---|---:|---:|
-| delta_0.0_pct: during_rebalancing [t] | ~-3.8 | -3.62997 |
-| delta_1.8_pct: during_rebalancing [t] | ~-6.1 | -4.58305 |
-| delta_0.3_pct: outside_rebalancing [t] | ~2.5 | 1.01573 |
-| delta_2.3_pct: outside_rebalancing [t] | ~-3 | -1.92976 |
-
-#### figure_D4 — direct CSV readings
-
-| Target | Paper | Main run |
-|---|---:|---:|
-| day_1: threshold [coef] | ~-0.42 | -0.464414 |
-| day_2: threshold [coef] | ~-0.2 | -0.193701 |
-| day_1: calendar:week4 [coef] | ~-0.3 | -0.260256 |
-| day_2: calendar:week4 [coef] | ~-0.2 | -0.0164074 |
-
-#### figure_D5 — direct CSV readings
-
-| Target | Paper | Main run |
-|---|---:|---:|
-| random: mean_bps [value] | -0.6 | 6.99019 |
-| random: ci95_low_bps [value] | ~-4.6 | -261.509 |
-| random: ci95_high_bps [value] | ~3.2 | 278.053 |
-
-Figure 2 is not monotonic. The paper’s rough 2.7% weakening point is not treated as a unique crossing here.
-Figure 6 reports raw terminal cumulative log returns. The paper axis reading has an unresolved level convention; these levels are not claimed equivalent.
-Figure D.5 uses positive loss in this code. The paper figure uses a signed mean of −0.6 bps; its text uses +0.6.
-The schedule interval is a distribution across 10,000 schedules, not an uncertainty interval for the mean.
-
-### Costs: failed size replication and proposed follow-up
-
-The headline cost and dollar value above are raw software outputs. They are not validated economic loss estimates.
-`annual_cost(-0.39, 0.01, 12)` returns 468 bps. The paper’s worked example states approximately 5 bps.
-This exposes an unresolved factor-of-100 unit mismatch against that example.
-The zero-threshold row also dominates the headline: impact −8.37734 and fixed-1%-trade cost 211,108.96 bps.
-Its daily-reset signal is close to a scaled current return, which enters the same regression. The design is full rank.
-This may make separate slope estimates unstable; it is not evidence of exact collinearity.
-[Issue #30](https://github.com/jesusvillota/replicate/issues/30) requests a unit and identification audit.
-The proxy alternative gives 5,552.08 bps, so proxy replacement does not resolve this failure.
-No cost was rescaled, removed or replaced to match the paper.
-
-Random tracking error is 37.4109 bps/year, near the paper’s approximately 35 bps.
-This comparison does not validate the separate cost formula.
-
-### Remaining core tables without numeric catalogue targets
-
-The following are existing estimates. The catalogue supplies no paper target for these keys; comparisons remain unavailable.
-
-| Exhibit/column | Threshold coefficient (t) | Cal × week4 coefficient (t) |
-|---|---:|---:|
-| table_D2/1 | -0.464414 (-3.899635) | -0.260256 (-3.179252) |
-| table_D5/1 | -0.457335 (-3.411393) | -0.280223 (-3.056536) |
-| table_D13/A1 | -0.368583 (-3.455851) | -0.245028 (-3.452627) |
-| table_D13/B1 | 0.095832 (3.551138) | 0.015227 (1.234278) |
-
-Table 6 net-of-trading-cost Sharpe ratio is 0.6576. Crisis-excluded Sharpe ratio is 0.5348.
-These use the documented strategy execution-cost assumptions, separate from the failed rebalancing-cost calculation.
-No extension exhibits were requested. Tables 4, 5, D.4, D.9, D.14 and Figures 1/5 remain outside this delivery.
-
-### Reproducibility
-
-Analysis revision: `07a995b2ccc54e37cbd86492cd720384f39d12dd` (merged main code).
-Both robustness folders include lineage metadata. Main sidecars record module parameters, samples and output paths.
-Processed panels and signal frames remain outside git under `~/data/replicate/processed/`.
-The task outcome records verification, artifact counts, proposed follow-ups and the PR.
+| exhibit | column | term | stat | reason |
+|---|---|---|---|---|
+| costs | random | annual_bps | value | paper-only data: random-date cost sign conflicts between text and Figure D.5 |
+| figure_5 | ancerno | calendar | value | not available: FEARS is private; ANcerno is licensed and unavailable |
+| figure_5 | ancerno | threshold | value | not available: FEARS is private; ANcerno is licensed and unavailable |
+| figure_6 | sample_end | sp500 | value | paper-only data: Figure 6 axis transformation is unresolved |
+| figure_6 | sample_end | strategy | value | paper-only data: Figure 6 axis transformation is unresolved |
+| figure_D5 | random | ci95_high_bps | value | paper-only data: random-date cost sign conflicts between text and Figure D.5 |
+| figure_D5 | random | ci95_low_bps | value | paper-only data: random-date cost sign conflicts between text and Figure D.5 |
+| figure_D5 | random | mean_bps | value | paper-only data: random-date cost sign conflicts between text and Figure D.5 |
+| table_D9 | 3 | threshold | coef | not available: FEARS is private; ANcerno is licensed and unavailable |
+| table_D9 | 3 | threshold | nobs | not available: FEARS is private; ANcerno is licensed and unavailable |
+| table_D9 | 3 | threshold | se | not available: FEARS is private; ANcerno is licensed and unavailable |

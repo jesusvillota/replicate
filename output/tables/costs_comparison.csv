@@ -1,0 +1,10 @@
+exhibit,column,term,stat,value
+costs,calendar,annual_bps,value,3.3328058606338185
+costs,threshold,annual_min_bps,value,-18.570229436783585
+costs,threshold,annual_max_bps,value,6.568186063857543
+costs,threshold,annual_mean_bps,value,-5.5541623267533025
+costs,threshold,annual_one_pct_trade_bps,value,-0.8897767232075793
+costs,headline,annual_bps,value,1.2215145687131197
+costs,headline,annual_usd,value,2443029137.4262395
+costs,household,annual_usd,value,28.854674851491023
+costs,random,annual_bps,value,

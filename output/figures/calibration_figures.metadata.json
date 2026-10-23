@@ -1,13 +1,14 @@
 {
   "module": "rebal.exhibits.calibration_figures",
-  "created_utc": "2026-10-22T23:21:48.456467+00:00",
+  "created_utc": "2026-10-23T16:00:08.537721+00:00",
   "demo": false,
   "parameters": {
     "start": "1997-09-10",
     "end": "2023-03-17",
     "se": "hc1",
     "hac_lags": null,
-    "timing": "clean"
+    "timing": "clean",
+    "weakening_critical_t": 2.58
   },
   "inputs": [
     "daily_panel.parquet",
@@ -23,6 +24,11 @@
     "figure_D2.csv",
     "figure_D2.pdf",
     "figure_D3.csv",
-    "figure_D3.pdf"
+    "figure_D3.pdf",
+    "figure_2_comparison.csv",
+    "figure_3_comparison.csv",
+    "figure_D1_comparison.csv",
+    "figure_D2_comparison.csv",
+    "figure_D3_comparison.csv"
   ]
 }
