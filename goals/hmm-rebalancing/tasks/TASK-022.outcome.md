@@ -1,65 +1,64 @@
 # TASK-022 outcome
 
-Status: BLOCKED — delta=0 cost-summary policy requires a material decision.
+Status: Delivered — DEC-005 applied; all local acceptance checks pass.
 
 ## Summary
 
 Corrected the missing portfolio-share factor in `annual_cost`. The regression
-slope times the mean absolute trade gives the price change; multiply again by
-the share traded to get portfolio cost. Annual cost is now
-`-beta * decimal_size**2 * trades_per_year * 10000`. This gives 4.68 bps for
+slope times the mean absolute trade gives the price change. Multiplying again
+by the share traded gives portfolio cost. Annual cost is
+`-beta * decimal_size**2 * trades_per_year * 10000`, which gives 4.68 bps for
 the paper's worked example. The same helper covers Calendar, Threshold,
-fixed-size, full-sample interaction and random-date costs. Tracking error,
-gross utility and dollar conversion keep their existing units.
+fixed-size, full-sample interaction and random-date costs.
 
-Added `--delta-zero include|exclude` for the audit. Inclusion retains the prior
-default provisionally. Neither option changes the individual zero-delta
-estimate or removes its row. Means, range, headline and dollars use the selected
-grid. Output column layouts are unchanged. Metadata records the formula and
-policy. The methods document explains both the paper's suppressed units and
-the unresolved daily-reset identification problem.
+Applied DEC-005, accepted by jesusvillota on 2026-10-23. The API, CLI and
+metadata now default to excluding delta=0 from Threshold cost summaries.
+All 26 raw estimates remain available. Means, range, both headlines and dollars
+use 25 deltas, 0.1–2.5%. `--delta-zero include` retains the sensitivity check.
+Tests guard the default, raw-estimate retention, CLI and metadata. Output
+column layouts stay unchanged. The methods document records the unit
+convention, accepted treatment and retained daily-reset diagnostics.
 
-No shared modules, task specifications, decisions, contracts or goal.yaml were
-changed. No cluster jobs or new data were used. Real smoke estimates stayed
-in memory; no real exhibit outputs are committed. The only additional task
-file is this required outcome. The PR remains draft because the 34.25x policy
-sensitivity exceeds the task's 2x decision threshold.
+No shared modules, task specifications, decisions, contracts or goal.yaml
+changed. No cluster jobs or new data were used. Real smoke results stayed in
+memory; no real exhibit outputs are committed. Demo outputs are ignored.
 
-Verified analysis revision: 0eed9f42f071f9f9ac69a473b2b2af7299494592 (only outcome documentation follows).
-Rebased onto `origin/main` without conflicts. Proposed follow-up: resolve the
-decision below, then resume TASK-022. No additional task was created.
+Verified analysis revision: 8102a73c68d44f6805d8a612ec06c51cb8db1109.
+Only outcome documentation follows this revision. Proposed follow-up:
+TASK-030 should report the remaining magnitude gap; no new task was created.
 
 ## Acceptance
 
-- [x] `uv run pytest -q tests/test_costs.py` passes: 13 tests passed in this
-  session. New tests reproduce 4.68 bps and guard explicit inclusion/exclusion
-  without clipping or deleting delta=0. Existing planted-effect, zero-effect,
-  random-date, trade, dollar and output-schema checks pass with corrected units.
+- [x] `uv run pytest -q tests/test_costs.py`: **13 passed in 12.25s** in this
+  resume session. Tests include the 4.68 bps worked example and default
+  delta=0 exclusion while retaining its raw estimate. Planted-effect,
+  zero-effect, trade, dollar and output-schema checks also pass.
 - [x] `uv run python3 -m rebal.exhibits --all --demo --only costs figure_D5`
-  exits 0 and writes `costs.csv`, `costs.metadata.json`, `figure_D5.csv` and
-  `figure_D5.pdf` under `output/demo/`. The CSV has 10,000 finite simulation
-  rows, unchanged columns, and a valid PDF. Metadata confirms 10,000 schedules
-  and the inclusion policy. `ls output/demo/costs* output/demo/figure_D5*` exits 0.
-- [x] Real-panel smoke reports the headline in bps and dollars and the Threshold
-  range next to the paper; see the table below. It explicitly rejects agreement
-  in size and explains the remaining differences.
-- [ ] Delivery approval: a material decision is missing. PR #33 remains open
-  and draft into `main`, labelled `goal:hmm-rebalancing`, with `Goal-Task`,
-  `Goal-Blocked` and `Goal-Decision` markers. Do not mark the native goal complete.
+  exited 0 in this resume session. It wrote `costs.csv`, `costs.metadata.json`,
+  `figure_D5.csv` and `figure_D5.pdf` under `output/demo/`.
+  `ls output/demo/costs* output/demo/figure_D5*` exited 0. Artifact checks
+  confirmed 10,000 finite draws, unchanged columns, a one-page PDF, exclusion
+  metadata, correct 25-delta summaries and the retained raw delta=0 estimate.
+- [x] Real-panel smoke was rerun in this session with 100 schedules per policy,
+  seed 16. The default headline is **1.22151 bps/year and $2,443,029,137/year**,
+  versus the paper's **8 bps and $16B**. The Threshold range is
+  **−18.57023 to 6.56819 bps**, versus **6–27 bps**. These do not agree in size;
+  see the table and explanation below.
 
-Additional local checks: Ruff passes using
-`uv run --with ruff ruff check src/rebal/exhibits/costs.py tests/test_costs.py`.
-The unaugmented `uv run ruff check ...` could not start because Ruff is absent
-from the project environment; the isolated `--with ruff` invocation changes no
-dependency files. `uv run python3 -m rebal.exhibits.costs --help` exits 0 and
-lists `--delta-zero {include,exclude}`. `git diff --check` passes.
+Additional local checks in this resume session: Ruff lint and format checks
+pass with `uv run --with ruff ruff check src/rebal/exhibits/costs.py tests/test_costs.py`
+and `uv run --with ruff ruff format --check src/rebal/exhibits/costs.py tests/test_costs.py`.
+The isolated Ruff invocation changes no dependency files. CLI `--help` exits 0
+and documents exclusion as the default. `git diff --check` passes.
 
 ## Real-panel smoke
 
 Inputs: existing `~/data/replicate/processed/daily_panel.parquet` and
 `signals_clean.parquet`. Default sample: 1997-09-10 through 2023-03-17;
-no macro controls; 100 random schedules; seed 16. Both policies were run through
-the corrected `costs.estimate` API. These were not runs of the real-output writer.
+no macro controls; 100 random schedules; seed 16. Both policies were rerun in this resume session through
+the corrected `costs.estimate` API. Exclusion used the default without a policy
+argument; inclusion used `delta_zero="include"`. Input hashes match the original
+audit. These were not runs of the real-output writer.
 
 | Quantity | Include delta=0 | Exclude delta=0 | Paper |
 |---|---:|---:|---:|
@@ -92,6 +91,10 @@ signals_clean.parquet ac21349f54e9b1efcee38b25317dfcf7350f23490646b661a4e2caf52d
 
 ## Delta=0 sensitivity
 
+Retained diagnostics from the initial TASK-022 audit follow. This resume
+reran both policy smoke checks above and confirmed the raw zero-delta slope
+and fixed-size cost below. The model and its raw estimates did not change.
+
 The design has shape 6,317 × 7 and rank seven. Its condition number is 16,277;
 after centering/scaling the nonconstant columns, it is 110. Thus the design is
 full rank, not singular. `max(abs(thr_000 - 0.24*ret)) = 0.0018975973`.
@@ -113,49 +116,28 @@ not a numerical repair. No such changes are applied to production estimates.
 The corrected zero-delta fixed-1%-trade cost is 2,111.09 bps/year. The headline
 with zero is 34.25 times its value without zero.
 
-## Decision request
+## Accepted decision
 
-Should delta=0 be excluded from Threshold cost summaries while retaining its raw estimate?
+The initial request asked whether to exclude delta=0 from Threshold cost
+summaries while retaining its raw estimate. The alternatives were inclusion
+(41.84 bps, $83.67B), exclusion (1.22 bps, $2.44B), or changing the zero-delta
+model. Inclusion lets the unstable daily-reset slope dominate. Exclusion
+changes the summary grid but keeps all raw evidence. Changing the model would
+change equation (4) and require a separate methodological justification.
 
-The paper describes costs across 0–2.5%, but does not explain how it handles
-the separate daily-reset slope with current return present. Equation (2),
-footnotes 10 and 16, and Table D.6 describe the aggregate signal or robustness
-checks on it; they do not settle the average of per-delta costs. Footnote 17's
-interaction alternative also leaves this problem unresolved. The task requires
-a decision because the headline changes by more than 2x.
-
-Options and trade-offs:
-
-1. **Include zero.** Keep the literal 26-delta grid. Report 41.84 bps and
-   $83.67B. This preserves coverage but makes the headline depend heavily on
-   a slope with large uncertainty and weak separation from current return.
-2. **Exclude zero from summaries and retain its raw estimate.** Report
-   1.22 bps and $2.44B using 25 deltas. This makes the unstable case visible
-   without letting it dominate, but changes the stated cost grid. It still
-   does not reproduce the paper's 8 bps or 6–27 bps range.
-3. **Change the delta=0 model.** For example, omit current return for zero
-   only. This gives a much smaller daily-reset slope, but treats that delta
-   differently and changes the equation (4) specification. It requires an
-   explicit methodological justification; it is not implemented here.
-
-### Recommendation
-
-Choose option 2. Retain delta=0 as a separate diagnostic and exclude it from
-all Threshold summary statistics. Document the 25-delta convention, retain
-an inclusion flag for sensitivity, and report that the remaining estimates
-still fail to reproduce the paper. Keep the PR draft until this decision is
-accepted and TASK-022 is resumed. Do not change the model to match a target.
+The owner accepted the recommended exclusion in DEC-005 on 2026-10-23.
+This resolves the material decision. The aggregate signal and regression
+specification stay unchanged. The corrected estimates still do not reproduce
+the paper's headline or Threshold range. No estimate was tuned to a target.
 
 ## Verify evidence
 
-All three Verify commands ran successfully in this session. The full demo
-command exited 0; the final local test rerun after the rebase exited 0.
-Console tail (absolute exhibit paths shortened here to repository-relative paths):
+All three exact Verify commands completed successfully in this resume session:
 
 ```text
 $ uv run pytest -q tests/test_costs.py
 .............                                                            [100%]
-13 passed in 9.49s
+13 passed in 12.25s
 $ uv run python3 -m rebal.exhibits --all --demo --only costs figure_D5
 1 exhibit modules
 output/demo/costs.csv
@@ -169,7 +151,13 @@ output/demo/figure_D5.csv
 output/demo/figure_D5.pdf
 ```
 
-Additional artifact validation: 10,000 draws; both schemas unchanged; finite
-data; PDF header and metadata valid. `git restore output/` ran after the
-in-memory real smoke; no new untracked real outputs were present. The ignored
-demo files remain available. GitHub Actions were not inspected or used as a gate.
+Absolute output paths above are shortened to repository-relative paths.
+The cost tests, lint, format and both real-panel policy smoke checks passed.
+No real output writer ran; `output/` has no tracked changes or untracked real
+artifacts. GitHub Actions were not inspected or used as a gate.
+
+PR #33 is open and ready for review, with label `goal:hmm-rebalancing` and
+`Goal-Task: hmm-rebalancing/TASK-022` in its body. Resolved decision/blocker
+markers were removed. No review threads, reviews or PR comments were present
+when checked in this session. All task changes are committed and pushed on
+`goal/hmm-rebalancing/task-022`; the PR has not been merged.
