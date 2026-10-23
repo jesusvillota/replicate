@@ -152,7 +152,18 @@ flowchart TD
     TASK_021["TASK-021 Export Tables C.1 and C.2 in the comparison key schema"]
   end
   subgraph M_3["M-3 · Extensions and final report"]
+    DEC_003{{"DEC-003 How should TASK-019 create and verify its replan while preserving branch isolation?"}}
+    DEC_004{{"DEC-004 Choose the optional extensions: latest sample and 3:30 PM check"}}
     TASK_019["TASK-019 Plan: decompose M-3"]
+    TASK_022["TASK-022 Audit the cost units and the delta=0 contribution"]
+    TASK_023["TASK-023 Comparison: main-run discovery and canonical exports"]
+    TASK_024["TASK-024 Table 4: long-sample code on demo data"]
+    TASK_025["TASK-025 Table 5: equity-segment code on demo data"]
+    TASK_026["TASK-026 Tables D.4, D.9 and D.14: robustness code on demo data"]
+    TASK_027["TASK-027 Figure 1: pension-allocation code on demo data"]
+    TASK_028["TASK-028 Figure 5: trading-correlation code on demo data"]
+    TASK_029["TASK-029 Final-report generator on fixture outputs"]
+    TASK_030["TASK-030 Final run: all exhibits on the real panel and the replication report"]
   end
   TASK_011 --> DEC_001
   TASK_001 --> TASK_003
@@ -187,12 +198,24 @@ flowchart TD
   TASK_020 --> TASK_018
   TASK_021 --> TASK_018
   TASK_018 --> TASK_019
+  DEC_003 --> TASK_019
   TASK_001 --> TASK_020
+  TASK_022 --> TASK_023
+  TASK_023 --> TASK_029
+  TASK_024 --> TASK_030
+  TASK_025 --> TASK_030
+  TASK_026 --> TASK_030
+  TASK_027 --> TASK_030
+  TASK_028 --> TASK_030
+  TASK_029 --> TASK_030
+  DEC_004 --> TASK_030
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
   classDef decision fill:#f3e8ff,stroke:#7c3aed
   class DEC_001 decision
   class DEC_002 decision
+  class DEC_003 decision
+  class DEC_004 decision
 ```
 <!-- goal:graph:end -->
 

@@ -3,7 +3,7 @@ id: TASK-019
 title: 'Plan: decompose M-3'
 milestone: M-3
 state: approved
-depends_on: [TASK-018]
+depends_on: [TASK-018, DEC-003]
 delivery: pr
 kind: plan
 route: {platform: codex, model: gpt-6.1-sol, effort: high}
@@ -45,8 +45,8 @@ Name every outside blocker as a `--manual` task.
 ## Acceptance
 
 - `goal check --goal hmm-rebalancing --json` reports no errors after the replanning.
-- `goal graph --goal hmm-rebalancing` shows the new M-3 tasks, each depending only on merged work.
-- The PR body lists the new task IDs and titles.
+- `goal graph --goal hmm-rebalancing` shows the new M-3 tasks with explicit dependency edges. Each work task depends only on merged work; the final run task depends on the new work tasks and is not dispatched before they merge (owner clarification, DEC-003).
+- The new task IDs and titles are listed in the outcome (DEC-003 moved the replan to the plan root, so there is no PR body to list them in).
 
 ## Verify
 
