@@ -57,7 +57,11 @@ coefficients unchanged. VIX, MOVE, EPU, ADS and Sentiment are absent here.
 ARA is limited to predictor dates 2004-07-01 through 2019-12-31, as in the paper.
 This removes forward-filled observations beyond the published endpoint.
 BEX uses its available complete observations within the requested study window.
-The real N for every column is recorded in the outcome and metadata sidecar.
+The real smoke run gives N = 6,317 for each BEX column and N = 3,843 for ARA.
+The BEX response dates run from 1997-09-11 through 2023-03-17.
+ARA response dates run from 2004-07-02 through 2020-01-02. Its last predictor
+is 2019-12-31, so its next-trading-day response falls in 2020.
+The outcome and metadata sidecar record these samples as well.
 
 Column 3 (FEARS) is skipped. The authors' private full-sample FEARS data are
 unavailable. The public 2004–2011 subset is out of scope.
@@ -85,7 +89,9 @@ It stays in decimal return units. There is no international-return lag control.
 Column 1 uses the same other terms as D.4 and exports `threshold` and `calendar:week4`.
 The real N is smaller than the paper's 6,097 because MSCI starts later and the
 panel retains only dates with both core return proxies. Missing optional inputs
-can remove more observations. The outcome records the measured N and date range.
+can remove more observations. The smoke run gives N = 5,503, with response dates
+2001-01-02 through 2023-03-17. There are 5,504 panel dates from 2000-12-29
+through the endpoint; only the first lacks an international return.
 
 ## Demo and commands
 
