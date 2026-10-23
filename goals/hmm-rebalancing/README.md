@@ -166,6 +166,7 @@ flowchart TD
     TASK_029["TASK-029 Final-report generator on fixture outputs"]
     TASK_030["TASK-030 Final run: all exhibits on the real panel and the replication report"]
     TASK_031["TASK-031 Latest sample (footnote 32): code on demo data"]
+    TASK_032["TASK-032 Latest sample (footnote 32): real run and comparison"]
   end
   TASK_011 --> DEC_001
   TASK_001 --> TASK_003
@@ -212,6 +213,7 @@ flowchart TD
   TASK_028 --> TASK_030
   TASK_029 --> TASK_030
   DEC_004 --> TASK_030
+  TASK_031 --> TASK_032
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
   classDef decision fill:#f3e8ff,stroke:#7c3aed
