@@ -1,0 +1,26 @@
+{
+  "module": "rebal.latest",
+  "created_utc": "2026-10-23T15:42:17.544910+00:00",
+  "demo": false,
+  "timing": "clean",
+  "se": "hc1",
+  "samples": {
+    "paper_end": [
+      "1997-09-10",
+      "2023-03-17"
+    ],
+    "latest": [
+      "1997-09-10",
+      "2026-07-31"
+    ]
+  },
+  "inputs": [
+    "daily_panel.parquet",
+    "signals_clean.parquet"
+  ],
+  "outputs": [
+    "table_1.csv",
+    "table_3.csv",
+    "latest_comparison.csv"
+  ]
+}
