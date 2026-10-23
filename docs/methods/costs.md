@@ -1,7 +1,8 @@
 # Rebalancing costs
 
 This implements paper-notes §3.8 and documents the cost ambiguities in §5.9.
-The delta=0 summary policy awaits the TASK-022 decision request.
+DEC-005, accepted by the owner on 2026-10-23, excludes delta=0 from Threshold
+cost summaries and retains its raw estimate and diagnostics.
 Inputs and outputs follow [daily_panel](../contracts/daily_panel.md),
 [signals](../contracts/signals.md), and [exhibits](../contracts/exhibits.md).
 Run `uv run python3 -m rebal.exhibits.costs --demo --n-sims 100` for a quick run.
@@ -82,8 +83,8 @@ and the portfolio share traded. This follows the paper's scenario of trading
 earlier, at about 1% deviation, rather than applying the original deviation's
 price change to a smaller trade. The headline is half Calendar cost plus
 half the mean fixed-size Threshold cost. `--delta-zero include|exclude` selects
-the summary grid. The existing inclusion default is retained pending a decision,
-not accepted as an economic estimate. Every per-delta row, including zero,
+the summary grid. Exclusion is the default under DEC-005; explicit inclusion
+provides a sensitivity check. Every per-delta row, including zero,
 is retained under either flag. Means, the Threshold range, both headlines and
 dollar amounts use the selected grid. Notes and metadata record the choice.
 
@@ -94,7 +95,7 @@ for its trade size. Pre-2006 means dates before 2006-01-01; post-2006 starts
 its own regression and size, while preserving the full-history weight path.
 Short samples lacking either period fail clearly rather than invent estimates.
 
-## Delta=0 identification and unresolved decision
+## Delta=0 identification and accepted treatment
 
 The paper includes zero in the aggregate signal (equation 2), and describes
 costs over 0–2.5%. It does not explain a special treatment of the daily-reset
@@ -123,9 +124,11 @@ clip the slope, or silently substitute another estimate.
 
 With corrected units, the zero-delta fixed-1%-trade cost is 2,111.09 bps/year.
 Including it gives a 41.83650 bps headline; excluding it gives 1.22151 bps,
-a **34.25×** change. The task requires a material decision above 2× when the
-paper does not settle the choice. The outcome requests that decision; this PR
-must remain draft until it is resolved.
+a **34.25×** change. The task required a material decision above 2× when the
+paper did not settle the choice. The owner accepted exclusion in DEC-005 on
+2026-10-23. Summaries now use 25 deltas, 0.1–2.5%, while all 26 raw estimates
+remain available. The aggregate predictive signal and the delta=0 model do
+not change. The diagnostics above explain why zero is excluded from summaries.
 
 ## Real-panel audit against paper targets
 

@@ -9,7 +9,7 @@ CLI Arguments:
 --controls: include the five macro controls from equation (4).
 --assets: paper public equity/debt dollar base (default 20e12).
 --fed-assets: Fed year-end 2022 retirement total (default 37.8e12).
---delta-zero: include (default) or exclude zero from Threshold summaries.
+--delta-zero: exclude (default) or include zero in Threshold summaries.
 
 Reads rebal.io panel/signals and simulates portfolio trades. Writes costs.csv
 (item,value,unit,note), figure_D5.csv (one cost and tracking error per draw),
@@ -161,7 +161,7 @@ def estimate(
     controls: bool = False,
     assets: float = 20e12,
     fed_assets: float = 37.8e12,
-    delta_zero: str = "include",
+    delta_zero: str = "exclude",
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Compute paper §3.8 estimates; retain the entire history before sampling."""
     if not np.isfinite([assets, fed_assets]).all() or min(assets, fed_assets) <= 0:
@@ -268,7 +268,7 @@ def estimate(
             note + "; base slope + active interaction",
         )
     # Preserve every per-delta estimate, even when zero is excluded from summaries.
-    # Inclusion retains the prior default pending the TASK-022 decision request.
+    # DEC-005 excludes zero by default; explicit inclusion is a sensitivity check.
     start = 0 if delta_zero == "include" else 1
     grid_note = (
         "Equal mean over all 26 deltas, 0..2.5%; delta=0 included"
@@ -426,7 +426,7 @@ def run(demo: bool, **kwargs) -> list[Path]:
                     "controls": False,
                     "assets": 20e12,
                     "fed_assets": 37.8e12,
-                    "delta_zero": "include",
+                    "delta_zero": "exclude",
                     **kwargs,
                 },
                 "cost_formula": "-slope * decimal_trade_size**2 * trades_per_year * 10000",
@@ -462,8 +462,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--delta-zero",
         choices=["include", "exclude"],
-        default="include",
-        help="Threshold summary grid; per-delta rows always retain zero (default: include).",
+        default="exclude",
+        help="Threshold summary grid; per-delta rows always retain zero (default: exclude).",
     )
     args = parser.parse_args()
     if args.n_sims < 1:

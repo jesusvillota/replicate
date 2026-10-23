@@ -127,8 +127,9 @@ def test_delta_zero_policy_is_explicit_and_keeps_raw_estimate(inputs, monkeypatc
         return (-8.0 if term == "thr_000" else -0.4), "test impact"
 
     monkeypatch.setattr(costs, "_fit", impact)
-    included = costs.estimate(panel, signals, n_sims=1)
-    excluded = costs.estimate(panel, signals, n_sims=1, delta_zero="exclude")
+    included = costs.estimate(panel, signals, n_sims=1, delta_zero="include")
+    # DEC-005: the default excludes zero from summaries, retaining its raw rows.
+    excluded = costs.estimate(panel, signals, n_sims=1)
     inc, exc = values(included), values(excluded)
     for suffix in ("", "_fixed_1pct", "_impact", "_full_sample"):
         assert inc[f"threshold_000{suffix}"] == exc[f"threshold_000{suffix}"]
@@ -153,6 +154,10 @@ def test_delta_zero_policy_is_explicit_and_keeps_raw_estimate(inputs, monkeypatc
         expected = np.mean([exc[f"threshold_{i:03d}{suffix}"] for i in range(1, 26)])
         assert exc[average] == pytest.approx(expected)
     assert exc.headline_full_sample == pytest.approx(exc.headline)
+    monkeypatch.setattr("sys.argv", ["costs"])
+    assert costs.parse_args().delta_zero == "exclude"
+    monkeypatch.setattr("sys.argv", ["costs", "--delta-zero", "include"])
+    assert costs.parse_args().delta_zero == "include"
 
 
 def test_all_paper_items_and_finite_outputs(planted_result):
@@ -244,9 +249,7 @@ def test_run_writes_outputs_and_lineage(inputs, monkeypatch, tmp_path):
     panel, _ = inputs
     monkeypatch.setattr(costs, "load_panel", lambda demo: panel)
     monkeypatch.setattr(costs, "output_dir", lambda kind: tmp_path)
-    paths = costs.run(
-        True, n_sims=2, end="latest", controls=True, assets=21.1e12, delta_zero="exclude"
-    )
+    paths = costs.run(True, n_sims=2, end="latest", controls=True, assets=21.1e12)
     assert {p.name for p in paths} == {
         "costs.csv",
         "figure_D5.csv",
