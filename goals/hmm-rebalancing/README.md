@@ -155,6 +155,7 @@ flowchart TD
     DEC_003{{"DEC-003 How should TASK-019 create and verify its replan while preserving branch isolation?"}}
     TASK_019["TASK-019 Plan: decompose M-3"]
     TASK_022["TASK-022 Audit the cost units and the delta=0 contribution"]
+    TASK_023["TASK-023 Comparison: main-run discovery and canonical exports"]
   end
   TASK_011 --> DEC_001
   TASK_001 --> TASK_003
@@ -191,6 +192,7 @@ flowchart TD
   TASK_018 --> TASK_019
   DEC_003 --> TASK_019
   TASK_001 --> TASK_020
+  TASK_022 --> TASK_023
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
   classDef decision fill:#f3e8ff,stroke:#7c3aed
