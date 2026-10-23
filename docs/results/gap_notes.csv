@@ -1,0 +1,44 @@
+exhibit,cause,note
+table_1,proxy,Historical core run: cash-market returns and control vintages are likely causes of small-control gaps.
+table_2a,proxy,Historical core run: quarter-month subsets amplify proxy differences.
+table_2b,proxy,Historical core run: quarter-month subsets amplify proxy differences.
+table_2a,sample,Historical core run: quarter-month subsets amplify sample differences.
+table_2b,sample,Historical core run: quarter-month subsets amplify sample differences.
+table_3,proxy,Historical core run: the bond proxy is the main candidate for the bond Calendar significance gap.
+table_C1,proxy,Historical core run: distributions and correlations describe proxy signals rather than exact futures signals.
+table_C2,proxy,Historical core run: distributions and correlations describe proxy signals rather than exact futures signals.
+figure_C1,proxy,Historical core run: distributions and correlations describe proxy signals rather than exact futures signals.
+table_D3,proxy,Historical core run: sizes differ with proxy returns and signal distributions.
+table_D6,proxy,Historical core run: sizes differ with proxy returns and signal distributions.
+table_D7,proxy,Historical core run: sizes differ with proxy returns and signal distributions.
+table_D8,proxy,Historical core run: proxy measurement is a likely cause of the small-signal significance gap.
+table_D8,method,Historical core run: the small/large split is a likely cause of the significance gap.
+table_D10,timing,Historical core run: calendar alignment is a plausible cause of significance differences.
+table_D11,timing,Historical core run: calendar alignment is a plausible cause of significance differences.
+table_D12,timing,Historical core run: calendar alignment is a plausible cause of significance differences.
+table_D10,proxy,Historical core run: proxy returns are a plausible cause of significance differences.
+table_D11,proxy,Historical core run: proxy returns are a plausible cause of significance differences.
+table_D12,proxy,Historical core run: proxy returns are a plausible cause of significance differences.
+table_D10,sample,Historical core run: sample differences are a plausible cause of significance differences.
+table_D11,sample,Historical core run: sample differences are a plausible cause of significance differences.
+table_D12,sample,Historical core run: sample differences are a plausible cause of significance differences.
+figure_2,timing,Historical core run: timing matters for exact threshold readings.
+figure_D1,timing,Historical core run: timing matters for exact threshold readings.
+figure_2,proxy,Historical core run: proxy construction matters for exact threshold readings.
+figure_D1,proxy,Historical core run: proxy construction matters for exact threshold readings.
+figure_3,timing,"Historical core run: close times, month-end calendars and timing are leading candidates for the four-day-window gap."
+figure_D2,timing,"Historical core run: close times, month-end calendars and timing are leading candidates for the four-day-window gap."
+figure_4,proxy,Historical core run: proxy close times are a plausible cause of horizon differences.
+figure_D4,proxy,Historical core run: proxy close times are a plausible cause of horizon differences.
+figure_4,method,Historical core run: horizon and error conventions in paper-notes section 5 are plausible causes.
+figure_D4,method,Historical core run: horizon and error conventions in paper-notes section 5 are plausible causes.
+costs,method,Historical core run: unit mismatch and extreme delta=0 costs required review; TASK-022 later corrected units and excluded delta=0 from summaries.
+figure_D5,method,Historical core run: unit mismatch and extreme delta=0 costs required review; TASK-022 later corrected units and excluded delta=0 from summaries.
+table_6a,proxy,Historical core run: proxy returns can contribute to strategy differences.
+table_6b,proxy,Historical core run: proxy returns can contribute to strategy differences.
+table_6c,proxy,Historical core run: proxy returns can contribute to strategy differences.
+figure_6,proxy,Historical core run: proxy returns can contribute to strategy differences.
+table_6a,method,Historical core run: the documented Calendar-reversal reading can contribute to strategy differences.
+table_6b,method,Historical core run: the documented Calendar-reversal reading can contribute to strategy differences.
+table_6c,method,Historical core run: the documented Calendar-reversal reading can contribute to strategy differences.
+figure_6,method,Historical core run: the documented Calendar-reversal reading can contribute to strategy differences.
