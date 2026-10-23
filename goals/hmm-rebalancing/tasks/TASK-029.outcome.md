@@ -25,7 +25,7 @@ choice about paper-notes section 5 was made. The generator writes only the
 requested Markdown file, with lineage inside that file. It uses standard-library
 logging to respect the task's standard-library-plus-pandas scope.
 
-Verified implementation revision: `65adab762c0c7641bb1926535cf40d16fbd1fe56`.
+Verified implementation revision: `8ce35f9a2d242ccb1b662db312b12c6874993fa7`.
 Only this outcome documentation follows that revision. The branch rebased onto
 the fetched `origin/main` without conflicts and remains
 `goal/hmm-rebalancing/task-029`. No shared module, contract, task specification,
@@ -44,7 +44,7 @@ and review/extend gap notes for M-3. No new task was created.
 
 ## Acceptance
 
-- [x] `uv run pytest -q tests/test_report.py` exited 0: **13 passed in 2.56s**.
+- [x] `uv run pytest -q tests/test_report.py` exited 0: **13 passed in 3.21s**.
   Tests cover matching, partial, failing, unavailable and missing exports;
   whole-contract coverage; blank unrecorded causes; CLI demo isolation;
   destination-only writes; tolerances; variants; source/method links; and
@@ -65,7 +65,7 @@ Their terminal tail was:
 ```text
 $ uv run pytest -q tests/test_report.py
 .............                                                            [100%]
-13 passed in 2.56s
+13 passed in 3.21s
 $ uv run python3 -m rebal.report --demo --out /tmp/replication_report_demo.md
 Replication report: /private/tmp/replication_report_demo.md
 $ grep -c '^|' /tmp/replication_report_demo.md
@@ -83,6 +83,22 @@ tests/test_compare.py` exited 0: **37 passed in 9.19s**. Ruff lint and format
 checks pass for both new Python files. `uv run ruff` was unavailable in the
 project environment, so the same checks ran successfully through `uvx ruff`.
 `git diff --check` passes. GitHub Actions were not inspected or used as a gate.
+
+## Review correction
+
+Review of `e00b7c8` found 44 trailing-whitespace errors in the full PR diff.
+The earlier `git diff --check` checked only uncommitted changes and missed them.
+Converted `docs/results/gap_notes.csv` from CRLF to LF without changing any
+CSV field. The fixture CSV writer now sets `lineterminator="\n"` explicitly.
+
+All three Verify commands and the independent five-part/38-ID artifact check
+above ran again after the fix. The report reader parsed all 43 annotations;
+their fields match the original file at `e00b7c8` exactly. The CSV contains no
+carriage returns. `git ls-files --eol docs/results/gap_notes.csv` reports
+`i/lf w/lf`. `git diff --check origin/main...HEAD` exits 0 at the verified
+implementation revision. Ruff lint and format checks pass for the changed
+fixture test file. The combined 37-test result above is from the original
+implementation session. PR #40 has no review threads or open review comments.
 
 PR: https://github.com/jesusvillota/replicate/pull/40, into `main`, with
 `Goal-Task: hmm-rebalancing/TASK-029` and label `goal:hmm-rebalancing`.
