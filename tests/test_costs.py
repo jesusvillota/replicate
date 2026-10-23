@@ -51,6 +51,17 @@ def values(result):
     return result[0].set_index("item").value
 
 
+def test_paper_worked_example_is_about_five_bps():
+    # A 1% weight deviation predicts a 0.39% move on 1% of the portfolio.
+    portfolio_loss_per_trade = 0.0039 * 0.01
+    assert costs.annual_cost(-0.39, 0.01, 12) == pytest.approx(
+        portfolio_loss_per_trade * 12 * 10_000
+    )
+    assert costs.annual_cost(-0.39, 0.01, 12) == pytest.approx(5, abs=0.5)
+    assert costs.annual_cost(-0.39, 0.02, 12) == pytest.approx(18.72)
+    assert costs.annual_cost(0.39, 0.01, 12) == pytest.approx(-4.68)
+
+
 def test_zero_price_impact_costs(zero_result):
     estimates = zero_result[0]
     annual = estimates.loc[estimates.unit == "bps/year"]
@@ -69,7 +80,7 @@ def test_planted_calendar_equals_impact_size_times_twelve(inputs, planted_result
     v = values(planted_result)
     assert v.calendar_impact == pytest.approx(-0.39, abs=1e-12)
     assert v.calendar_trade_size == pytest.approx(size)
-    assert v.calendar == pytest.approx(0.39 * size * 12 * 10_000, abs=1e-9)
+    assert v.calendar == pytest.approx(0.39 * size**2 * 12 * 10_000, abs=1e-9)
     assert v.calendar_full_sample == pytest.approx(v.calendar, abs=1e-9)
     assert v.calendar_T_minus_4_impact == pytest.approx(-0.39, abs=1e-12)
     assert v.calendar_pre_2006_impact == pytest.approx(-0.39, abs=1e-12)
@@ -98,7 +109,7 @@ def test_threshold_size_frequency_and_headline(inputs, planted_result):
         assert v[f"threshold_{i:03d}_trade_size"] == pytest.approx(
             np.abs(executed[executed != 0]).mean()
         )
-        expected = -v[f"threshold_{i:03d}_impact"] * 0.01 * frequency * 10_000
+        expected = -v[f"threshold_{i:03d}_impact"] * 0.01**2 * frequency * 10_000
         assert v[f"threshold_{i:03d}_fixed_1pct"] == pytest.approx(expected)
     assert v.headline == pytest.approx(
         (v.calendar + v.threshold_fixed_1pct_average) / 2
@@ -106,6 +117,47 @@ def test_threshold_size_frequency_and_headline(inputs, planted_result):
     assert v.dollar_cost_paper == pytest.approx(v.headline * 20e12 / 10_000)
     assert v.per_household_paper == pytest.approx(v.dollar_cost_paper / (2 / 3 * 127e6))
     assert v.dollar_cost_fed_z1 == pytest.approx(v.headline * 37.8e12 / 10_000)
+
+
+def test_delta_zero_policy_is_explicit_and_keeps_raw_estimate(inputs, monkeypatch):
+    panel, signals = inputs
+
+    def impact(signals, panel, term, *args, **kwargs):
+        # An unstable daily-reset slope must not be clipped or silently dropped.
+        return (-8.0 if term == "thr_000" else -0.4), "test impact"
+
+    monkeypatch.setattr(costs, "_fit", impact)
+    included = costs.estimate(panel, signals, n_sims=1, delta_zero="include")
+    # DEC-005: the default excludes zero from summaries, retaining its raw rows.
+    excluded = costs.estimate(panel, signals, n_sims=1)
+    inc, exc = values(included), values(excluded)
+    for suffix in ("", "_fixed_1pct", "_impact", "_full_sample"):
+        assert inc[f"threshold_000{suffix}"] == exc[f"threshold_000{suffix}"]
+    assert inc.threshold_000_impact == -8.0
+    fixed = np.array([inc[f"threshold_{i:03d}_fixed_1pct"] for i in range(26)])
+    actual = np.array([inc[f"threshold_{i:03d}"] for i in range(26)])
+    assert inc.threshold_fixed_1pct_average == pytest.approx(fixed.mean())
+    assert exc.threshold_fixed_1pct_average == pytest.approx(fixed[1:].mean())
+    assert exc.threshold_min == pytest.approx(actual[1:].min())
+    assert exc.threshold_max == pytest.approx(actual[1:].max())
+    assert exc.threshold_average == pytest.approx(actual[1:].mean())
+    assert exc.headline == pytest.approx((exc.calendar + fixed[1:].mean()) / 2)
+    assert exc.dollar_cost_paper == pytest.approx(exc.headline / 10_000 * 20e12)
+    assert inc.headline > 2 * exc.headline
+    assert "delta=0 included" in included[0].set_index("item").loc["headline", "note"]
+    assert "delta=0 excluded" in excluded[0].set_index("item").loc["headline", "note"]
+    for average, suffix in (
+        ("threshold_full_sample_average", "_full_sample"),
+        ("threshold_full_sample_fixed_1pct_average", "_fixed_1pct"),
+    ):
+        # The stub supplies identical conditional and interaction impacts.
+        expected = np.mean([exc[f"threshold_{i:03d}{suffix}"] for i in range(1, 26)])
+        assert exc[average] == pytest.approx(expected)
+    assert exc.headline_full_sample == pytest.approx(exc.headline)
+    monkeypatch.setattr("sys.argv", ["costs"])
+    assert costs.parse_args().delta_zero == "exclude"
+    monkeypatch.setattr("sys.argv", ["costs", "--delta-zero", "include"])
+    assert costs.parse_args().delta_zero == "include"
 
 
 def test_all_paper_items_and_finite_outputs(planted_result):
@@ -209,6 +261,8 @@ def test_run_writes_outputs_and_lineage(inputs, monkeypatch, tmp_path):
     metadata = json.loads((tmp_path / "costs.metadata.json").read_text())
     assert metadata["parameters"]["assets"] == 21.1e12
     assert metadata["parameters"]["controls"] is True
+    assert metadata["parameters"]["delta_zero"] == "exclude"
+    assert "decimal_trade_size**2" in metadata["cost_formula"]
     assert metadata["sample_end"].startswith("2023-12-29")
 
 
@@ -218,6 +272,8 @@ def test_invalid_parameters_fail(inputs):
         costs.random_dates(panel, signals, n_sims=0)
     with pytest.raises(ValueError, match="asset bases"):
         costs.estimate(panel, signals, assets=-1)
+    with pytest.raises(ValueError, match="delta_zero"):
+        costs.estimate(panel, signals, delta_zero="drop silently")
 
 
 def test_planted_threshold_recovers_conditional_impact(inputs):
@@ -234,6 +290,6 @@ def test_planted_threshold_recovers_conditional_impact(inputs):
     estimates, _ = costs.estimate(panel, frame, n_sims=2)
     v = estimates.set_index("item").value
     assert v.threshold_010_impact == pytest.approx(-0.4, abs=1e-12)
-    expected = 0.4 * v.threshold_010_trade_size * v.threshold_010_trades * 10_000
+    expected = 0.4 * v.threshold_010_trade_size**2 * v.threshold_010_trades * 10_000
     assert v.threshold_010 == pytest.approx(expected, abs=1e-9)
     assert v.threshold_010_full_sample == pytest.approx(expected, abs=1e-9)
