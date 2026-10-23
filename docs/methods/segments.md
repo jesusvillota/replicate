@@ -47,6 +47,13 @@ The CSV records actual outcome dates and the number of complete pairs, `nobs`.
 The paper reports N = 4,175. Our trading calendar and pairing rule can change N.
 `--end latest` extends the endpoint without changing the start.
 
+The TASK-025 smoke check found 4,110 panel dates in the requested window.
+All four segment returns and cash were present on those dates.
+Requiring both dates in the window gives N = 4,109 for each column.
+Actual outcome dates run from 2006-08-18 through 2023-03-17.
+The shared panel calendar excludes missing main-pair returns, including GSW gaps;
+see [panel construction](panel.md). We keep that contract calendar unchanged.
+
 Each regression includes an intercept, Threshold, Calendar, week4,
 Calendar × week4, Momentum and current `ret`. Week4 is the last five trading
 days of each month, counted before sample selection.
