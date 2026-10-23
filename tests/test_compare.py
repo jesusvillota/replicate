@@ -256,6 +256,118 @@ def test_invalid_targets_still_fail(targets, tmp_path):
         compare.compare(targets, [tmp_path / "empty"])
 
 
+def test_main_discovery_and_explicit_variant(targets, tmp_path, monkeypatch):
+    folder = tmp_path / "output" / "tables"
+    fields = ["exhibit", "column", "term", "coef"]
+    main = [["table_1", "1", "threshold", -0.4]]
+    literal = [["table_1", "1", "threshold", 99]]
+    write_csv(folder / "z.csv", fields, main)
+    write_csv(folder / "robustness" / "literal" / "a.csv", fields, literal)
+    write_csv(folder / "robustness" / "other" / "a.csv", fields, literal)
+    selected = lambda rows: next(
+        r["ours"]
+        for r in rows
+        if r["term"] == "threshold" and r["column"] == "1" and r["stat"] == "coef"
+    )
+    assert selected(compare.compare(targets, [folder])) == -0.4
+    assert selected(compare.compare(targets, [folder], variant="literal")) == 99
+    assert all(
+        r["ours"] is None for r in compare.compare(targets, [folder], variant="absent")
+    )
+    with pytest.raises(ValueError, match="directory name"):
+        compare.compare(targets, [folder], variant="../literal")
+    destination = tmp_path / "docs/results/targets.csv"
+    destination.parent.mkdir(parents=True)
+    destination.write_bytes(targets.read_bytes())
+    monkeypatch.setattr(compare, "REPO_ROOT", tmp_path)
+    monkeypatch.setattr(sys, "argv", ["compare", "--variant", "literal"])
+    compare.main()
+    report = (tmp_path / "output/compare.md").read_text()
+    assert "| 1: threshold [coef] | -0.4 | 99 |" in report
+    assert "robustness/literal" in report
+
+
+def test_core_canonical_exports_join_and_explain_gaps(tmp_path, monkeypatch):
+    from rebal.exhibits import (
+        _figure_output,
+        calibration_figures,
+        costs,
+        horizon_figures,
+        strategy,
+    )
+
+    for module in (costs, strategy, _figure_output):
+        monkeypatch.setattr(module, "output_dir", lambda kind: tmp_path)
+    outputs = costs.run(demo=True, n_sims=2)
+    for module in (strategy, calibration_figures, horizon_figures):
+        outputs += module.run(demo=True)
+    groups = {
+        "costs",
+        "table_6a",
+        "table_6b",
+        "table_6c",
+        "figure_2",
+        "figure_3",
+        "figure_4",
+        "figure_6",
+        "figure_D1",
+        "figure_D2",
+        "figure_D3",
+        "figure_D4",
+        "figure_D5",
+    }
+    assert {
+        p.stem.removesuffix("_comparison")
+        for p in outputs
+        if p.name.endswith("_comparison.csv")
+    } == groups
+    targets = Path(__file__).resolve().parents[1] / "docs/results/targets.csv"
+    rows = compare.compare(targets, [tmp_path])
+    core = [r for r in rows if r["exhibit"] in groups]
+    assert all(r["exported"] for r in core)
+    ambiguous = [
+        r
+        for r in core
+        if r["exhibit"] in {"figure_6", "figure_D5"}
+        or (r["exhibit"] == "costs" and r["column"] == "random")
+    ]
+    assert len(ambiguous) == 6 and all(r["ours"] is None for r in ambiguous)
+    for exhibit in groups - {"figure_6", "figure_D5"}:
+        assert any(r["ours"] is not None for r in core if r["exhibit"] == exhibit)
+    # Independent source checks protect unit and key mappings at the join boundary.
+    with (tmp_path / "costs.csv").open() as stream:
+        raw_costs = {r["item"]: float(r["value"]) for r in csv.DictReader(stream)}
+    assert (
+        next(
+            r["ours"]
+            for r in core
+            if r["exhibit"] == "costs"
+            and r["column"] == "headline"
+            and r["term"] == "annual_usd"
+        )
+        == raw_costs["dollar_cost_paper"]
+    )
+    with (tmp_path / "table_6a.csv").open() as stream:
+        equity = next(r for r in csv.DictReader(stream) if r["asset"] == "r_es")
+    assert next(
+        r["ours"]
+        for r in core
+        if r["exhibit"] == "table_6a"
+        and r["column"] == "sp500"
+        and r["term"] == "vol_pct_pa"
+    ) == float(equity["volatility_pct_pa"])
+    report = compare.render_report(rows, targets, [tmp_path])
+    assert "Joined exhibit keys: " in report
+    missing = report.split("## Unmatched targets")[1]
+    assert missing.count("| no export:") + missing.count(
+        "| paper-only data:"
+    ) + missing.count("| not available:") == sum(r["ours"] is None for r in rows)
+    assert "Figure 6 axis transformation is unresolved" in missing
+    assert "random-date cost sign conflicts" in missing
+    assert "| table_D9 | 3 | threshold | coef | not available:" in missing
+    assert "| figure_5 | ancerno | threshold | value | not available:" in missing
+
+
 def test_current_predictive_outputs_match_all_their_targets(tmp_path, monkeypatch):
     """Exercise the actual exporters so renamed keys cannot silently disappear."""
     from rebal.exhibits import predictive_tables, signals_descriptive

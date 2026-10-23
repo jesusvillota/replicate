@@ -28,6 +28,7 @@ from matplotlib.figure import Figure
 from rich.console import Console
 from scipy.stats import skew
 
+from rebal.comparison_exports import figure_rows, strategy_rows, write_comparison
 from rebal.io import load_panel, load_signals
 from rebal.paths import output_dir
 from rebal.regress import DEFAULT_SAMPLE, TABLE_COLUMNS, dated, ols
@@ -284,11 +285,11 @@ def run(
     for exhibit, table in tables.items():
         path = destination / f"{exhibit}.csv"
         table.to_csv(path, index=False)
-        outputs.append(path)
+        outputs.extend([path, write_comparison(path, strategy_rows(exhibit, table))])
     csv, pdf = figures / "figure_6.csv", figures / "figure_6.pdf"
     plotted.to_csv(csv, index=False)
     plot_gains(plotted, pdf, demo)
-    outputs += [csv, pdf]
+    outputs += [csv, pdf, write_comparison(csv, figure_rows("figure_6", plotted))]
     metadata = destination / "strategy.metadata.json"
     metadata.write_text(
         json.dumps(

@@ -2,6 +2,7 @@
 
 CLI Arguments:
 --demo: read output/demo instead of output/tables and output/figures.
+--variant NAME: read only robustness/NAME under the selected output folders.
 --out FILE: Markdown destination (default: output/demo/compare.md with --demo,
 otherwise output/compare.md).
 
@@ -21,6 +22,7 @@ from pathlib import Path
 import duckdb
 from rich.console import Console
 
+from rebal.comparison_exports import coverage_report, discover_csvs
 from rebal.paths import REPO_ROOT
 
 STATS = ("coef", "se", "t", "adj_r2", "nobs", "value")
@@ -77,7 +79,11 @@ def _read_actual(path: Path) -> list[tuple]:
 
 
 def compare(
-    targets_path: Path, exhibit_dirs: list[Path], *, skipped: list[str] | None = None
+    targets_path: Path,
+    exhibit_dirs: list[Path],
+    *,
+    skipped: list[str] | None = None,
+    variant: str | None = None,
 ) -> list[dict]:
     """Join exact string keys and statistic names; missing estimates stay NULL.
 
@@ -90,7 +96,7 @@ def compare(
     )
     target_keys = {tuple(row[key] for key in KEY) for row in targets}
     skipped = skipped if skipped is not None else []
-    paths = sorted({p for folder in exhibit_dirs for p in folder.rglob("*.csv")})
+    paths = discover_csvs(exhibit_dirs, variant)
     actual = []
     seen = set()
     for path in paths:
@@ -172,7 +178,7 @@ def compare(
                         nullif(max(value) FILTER (WHERE stat = 'se'), 0)) AS t
                 FROM actual GROUP BY ALL
             )
-            SELECT p.*, a.value AS ours,
+            SELECT p.*, a.value AS ours, a.stat IS NOT NULL AS exported,
                 a.value / nullif(p.paper_value, 0) AS ratio,
                 CASE WHEN p.stat IN ('coef', 't', 'value') AND a.value IS NOT NULL
                     THEN sign(p.paper_value) = sign(a.value) END AS sign_match,
@@ -274,7 +280,7 @@ def render_report(
                 f"{_match(row['significance_match'])} |"
             )
         lines.append("")
-    return "\n".join(lines)
+    return "\n".join(lines) + coverage_report(rows)
 
 
 def parse_args() -> argparse.Namespace:
@@ -283,6 +289,9 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--demo", action="store_true", help="Read only output/demo CSVs."
+    )
+    parser.add_argument(
+        "--variant", help="Compare only robustness/NAME; default: main outputs."
     )
     parser.add_argument(
         "--out",
@@ -300,13 +309,21 @@ def main() -> None:
         for kind in (("demo",) if args.demo else ("tables", "figures"))
     ]
     skipped: list[str] = []
-    rows = compare(targets, folders, skipped=skipped)
+    rows = compare(targets, folders, skipped=skipped, variant=args.variant)
     destination = args.out or REPO_ROOT / "output" / (
         "demo/compare.md" if args.demo else "compare.md"
     )
     destination.parent.mkdir(parents=True, exist_ok=True)
     destination.write_text(
-        render_report(rows, targets, folders, skipped=skipped), encoding="utf-8"
+        render_report(
+            rows,
+            targets,
+            [folder / "robustness" / args.variant for folder in folders]
+            if args.variant
+            else folders,
+            skipped=skipped,
+        ),
+        encoding="utf-8",
     )
     Console().print(f"Comparison report: {destination}", markup=False)
 

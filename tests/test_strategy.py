@@ -211,6 +211,10 @@ def test_run_writes_contract_outputs(tmp_path, monkeypatch):
     outputs = run(demo=True)
     assert {p.name for p in outputs} == {
         "table_6a.csv",
+        "table_6a_comparison.csv",
+        "table_6b_comparison.csv",
+        "table_6c_comparison.csv",
+        "figure_6_comparison.csv",
         "table_6b.csv",
         "table_6c.csv",
         "figure_6.csv",

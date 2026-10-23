@@ -30,6 +30,7 @@ from matplotlib.backends.backend_agg import FigureCanvasAgg
 from matplotlib.figure import Figure
 from rich.console import Console
 
+from rebal.comparison_exports import cost_rows, figure_rows, write_comparison
 from rebal.io import load_panel, load_signals
 from rebal.paths import output_dir
 from rebal.regress import DEFAULT_SAMPLE, dated, predictive
@@ -410,6 +411,10 @@ def run(demo: bool, **kwargs) -> list[Path]:
     costs.to_csv(csv, index=False)
     draws.to_csv(plotted, index=False)
     plot_distribution(draws, pdf, demo)
+    canonical = [
+        write_comparison(csv, cost_rows(costs)),
+        write_comparison(plotted, figure_rows("figure_D5", draws)),
+    ]
     metadata = tables / "costs.metadata.json"
     metadata.write_text(
         json.dumps(
@@ -439,13 +444,13 @@ def run(demo: bool, **kwargs) -> list[Path]:
                 )
                 if kwargs.get("end") != "latest"
                 else str(panel.date.max()),
-                "outputs": [str(path) for path in (csv, plotted, pdf)],
+                "outputs": [str(path) for path in (csv, plotted, pdf, *canonical)],
             },
             indent=2,
         )
         + "\n"
     )
-    return [csv, plotted, pdf, metadata]
+    return [csv, plotted, pdf, *canonical, metadata]
 
 
 def parse_args() -> argparse.Namespace:

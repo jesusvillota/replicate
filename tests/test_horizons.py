@@ -219,7 +219,7 @@ def test_csvs_are_the_plotted_values(
         monkeypatch.setattr(module, "load_signals", lambda **kwargs: signals)
         paths.extend(module.run(demo=True))
     assert sum(path.suffix == ".pdf" for path in paths) == 7
-    assert sum(path.suffix == ".csv" for path in paths) == 7
+    assert sum(path.suffix == ".csv" for path in paths) == 14
     for name, expected in (calibration | horizons).items():
         data = pd.read_csv(tmp_path / f"{name}.csv")
         pd.testing.assert_frame_equal(data, expected, check_dtype=False)

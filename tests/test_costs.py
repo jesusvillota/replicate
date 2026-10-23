@@ -252,6 +252,8 @@ def test_run_writes_outputs_and_lineage(inputs, monkeypatch, tmp_path):
     paths = costs.run(True, n_sims=2, end="latest", controls=True, assets=21.1e12)
     assert {p.name for p in paths} == {
         "costs.csv",
+        "costs_comparison.csv",
+        "figure_D5_comparison.csv",
         "figure_D5.csv",
         "figure_D5.pdf",
         "costs.metadata.json",
