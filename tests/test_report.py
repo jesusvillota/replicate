@@ -102,6 +102,7 @@ def test_statuses_and_exact_contract_coverage(inputs, tmp_path):
         "Gap notes",
         "Data and proxies",
         "Method choices",
+        "Latest sample (footnote 32)",
     ]
 
 
@@ -234,3 +235,35 @@ def test_real_demo_export_integration(inputs, tmp_path, monkeypatch):
     assert "| table_C1 |" in text
     assert "headline calendar:ar1 [value]" in text
     assert "Numeric targets joined: 14/399" in text
+
+
+def test_latest_sample_missing_and_demo_isolation(inputs, tmp_path):
+    destination = tmp_path / "report.md"
+    missing = report.generate_report(inputs, destination, demo=True)
+    assert missing.endswith("## Latest sample (footnote 32)\n\nnot run\n\n")
+    fields = ["exhibit", "column", "term", "stat", "sample", "value"]
+    for kind, value in (("tables", "real-only"), ("demo", "demo-only")):
+        write_csv(
+            inputs / "output" / kind / "robustness/latest/latest_comparison.csv",
+            fields,
+            [["table_1", "1", "threshold", "coef", "latest", value]],
+        )
+    demo = report.generate_report(inputs, destination, demo=True)
+    real = report.generate_report(inputs, destination)
+    assert "demo-only" in demo and "real-only" not in demo
+    assert "real-only" in real and "demo-only" not in real
+    assert demo.split("## Latest sample")[0] == missing.split("## Latest sample")[0]
+    assert "repo/output/demo/robustness/latest/latest_comparison.csv" in demo
+
+
+def test_latest_sample_real_export_integration(inputs, tmp_path, monkeypatch):
+    from rebal import latest, paths
+
+    monkeypatch.setattr(paths, "REPO_ROOT", inputs)
+    latest.run(demo=True)
+    text = report.generate_report(inputs, tmp_path / "report.md", demo=True)
+    section = text.split("## Latest sample (footnote 32)\n", 1)[1]
+    assert "| table_1 | 1 | threshold | coef | paper_end |" in section
+    assert "| table_1 | 1 | calendar:week4 | coef | latest |" in section
+    assert "| sample_end | paper_end | 2023-03-17 |" in section
+    assert "| sample_end | latest | 2023-12-29 |" in section

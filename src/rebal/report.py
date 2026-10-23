@@ -181,6 +181,32 @@ def _number(value: float | None) -> str:
     return "N/A" if value is None else f"{value:.6g}"
 
 
+def _latest_sample(root: Path, destination: Path, demo: bool) -> list[str]:
+    path = (
+        root
+        / "output"
+        / ("demo" if demo else "tables")
+        / "robustness/latest/latest_comparison.csv"
+    )
+    lines = ["## Latest sample (footnote 32)", ""]
+    if not path.is_file():
+        return lines + ["not run", ""]
+    with path.open(newline="", encoding="utf-8") as stream:
+        reader = csv.DictReader(stream)
+        fields = ["exhibit", "column", "term", "stat", "sample", "value"]
+        if reader.fieldnames != fields:
+            raise ValueError(f"{path}: expected {','.join(fields)}")
+        rows = [[row[field] for field in fields] for row in reader]
+    lines += [
+        (
+            f"[Latest-sample comparison]({_link(path, destination)}). "
+            "Table 1 compares paper_end with latest; sample dates are actual outcome dates."
+        ),
+        "",
+    ]
+    return lines + _table(fields, rows)
+
+
 def generate_report(
     root: Path,
     destination: Path,
@@ -335,13 +361,12 @@ def generate_report(
         f"- [{path.name}]({_link(path, destination)})"
         for path in sorted((root / "docs/methods").glob("*.md"))
     ]
+    lines += [""] + _latest_sample(root, destination, demo)
     return "\n".join(lines) + "\n"
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(
-        description="Generate the five-part replication report."
-    )
+    parser = argparse.ArgumentParser(description="Generate the replication report.")
     parser.add_argument(
         "--demo",
         action="store_true",
