@@ -6,6 +6,8 @@ Exhibit IDs:
 - `table_2a`
 - `table_2b`
 - `table_3`
+- `table_4`
+- `table_5`
 - `table_C1`
 - `table_C2`
 - `table_D1`
@@ -22,9 +24,11 @@ Exhibit IDs:
 - `table_D12`
 - `table_D13`
 - `table_D14`
+- `figure_1`
 - `figure_2`
 - `figure_3`
 - `figure_4`
+- `figure_5`
 - `figure_6`
 - `figure_C1`
 - `figure_D1`
@@ -48,6 +52,11 @@ Each row describes one estimated term in one table column.
 `exhibit`, `column`, `term` and `se_type` are strings. Estimates and statistics are numeric.
 `nobs` is an integer. Sample dates use ISO `YYYY-MM-DD` strings.
 Record the actual standard-error method in `se_type`.
+
+`table_4` and `table_5` use the regression layout. Their `column` values follow `docs/results/targets.csv`
+(Table 4: 1 = 1961 on, 2 = to 1997-09-09, 3 = from 1997-09-10; Table 5: 1 = R1K/R2K, 2 = Value/Growth).
+`figure_1` and `figure_5` write their plotted data in the comparison key layout
+`exhibit,column,term,stat,value`, with keys equal to those in `targets.csv`.
 
 Figures are `output/figures/<id>.pdf`, with plotted data in `output/figures/<id>.csv`.
 Use named columns with units in the relevant module documentation.
