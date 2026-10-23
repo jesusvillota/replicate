@@ -1,0 +1,18 @@
+{
+  "variant": "proxy_alt",
+  "panel": "/Users/jesusvillotamiranda/data/replicate/processed/daily_panel_alt.parquet",
+  "timing": "clean",
+  "analysis_revision": "07a995b2ccc54e37cbd86492cd720384f39d12dd",
+  "signals": "rebal.signals.build on the full alternative panel",
+  "se": "hc1",
+  "sample": [
+    "1997-09-10",
+    "2023-03-17"
+  ],
+  "panel_sha256": "c42b2dc742662b3a1308893525d59f3136cb66f6ca523c57cdccde69dbafcbfd",
+  "output_selection": [
+    "table_1",
+    "table_3",
+    "costs"
+  ]
+}

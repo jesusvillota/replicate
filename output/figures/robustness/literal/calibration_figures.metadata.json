@@ -1,0 +1,19 @@
+{
+  "module": "rebal.exhibits.calibration_figures",
+  "created_utc": "2026-10-22T23:22:16.039916+00:00",
+  "demo": false,
+  "parameters": {
+    "timing": "literal",
+    "end": "2023-03-17",
+    "se": "hc1",
+    "hac_lags": null
+  },
+  "inputs": [
+    "daily_panel.parquet",
+    "signals_literal.parquet"
+  ],
+  "outputs": [
+    "figure_2.csv",
+    "figure_2.pdf"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "script": "rebal.exhibits.costs",
+  "created_utc": "2026-10-22T23:24:25.872615+00:00",
+  "source": "rebal.io daily_panel and signals_clean",
+  "parameters": {
+    "n_sims": 10000,
+    "seed": 16,
+    "end": "2023-03-17",
+    "controls": false,
+    "assets": 20000000000000.0,
+    "fed_assets": 37800000000000.0
+  },
+  "sample_start": "1997-09-10",
+  "sample_end": "2023-03-17 00:00:00",
+  "outputs": [
+    "/Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-018/output/tables/costs.csv",
+    "/Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-018/output/figures/figure_D5.csv",
+    "/Users/jesusvillotamiranda/orca/workspaces/replicate/goal-hmm-rebalancing-task-018/output/figures/figure_D5.pdf"
+  ]
+}

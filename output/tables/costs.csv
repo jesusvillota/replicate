@@ -1,0 +1,204 @@
+item,value,unit,note
+calendar_impact,-0.3121937100704437,decimal return / weight,HC1; n=1530; outcome 1997-09-25..2023-03-01
+calendar_trade_size,0.009431967827239008,decimal weight,Mean absolute executed trade
+calendar_trades,12.0,trades/year,Calendar=12; Threshold=count / (sample days/252)
+calendar,353.35212351009693,bps/year,HC1; n=1530; outcome 1997-09-25..2023-03-01
+calendar_full_sample_impact,-0.2009427449270651,decimal return / weight,HC1; n=6317; outcome 1997-09-11..2023-03-17
+calendar_full_sample_trade_size,0.009431967827239008,decimal weight,Mean absolute executed trade
+calendar_full_sample_trades,12.0,trades/year,Calendar=12; Threshold=count / (sample days/252)
+calendar_full_sample,227.43426063230066,bps/year,HC1; n=6317; outcome 1997-09-11..2023-03-17
+calendar_T_minus_4_impact,-0.7748804749826996,decimal return / weight,HC1; n=306; outcome 1997-09-25..2023-02-23
+calendar_T_minus_4_trade_size,0.010289948355018898,decimal weight,Mean absolute executed trade
+calendar_T_minus_4_trades,12.0,trades/year,Calendar=12; Threshold=count / (sample days/252)
+calendar_T_minus_4,956.8176082661389,bps/year,HC1; n=306; outcome 1997-09-25..2023-02-23
+calendar_pre_2006_impact,-0.29516774593878653,decimal return / weight,HC1; n=499; outcome 1997-09-25..2005-12-30; exclude transition year 2006
+calendar_pre_2006_trade_size,0.009782464820107046,decimal weight,Mean absolute executed trade
+calendar_pre_2006_trades,12.0,trades/year,Calendar=12; Threshold=count / (sample days/252)
+calendar_pre_2006,346.4961708811768,bps/year,HC1; n=499; outcome 1997-09-25..2005-12-30; exclude transition year 2006
+calendar_post_2006_impact,-0.32746013288048764,decimal return / weight,HC1; n=970; outcome 2007-01-26..2023-03-01; exclude transition year 2006
+calendar_post_2006_trade_size,0.009592883140481626,decimal weight,Mean absolute executed trade
+calendar_post_2006_trades,12.0,trades/year,Calendar=12; Threshold=count / (sample days/252)
+calendar_post_2006,376.95441454669236,bps/year,HC1; n=970; outcome 2007-01-26..2023-03-01; exclude transition year 2006
+threshold_000_impact,-8.377339794979862,decimal return / weight,HC1; n=6317; outcome 1997-09-11..2023-03-17; delta=0.0
+threshold_000_trade_size,0.002283281740771382,decimal weight,Mean absolute executed trade
+threshold_000_trades,252.0,trades/year,Calendar=12; Threshold=count / (sample days/252)
+threshold_000,48202.12401508979,bps/year,HC1; n=6317; outcome 1997-09-11..2023-03-17; delta=0.0
+threshold_000_fixed_1pct,211108.96283349255,bps/year,Same impact and frequency; fixed 1% trade
+threshold_000_full_sample,48202.12401508979,bps/year,HC1; n=6317; outcome 1997-09-11..2023-03-17; base slope + active interaction
+threshold_001_impact,-0.2693770844820619,decimal return / weight,HC1; n=4117; outcome 1997-09-11..2023-03-17; delta=0.001
+threshold_001_trade_size,0.0032633471581909965,decimal weight,Mean absolute executed trade
+threshold_001_trades,164.25071225071224,trades/year,Calendar=12; Threshold=count / (sample days/252)
+threshold_001,1443.880285274022,bps/year,HC1; n=4117; outcome 1997-09-11..2023-03-17; delta=0.001
+threshold_001_fixed_1pct,4424.537799019895,bps/year,Same impact and frequency; fixed 1% trade
+threshold_001_full_sample,3087.5925754876807,bps/year,HC1; n=6317; outcome 1997-09-11..2023-03-17; base slope + active interaction
+threshold_002_impact,0.12788292039611257,decimal return / weight,HC1; n=2760; outcome 1997-09-11..2023-03-17; delta=0.002
+threshold_002_trade_size,0.0043248469609189185,decimal weight,Mean absolute executed trade
+threshold_002_trades,110.12535612535612,trades/year,Calendar=12; Threshold=count / (sample days/252)
+threshold_002,-609.07477780292,bps/year,HC1; n=2760; outcome 1997-09-11..2023-03-17; delta=0.002
+threshold_002_fixed_1pct,-1408.3152150972464,bps/year,Same impact and frequency; fixed 1% trade
+threshold_002_full_sample,55.57594217423957,bps/year,HC1; n=6317; outcome 1997-09-11..2023-03-17; base slope + active interaction
+threshold_003_impact,0.08722280720521099,decimal return / weight,HC1; n=1940; outcome 1997-09-11..2023-03-17; delta=0.003
+threshold_003_trade_size,0.005411544109053742,decimal weight,Mean absolute executed trade
+threshold_003_trades,77.41880341880342,trades/year,Calendar=12; Threshold=count / (sample days/252)
+threshold_003,-365.42454705399865,bps/year,HC1; n=1940; outcome 1997-09-11..2023-03-17; delta=0.003
+threshold_003_fixed_1pct,-675.268536465642,bps/year,Same impact and frequency; fixed 1% trade
+threshold_003_full_sample,1054.2626850712631,bps/year,HC1; n=6317; outcome 1997-09-11..2023-03-17; base slope + active interaction
+threshold_004_impact,-0.08328269837522183,decimal return / weight,HC1; n=1432; outcome 1997-09-12..2023-03-13; delta=0.004
+threshold_004_trade_size,0.006494888061922983,decimal weight,Mean absolute executed trade
+threshold_004_trades,57.116809116809115,trades/year,Calendar=12; Threshold=count / (sample days/252)
+threshold_004,308.9515622622345,bps/year,HC1; n=1432; outcome 1997-09-12..2023-03-13; delta=0.004
+threshold_004_fixed_1pct,475.6841985830334,bps/year,Same impact and frequency; fixed 1% trade
+threshold_004_full_sample,1133.4258701502667,bps/year,HC1; n=6317; outcome 1997-09-11..2023-03-17; base slope + active interaction
+threshold_005_impact,0.34381866938539385,decimal return / weight,HC1; n=1075; outcome 1997-10-08..2023-03-13; delta=0.005
+threshold_005_trade_size,0.007511890606034516,decimal weight,Mean absolute executed trade
+threshold_005_trades,42.87749287749288,trades/year,Calendar=12; Threshold=count / (sample days/252)
+threshold_005,-1107.4091140361304,bps/year,HC1; n=1075; outcome 1997-10-08..2023-03-13; delta=0.005
+threshold_005_fixed_1pct,-1474.2082547721302,bps/year,Same impact and frequency; fixed 1% trade
+threshold_005_full_sample,730.8235376182639,bps/year,HC1; n=6317; outcome 1997-09-11..2023-03-17; base slope + active interaction
+threshold_006_impact,0.20184973895852124,decimal return / weight,HC1; n=852; outcome 1997-10-08..2023-03-13; delta=0.006
+threshold_006_trade_size,0.008583534999527687,decimal weight,Mean absolute executed trade
+threshold_006_trades,33.98290598290598,trades/year,Calendar=12; Threshold=count / (sample days/252)
+threshold_006,-588.7824934023994,bps/year,HC1; n=852; outcome 1997-10-08..2023-03-13; delta=0.006
+threshold_006_fixed_1pct,-685.9440701701543,bps/year,Same impact and frequency; fixed 1% trade
+threshold_006_full_sample,957.6788022929924,bps/year,HC1; n=6317; outcome 1997-09-11..2023-03-17; base slope + active interaction
+threshold_007_impact,0.15897198663587567,decimal return / weight,HC1; n=724; outcome 1997-10-08..2023-03-13; delta=0.007
+threshold_007_trade_size,0.009446025648405904,decimal weight,Mean absolute executed trade
+threshold_007_trades,28.877492877492877,trades/year,Calendar=12; Threshold=count / (sample days/252)
+threshold_007,-433.6398718630294,bps/year,HC1; n=724; outcome 1997-10-08..2023-03-13; delta=0.007
+threshold_007_fixed_1pct,-459.0712411798392,bps/year,Same impact and frequency; fixed 1% trade
+threshold_007_full_sample,841.9231904155558,bps/year,HC1; n=6317; outcome 1997-09-11..2023-03-17; base slope + active interaction
+threshold_008_impact,0.1662526993964344,decimal return / weight,HC1; n=569; outcome 1997-10-22..2023-03-13; delta=0.008
+threshold_008_trade_size,0.010481782931601057,decimal weight,Mean absolute executed trade
+threshold_008_trades,22.695156695156694,trades/year,Calendar=12; Threshold=count / (sample days/252)
+threshold_008,-395.4914078317871,bps/year,HC1; n=569; outcome 1997-10-22..2023-03-13; delta=0.008
+threshold_008_fixed_1pct,-377.31310637948616,bps/year,Same impact and frequency; fixed 1% trade
+threshold_008_full_sample,745.8492312801067,bps/year,HC1; n=6317; outcome 1997-09-11..2023-03-17; base slope + active interaction
+threshold_009_impact,0.17773738629559904,decimal return / weight,HC1; n=466; outcome 1997-10-28..2023-03-13; delta=0.009
+threshold_009_trade_size,0.011544072537959645,decimal weight,Mean absolute executed trade
+threshold_009_trades,18.586894586894587,trades/year,Calendar=12; Threshold=count / (sample days/252)
+threshold_009,-381.3683714927881,bps/year,HC1; n=466; outcome 1997-10-28..2023-03-13; delta=0.009
+threshold_009_fixed_1pct,-330.35860632264615,bps/year,Same impact and frequency; fixed 1% trade
+threshold_009_full_sample,463.7295644796844,bps/year,HC1; n=6317; outcome 1997-09-11..2023-03-17; base slope + active interaction
+threshold_010_impact,-0.2581629954664245,decimal return / weight,HC1; n=399; outcome 1997-10-28..2023-03-13; delta=0.01
+threshold_010_trade_size,0.012643835015861518,decimal weight,Mean absolute executed trade
+threshold_010_trades,15.914529914529915,trades/year,Calendar=12; Threshold=count / (sample days/252)
+threshold_010,519.4773623364939,bps/year,HC1; n=399; outcome 1997-10-28..2023-03-13; delta=0.01
+threshold_010_fixed_1pct,410.8542714175063,bps/year,Same impact and frequency; fixed 1% trade
+threshold_010_full_sample,761.8603216138299,bps/year,HC1; n=6317; outcome 1997-09-11..2023-03-17; base slope + active interaction
+threshold_011_impact,-0.17124049985329687,decimal return / weight,HC1; n=349; outcome 1997-10-28..2023-03-14; delta=0.011
+threshold_011_trade_size,0.013660226600988297,decimal weight,Mean absolute executed trade
+threshold_011_trades,13.920227920227921,trades/year,Calendar=12; Threshold=count / (sample days/252)
+threshold_011,325.6197486253209,bps/year,HC1; n=349; outcome 1997-10-28..2023-03-14; delta=0.011
+threshold_011_fixed_1pct,238.37067871316484,bps/year,Same impact and frequency; fixed 1% trade
+threshold_011_full_sample,656.2184747819871,bps/year,HC1; n=6317; outcome 1997-09-11..2023-03-17; base slope + active interaction
+threshold_012_impact,-0.19668505667353764,decimal return / weight,HC1; n=286; outcome 1997-10-09..2023-03-13; delta=0.012
+threshold_012_trade_size,0.014903123796884125,decimal weight,Mean absolute executed trade
+threshold_012_trades,11.407407407407407,trades/year,Calendar=12; Threshold=count / (sample days/252)
+threshold_012,334.3764068776643,bps/year,HC1; n=286; outcome 1997-10-09..2023-03-13; delta=0.012
+threshold_012_fixed_1pct,224.3666572424059,bps/year,Same impact and frequency; fixed 1% trade
+threshold_012_full_sample,631.5028458547383,bps/year,HC1; n=6317; outcome 1997-09-11..2023-03-17; base slope + active interaction
+threshold_013_impact,-0.1921632647658731,decimal return / weight,HC1; n=282; outcome 1997-10-28..2023-03-14; delta=0.013
+threshold_013_trade_size,0.01584934377002235,decimal weight,Mean absolute executed trade
+threshold_013_trades,11.247863247863247,trades/year,Calendar=12; Threshold=count / (sample days/252)
+threshold_013,342.57185662472614,bps/year,HC1; n=282; outcome 1997-10-28..2023-03-14; delta=0.013
+threshold_013_fixed_1pct,216.1426123349478,bps/year,Same impact and frequency; fixed 1% trade
+threshold_013_full_sample,767.128959193349,bps/year,HC1; n=6317; outcome 1997-09-11..2023-03-17; base slope + active interaction
+threshold_014_impact,0.18398495631529607,decimal return / weight,HC1; n=252; outcome 1997-10-22..2023-03-14; delta=0.014
+threshold_014_trade_size,0.016720838584663607,decimal weight,Mean absolute executed trade
+threshold_014_trades,10.051282051282051,trades/year,Calendar=12; Threshold=count / (sample days/252)
+threshold_014,-309.2159078382935,bps/year,HC1; n=252; outcome 1997-10-22..2023-03-14; delta=0.014
+threshold_014_fixed_1pct,-184.9284689117848,bps/year,Same impact and frequency; fixed 1% trade
+threshold_014_full_sample,566.9003061577198,bps/year,HC1; n=6317; outcome 1997-09-11..2023-03-17; base slope + active interaction
+threshold_015_impact,0.1995242634840295,decimal return / weight,HC1; n=217; outcome 1997-10-28..2022-10-25; delta=0.015
+threshold_015_trade_size,0.017696201821651384,decimal weight,Mean absolute executed trade
+threshold_015_trades,8.655270655270655,trades/year,Calendar=12; Threshold=count / (sample days/252)
+threshold_015,-305.6021688580208,bps/year,HC1; n=217; outcome 1997-10-28..2022-10-25; delta=0.015
+threshold_015_fixed_1pct,-172.69365027478108,bps/year,Same impact and frequency; fixed 1% trade
+threshold_015_full_sample,533.2214431870926,bps/year,HC1; n=6317; outcome 1997-09-11..2023-03-17; base slope + active interaction
+threshold_016_impact,0.5775708909029524,decimal return / weight,HC1; n=178; outcome 1997-12-08..2023-03-13; delta=0.016
+threshold_016_trade_size,0.01866793915465452,decimal weight,Mean absolute executed trade
+threshold_016_trades,7.0997150997151,trades/year,Calendar=12; Threshold=count / (sample days/252)
+threshold_016,-765.4954175555212,bps/year,HC1; n=178; outcome 1997-12-08..2023-03-13; delta=0.016
+threshold_016_fixed_1pct,-410.05887752995943,bps/year,Same impact and frequency; fixed 1% trade
+threshold_016_full_sample,361.8180904873186,bps/year,HC1; n=6317; outcome 1997-09-11..2023-03-17; base slope + active interaction
+threshold_017_impact,0.3865526746149619,decimal return / weight,HC1; n=172; outcome 1997-10-28..2022-11-23; delta=0.017
+threshold_017_trade_size,0.019482381175915126,decimal weight,Mean absolute executed trade
+threshold_017_trades,6.860398860398861,trades/year,Calendar=12; Threshold=count / (sample days/252)
+threshold_017,-516.6543434705121,bps/year,HC1; n=172; outcome 1997-10-28..2022-11-23; delta=0.017
+threshold_017_fixed_1pct,-265.19055284126165,bps/year,Same impact and frequency; fixed 1% trade
+threshold_017_full_sample,455.46839465359915,bps/year,HC1; n=6317; outcome 1997-09-11..2023-03-17; base slope + active interaction
+threshold_018_impact,0.37018661376281425,decimal return / weight,HC1; n=146; outcome 1997-10-28..2023-03-14; delta=0.018
+threshold_018_trade_size,0.020704430630398316,decimal weight,Mean absolute executed trade
+threshold_018_trades,5.823361823361823,trades/year,Calendar=12; Threshold=count / (sample days/252)
+threshold_018,-446.3317454349422,bps/year,HC1; n=146; outcome 1997-10-28..2023-03-14; delta=0.018
+threshold_018_fixed_1pct,-215.5730594105961,bps/year,Same impact and frequency; fixed 1% trade
+threshold_018_full_sample,534.7310336444526,bps/year,HC1; n=6317; outcome 1997-09-11..2023-03-17; base slope + active interaction
+threshold_019_impact,0.605358207785418,decimal return / weight,HC1; n=141; outcome 1997-10-22..2023-03-14; delta=0.019
+threshold_019_trade_size,0.02146914430142147,decimal weight,Mean absolute executed trade
+threshold_019_trades,5.6239316239316235,trades/year,Calendar=12; Threshold=count / (sample days/252)
+threshold_019,-730.9155510925406,bps/year,HC1; n=141; outcome 1997-10-22..2023-03-14; delta=0.019
+threshold_019_fixed_1pct,-340.4493168570984,bps/year,Same impact and frequency; fixed 1% trade
+threshold_019_full_sample,274.3537885863783,bps/year,HC1; n=6317; outcome 1997-09-11..2023-03-17; base slope + active interaction
+threshold_020_impact,0.6916025529342023,decimal return / weight,HC1; n=113; outcome 1998-02-24..2023-03-14; delta=0.02
+threshold_020_trade_size,0.02269150737601198,decimal weight,Mean absolute executed trade
+threshold_020_trades,4.507122507122507,trades/year,Calendar=12; Threshold=count / (sample days/252)
+threshold_020,-707.325470373764,bps/year,HC1; n=113; outcome 1998-02-24..2023-03-14; delta=0.02
+threshold_020_fixed_1pct,-311.71374323131283,bps/year,Same impact and frequency; fixed 1% trade
+threshold_020_full_sample,225.95393430584608,bps/year,HC1; n=6317; outcome 1997-09-11..2023-03-17; base slope + active interaction
+threshold_021_impact,0.42895517452128695,decimal return / weight,HC1; n=108; outcome 1998-02-27..2023-03-14; delta=0.021
+threshold_021_trade_size,0.023721650762499973,decimal weight,Mean absolute executed trade
+threshold_021_trades,4.3076923076923075,trades/year,Calendar=12; Threshold=count / (sample days/252)
+threshold_021,-438.3303009189438,bps/year,HC1; n=108; outcome 1998-02-27..2023-03-14; delta=0.021
+threshold_021_fixed_1pct,-184.78069056301592,bps/year,Same impact and frequency; fixed 1% trade
+threshold_021_full_sample,301.2860182782281,bps/year,HC1; n=6317; outcome 1997-09-11..2023-03-17; base slope + active interaction
+threshold_022_impact,0.5364920921353282,decimal return / weight,HC1; n=92; outcome 1997-10-28..2022-05-10; delta=0.022
+threshold_022_trade_size,0.025164068441371867,decimal weight,Mean absolute executed trade
+threshold_022_trades,3.6695156695156697,trades/year,Calendar=12; Threshold=count / (sample days/252)
+threshold_022,-495.39649451497604,bps/year,HC1; n=92; outcome 1997-10-28..2022-05-10; delta=0.022
+threshold_022_fixed_1pct,-196.86661386618312,bps/year,Same impact and frequency; fixed 1% trade
+threshold_022_full_sample,192.72837205553807,bps/year,HC1; n=6317; outcome 1997-09-11..2023-03-17; base slope + active interaction
+threshold_023_impact,0.41354214944101253,decimal return / weight,HC1; n=90; outcome 1997-12-08..2022-08-11; delta=0.023
+threshold_023_trade_size,0.025849534768855032,decimal weight,Mean absolute executed trade
+threshold_023_trades,3.58974358974359,trades/year,Calendar=12; Threshold=count / (sample days/252)
+threshold_023,-383.73900098737164,bps/year,HC1; n=90; outcome 1997-12-08..2022-08-11; delta=0.023
+threshold_023_fixed_1pct,-148.45102800446602,bps/year,Same impact and frequency; fixed 1% trade
+threshold_023_full_sample,161.22613491183893,bps/year,HC1; n=6317; outcome 1997-09-11..2023-03-17; base slope + active interaction
+threshold_024_impact,0.79014389287251,decimal return / weight,HC1; n=81; outcome 1998-02-11..2023-02-08; delta=0.024
+threshold_024_trade_size,0.026971342985983644,decimal weight,Mean absolute executed trade
+threshold_024_trades,3.230769230769231,trades/year,Calendar=12; Threshold=count / (sample days/252)
+threshold_024,-688.517047387447,bps/year,HC1; n=81; outcome 1998-02-11..2023-02-08; delta=0.024
+threshold_024_fixed_1pct,-255.2772576972725,bps/year,Same impact and frequency; fixed 1% trade
+threshold_024_full_sample,133.78461889547017,bps/year,HC1; n=6317; outcome 1997-09-11..2023-03-17; base slope + active interaction
+threshold_025_impact,0.3650391820988883,decimal return / weight,HC1; n=81; outcome 1998-02-26..2021-10-20; delta=0.025
+threshold_025_trade_size,0.027780338750046662,decimal weight,Mean absolute executed trade
+threshold_025_trades,3.230769230769231,trades/year,Calendar=12; Threshold=count / (sample days/252)
+threshold_025,-327.6294690010597,bps/year,HC1; n=81; outcome 1998-02-26..2021-10-20; delta=0.025
+threshold_025_fixed_1pct,-117.93573575502545,bps/year,Same impact and frequency; fixed 1% trade
+threshold_025_full_sample,269.69233211489274,bps/year,HC1; n=6317; outcome 1997-09-11..2023-03-17; base slope + active interaction
+threshold_average,1595.409912929762,bps/year,"Equal mean over all 26 deltas, 0..2.5%"
+threshold_fixed_1pct_average,8034.020039441293,bps/year,"Equal mean over all 26 deltas, 0..2.5%"
+threshold_full_sample_average,2465.4177108762356,bps/year,"Equal mean over all 26 deltas, 0..2.5%"
+threshold_full_sample_fixed_1pct_average,8940.087985437389,bps/year,"Equal mean over all 26 deltas, 0..2.5%"
+threshold_min,-1107.4091140361304,bps/year,Minimum across delta
+threshold_max,48202.12401508979,bps/year,Maximum across delta
+headline,4193.686081475695,bps/year,Mean of Calendar and fixed-1%-size Threshold average
+headline_full_sample,4583.761123034845,bps/year,Full-sample interaction alternative
+random_mean,6.990193278504367,bps/year,10000 monthly schedules; seed=16; positive=loss
+random_median,6.365905126207878,bps/year,10000 monthly schedules; seed=16; positive=loss
+random_p025,-261.50904900562705,bps/year,10000 monthly schedules; seed=16; positive=loss
+random_p975,278.05329044794433,bps/year,10000 monthly schedules; seed=16; positive=loss
+random_tracking_error,37.410934196893706,bps/year,Mean annualized SD of daily return difference vs monthly Calendar
+random_simulations,10000.0,count,One uniform trading day per month; week4 allowed
+assets_paper,20000000000000.0,USD,D27; see docs/methods/costs.md
+dollar_cost_paper,8387372162951.39,USD/year,headline / 10000 * assets
+per_household_paper,99063.45074352036,USD/household/year,Two-thirds of 127M households
+assets_fed_z1,37800000000000.0,USD,D27; see docs/methods/costs.md
+dollar_cost_fed_z1,15852133387978.127,USD/year,headline / 10000 * assets
+per_household_fed_z1,187229.9219052535,USD/household/year,Two-thirds of 127M households
+households,127000000.0,households,Census 2022; paper D27
+household_participation,0.6666666666666666,fraction,SCF; paper D27
+utility_buy_hold,341.73902436480415,bps/year,Gross arithmetic mean-variance utility; gamma=3
+utility_threshold_025,386.1048362589501,bps/year,Gross arithmetic mean-variance utility; gamma=3
+utility_calendar,378.6893165313578,bps/year,Gross arithmetic mean-variance utility; gamma=3
+utility_threshold_minus_buy_hold,44.36581189414596,bps/year,Footnote 36; gross utility difference
+utility_calendar_minus_buy_hold,36.95029216655365,bps/year,Footnote 36; gross utility difference

@@ -1,0 +1,24 @@
+{
+  "module": "rebal.exhibits.horizon_figures",
+  "created_utc": "2026-10-22T23:24:26.427779+00:00",
+  "demo": false,
+  "parameters": {
+    "start": "1997-09-10",
+    "end": "2023-03-17",
+    "se": "hc1",
+    "timing": "clean",
+    "cumulative_se": "hodrick_1b",
+    "confidence": 0.95,
+    "cumulative_transform": "sum(log1p(ret))"
+  },
+  "inputs": [
+    "daily_panel.parquet",
+    "signals_clean.parquet"
+  ],
+  "outputs": [
+    "figure_4.csv",
+    "figure_4.pdf",
+    "figure_D4.csv",
+    "figure_D4.pdf"
+  ]
+}
