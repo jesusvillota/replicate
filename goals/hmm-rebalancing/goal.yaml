@@ -16,7 +16,7 @@ milestones:
   - {id: M-3, title: Extensions and final report, success: [SC-6], exit: "The replication report is merged"}
 policy:
   decide: human         # human | experts (a committee answers worker decision requests)
-  orchestrator: {platform: codex, model: gpt-6-astra, effort: high}
+  orchestrator: {platform: claude, model: sonnet, effort: high}
   max_parallel: 5
   default_route: null   # {platform: codex, model: MODEL, effort: LEVEL}
   agent: claude         # claude | codex | opencode | agy
