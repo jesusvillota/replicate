@@ -9,6 +9,7 @@ CLI Arguments:
 --controls: include the five macro controls from equation (4).
 --assets: paper public equity/debt dollar base (default 20e12).
 --fed-assets: Fed year-end 2022 retirement total (default 37.8e12).
+--delta-zero: include (default) or exclude zero from Threshold summaries.
 
 Reads rebal.io panel/signals and simulates portfolio trades. Writes costs.csv
 (item,value,unit,note), figure_D5.csv (one cost and tracking error per draw),
@@ -39,8 +40,12 @@ CONTROLS = ["vix", "move", "epu", "ads", "sentiment"]
 
 
 def annual_cost(impact: float, size: float, trades: float) -> float:
-    """Negative predictive slope implies a positive loss; decimals to bps."""
-    return -impact * size * trades * 10_000
+    """Slope times signal size gives price impact; weight by the share traded.
+
+    Both return and weight use decimals. The paper's -0.39 slope and 1% trade
+    imply a 0.39% price move on 1% of the portfolio: 4.68 bps over 12 trades.
+    """
+    return -impact * size**2 * trades * 10_000
 
 
 def portfolio_returns(panel: pd.DataFrame, simulation: pd.DataFrame) -> np.ndarray:
@@ -156,10 +161,13 @@ def estimate(
     controls: bool = False,
     assets: float = 20e12,
     fed_assets: float = 37.8e12,
+    delta_zero: str = "include",
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Compute paper §3.8 estimates; retain the entire history before sampling."""
     if not np.isfinite([assets, fed_assets]).all() or min(assets, fed_assets) <= 0:
         raise ValueError("asset bases must be finite and positive")
+    if delta_zero not in {"include", "exclude"}:
+        raise ValueError("delta_zero must be include or exclude")
     p, s = dated(panel), dated(signals)
     if not p.index.equals(s.index):
         raise ValueError("costs require signals on the full panel trading calendar")
@@ -259,27 +267,35 @@ def estimate(
             "bps/year",
             note + "; base slope + active interaction",
         )
+    # Preserve every per-delta estimate, even when zero is excluded from summaries.
+    # Inclusion retains the prior default pending the TASK-022 decision request.
+    start = 0 if delta_zero == "include" else 1
+    grid_note = (
+        "Equal mean over all 26 deltas, 0..2.5%; delta=0 included"
+        if start == 0
+        else "Equal mean over 25 deltas, 0.1..2.5%; delta=0 excluded"
+    )
     for item, values in (
         ("threshold_average", threshold_costs),
         ("threshold_fixed_1pct_average", fixed_costs),
         ("threshold_full_sample_average", full_costs),
         ("threshold_full_sample_fixed_1pct_average", full_fixed),
     ):
-        add(item, np.mean(values), "bps/year", "Equal mean over all 26 deltas, 0..2.5%")
-    add("threshold_min", min(threshold_costs), "bps/year", "Minimum across delta")
-    add("threshold_max", max(threshold_costs), "bps/year", "Maximum across delta")
-    headline = (calendar + np.mean(fixed_costs)) / 2
+        add(item, np.mean(values[start:]), "bps/year", grid_note)
+    add("threshold_min", min(threshold_costs[start:]), "bps/year", grid_note)
+    add("threshold_max", max(threshold_costs[start:]), "bps/year", grid_note)
+    headline = (calendar + np.mean(fixed_costs[start:])) / 2
     add(
         "headline",
         headline,
         "bps/year",
-        "Mean of Calendar and fixed-1%-size Threshold average",
+        "Mean of Calendar and fixed-1%-size Threshold average; " + grid_note,
     )
     add(
         "headline_full_sample",
-        (annual_cost(alternative, calendar_size, 12) + np.mean(full_fixed)) / 2,
+        (annual_cost(alternative, calendar_size, 12) + np.mean(full_fixed[start:])) / 2,
         "bps/year",
-        "Full-sample interaction alternative",
+        "Full-sample interaction alternative; " + grid_note,
     )
 
     draws = random_dates(
@@ -410,8 +426,10 @@ def run(demo: bool, **kwargs) -> list[Path]:
                     "controls": False,
                     "assets": 20e12,
                     "fed_assets": 37.8e12,
+                    "delta_zero": "include",
                     **kwargs,
                 },
+                "cost_formula": "-slope * decimal_trade_size**2 * trades_per_year * 10000",
                 "sample_start": DEFAULT_SAMPLE[0],
                 "sample_end": str(
                     min(
@@ -441,6 +459,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--controls", action="store_true")
     parser.add_argument("--assets", type=float, default=20e12)
     parser.add_argument("--fed-assets", type=float, default=37.8e12)
+    parser.add_argument(
+        "--delta-zero",
+        choices=["include", "exclude"],
+        default="include",
+        help="Threshold summary grid; per-delta rows always retain zero (default: include).",
+    )
     args = parser.parse_args()
     if args.n_sims < 1:
         parser.error("--n-sims must be positive")
