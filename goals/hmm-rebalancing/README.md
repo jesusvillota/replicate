@@ -161,6 +161,7 @@ flowchart TD
     TASK_026["TASK-026 Tables D.4, D.9 and D.14: robustness code on demo data"]
     TASK_027["TASK-027 Figure 1: pension-allocation code on demo data"]
     TASK_028["TASK-028 Figure 5: trading-correlation code on demo data"]
+    TASK_029["TASK-029 Final-report generator on fixture outputs"]
   end
   TASK_011 --> DEC_001
   TASK_001 --> TASK_003
@@ -198,6 +199,7 @@ flowchart TD
   DEC_003 --> TASK_019
   TASK_001 --> TASK_020
   TASK_022 --> TASK_023
+  TASK_023 --> TASK_029
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
   classDef decision fill:#f3e8ff,stroke:#7c3aed
