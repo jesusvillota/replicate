@@ -78,9 +78,10 @@ the first return, first momentum date and actual outcome dates for each column.
 Use equation (4), with the terms printed in the paper's Table 4 (PDF p.36):
 an intercept, `threshold`, `calendar`, `week4`, `calendar:week4`, `momentum`
 and `ret`. The controls are **momentum and the current spread return**.
-Omit `vix`, `move`, `epu`, `ads` and `sentiment` from every column: these
-level controls do not cover the full long sample. Do not add them only to
-the late column. Table 4 itself does not tabulate these additional controls.
+Omit `vix`, `move`, `epu`, `ads` and `sentiment` from every column, matching
+the control set printed in Table 4. VIX, MOVE, EPU and sentiment also lack
+full long-sample history. ADS starts in 1960, but Table 4 does not include it.
+Do not add extra controls only to the late column.
 
 Default momentum averages the 11–20 day sign family and the
 21/42/63/126/252 day sign family with equal family weights.
