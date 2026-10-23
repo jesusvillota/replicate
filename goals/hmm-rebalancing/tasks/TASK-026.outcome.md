@@ -23,6 +23,18 @@ The branch was rebased onto `origin/main` without conflicts.
 No material decision is missing. TASK-030 owns the final real-output run.
 No additional follow-up is proposed.
 
+Additional verification at `b7b44f7183a1e36bfd902c6a01da14b9ebc8b381`:
+
+- `uv run pytest -q tests/test_scaffold.py tests/test_regress.py`: **35 passed**,
+  including the complete demo exhibit runner.
+- The exact required demo command and `ls` command pass again.
+- `uvx ruff check src/rebal/exhibits/robustness_extra.py tests/test_robustness_extra.py`:
+  all checks passed. Ruff was not installed in the project environment, so `uvx`
+  supplied it without changing dependencies.
+- `uvx ruff format --check src/rebal/exhibits/robustness_extra.py tests/test_robustness_extra.py`:
+  both files already formatted.
+- `git diff --check origin/main...HEAD`: passes.
+
 ## Acceptance
 
 - [x] `uv run pytest -q tests/test_robustness_extra.py` passes.
