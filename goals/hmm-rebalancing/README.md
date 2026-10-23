@@ -159,6 +159,7 @@ flowchart TD
     TASK_024["TASK-024 Table 4: long-sample code on demo data"]
     TASK_025["TASK-025 Table 5: equity-segment code on demo data"]
     TASK_026["TASK-026 Tables D.4, D.9 and D.14: robustness code on demo data"]
+    TASK_027["TASK-027 Figure 1: pension-allocation code on demo data"]
   end
   TASK_011 --> DEC_001
   TASK_001 --> TASK_003
